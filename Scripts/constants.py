@@ -4,9 +4,9 @@
 # A Simply Python File that contains constant values that are important
 #to the project. 
 
-DATA_SET_NAME = "..\Data\News_Category_Dataset_v2.json"
+DATA_SET_PATH = "..\Data\News_Category_Dataset_v2.json"
 
-ARTICLE_SET_NAME = "..\Data\Article_Set.json"
+ARTICLE_SET_PATH = "..\Data\Article_Set.json"
 
 CATEGORIES = ["POLITICS", "WELLNESS", "ENTERTAINMENT", "TRAVEL", 
                 "STYLE & BEAUTY", "PARENTING", "HEALTHY LIVING", "QUEER VOICES", 

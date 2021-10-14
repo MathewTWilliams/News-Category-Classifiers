@@ -22,7 +22,7 @@ def load_articles():
 
     search_categories = CATEGORIES.copy()
 
-    with open(DATA_SET_NAME, "r+") as file: 
+    with open(DATA_SET_PATH, "r+") as file: 
         lines = file.readlines()
         
     
@@ -44,11 +44,11 @@ def load_articles():
 # Method used to save our chosen articles. 
 def save_articles(data_set_map):
 
-    if os.path.exists(ARTICLE_SET_NAME): 
-        os.remove(ARTICLE_SET_NAME)
+    if os.path.exists(ARTICLE_SET_PATH): 
+        os.remove(ARTICLE_SET_PATH)
 
 
-    with open(ARTICLE_SET_NAME, "w+") as file: 
+    with open(ARTICLE_SET_PATH, "w+") as file: 
         json.dump(data_set_map, file, indent=1)
     
 
