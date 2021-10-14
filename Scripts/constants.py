@@ -4,9 +4,10 @@
 # A Simply Python File that contains constant values that are important
 #to the project. 
 
-DATA_SET_PATH = "..\Data\News_Category_Dataset_v2.json"
+#Dataset: https://www.kaggle.com/rmisra/news-category-dataset 
+DATA_SET_PATH = "../Data/News_Category_Dataset_v2.json"
 
-ARTICLE_SET_PATH = "..\Data\Article_Set.json"
+ARTICLE_SET_PATH = "../Data/Article_Set.json"
 
 CATEGORIES = ["POLITICS", "WELLNESS", "ENTERTAINMENT", "TRAVEL", 
                 "STYLE & BEAUTY", "PARENTING", "HEALTHY LIVING", "QUEER VOICES", 
@@ -15,5 +16,5 @@ CATEGORIES = ["POLITICS", "WELLNESS", "ENTERTAINMENT", "TRAVEL",
 
 ARTICLES_PER_CATEGORY = 4800
 
-VALD_SET_PERCENT = 10 
+VALD_SET_PERCENT = 10
 TEST_SET_PERCENT = 10
