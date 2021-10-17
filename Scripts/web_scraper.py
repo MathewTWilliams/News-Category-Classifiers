@@ -12,16 +12,9 @@ def scrape_articles():
     article_set = load_dataset(ARTICLE_SET_PATH)
 
     for category, article_list in article_set.items(): 
-        html = urlopen(article_list[0]).read().decode("utf-8")
-        text = clean_html(html)
-        print(text)
-
-
-    
-    
-            
-
-
+        for url in article_list: 
+            html = urlopen(url).read().decode("utf-8")
+            text = clean_html(html)
 
 
 
