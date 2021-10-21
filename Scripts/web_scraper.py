@@ -2,25 +2,53 @@
 #Version: 10.15.2021
 
 
-
-from urllib.request import urlopen
 from constants import ARTICLE_SET_PATH
-from load_dataset import load_dataset
+from save_load_json import load_json
 from text_cleaner import clean_html
+from http import HTTPStatus
+import requests
+
+
+
+def check_if_page_exists(url): 
+
+    url_check = "https://www.huffpost.com/section"
+
+    try: 
+        response = requests.head(url)
+        if response.status_code == HTTPStatus.OK:
+            return True
+        elif response.status_code == HTTPStatus.MOVED_PERMANENTLY: 
+            location = response.headers['Location']
+            return not location.startswith(url_check)
+    except: 
+        return False
+
+    
+def test_page_exists():
+    bad_url = "https://www.huffingtonpost.com/entry/kaiser-carlile-dead_us_55bf5973e4b06363d5a2988e"
+    good_url = "https://www.huffpost.com/entry/donald-trump-mcondalds-tonight-show_n_5b093561e4b0fdb2aa53daba"
+    exists_redirect_url = "https://www.huffingtonpost.com/entry/thanksgiving-space-nasa-atronauts-iss-video_us_5baebc8ee4b014374e2eb14e"
+
+    print(check_if_page_exists(bad_url))
+    print(check_if_page_exists(good_url))
+    print(check_if_page_exists(exists_redirect_url))
+
+
+
 
 def scrape_articles():
-    article_set = load_dataset(ARTICLE_SET_PATH)
+    article_set = load_json(ARTICLE_SET_PATH)
 
     for category, article_list in article_set.items(): 
         for url in article_list: 
-            html = urlopen(url).read().decode("utf-8")
+            html = requests.get(url).text
             text = clean_html(html)
 
 
 
 if __name__ == "__main__":
-    article_set_map = scrape_articles()
-
+    test_page_exists()
 
 
 
