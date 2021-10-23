@@ -19,7 +19,7 @@ def get_articles_for_category(**kwargs):
     article_list = []
     counter = 0
 
-    while len(article_list) < ARTICLES_PER_CATEGORY and counter < len(dataset):
+    while counter < len(dataset):
         art_obj = dataset[counter]
         art_cat = art_obj['category']
         art_link = art_obj['link']

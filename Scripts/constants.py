@@ -16,12 +16,11 @@ ARTICLE_SET_PATH = PurePath.joinpath(Path(__file__).resolve().parent.parent,
 SORTED_DATA_PATH = PurePath.joinpath(Path(__file__).resolve().parent.parent, 
                     "Data/Sorted_Data_Set.json").as_posix()
 
-CATEGORIES = ["POLITICS", "WELLNESS", "ENTERTAINMENT", "TRAVEL", 
-                "STYLE & BEAUTY", "PARENTING", "HEALTHY LIVING", "QUEER VOICES", 
-                "FOOD & DRINK", "BUSINESS", "COMEDY", "SPORTS"]
+CATEGORIES = ["MEDIA", "WEIRD NEWS", "GREEN", "WORLDPOST",
+                "RELIGION", "STYLE", "SCIENCE", "WORLD NEWS",
+                "TASTE", "TECH"]
 
 
-ARTICLES_PER_CATEGORY = 4800
-
-VALD_SET_SIZE = 480 #10%
-TEST_SET_SIZE = 480 #10%
+VALID_SET_PERC = 10
+TEST_SET_PERC = 10
+TRAIN_SET_PERC = 80

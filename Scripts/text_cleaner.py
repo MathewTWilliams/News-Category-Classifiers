@@ -28,6 +28,10 @@ from nltk.tokenize.treebank import TreebankWordTokenizer
 #Remove Single characters
 
 
+#def expand_contractions(): 
+    
+
+
 def tokenize_text(text):
     tokenizer = TreebankWordTokenizer()
     return tokenizer.tokenize(text)
@@ -42,11 +46,11 @@ def clean_html(html):
     content = soup.find_all("div", 
                         {"class": "primary-cli cli cli-text"})
 
-    text = ""
-    for child in content: 
-        text += child.get_text()
+    return "".join([child.get_text() for child in content])
+    
 
-    return text
 
+#if __name__ == "__main__":
+    #expand_contractions()
 
 
