@@ -16,6 +16,10 @@ ARTICLE_SET_PATH = PurePath.joinpath(Path(__file__).resolve().parent.parent,
 SORTED_DATA_PATH = PurePath.joinpath(Path(__file__).resolve().parent.parent, 
                     "Data/Sorted_Data_Set.json").as_posix()
 
+
+TEST_TEXT_PATH = PurePath.joinpath(Path(__file__).resolve().parent.parent, 
+                    "Data/test_text.txt")
+
 CATEGORIES = ["MEDIA", "WEIRD NEWS", "GREEN", "WORLDPOST",
                 "RELIGION", "STYLE", "SCIENCE", "WORLD NEWS",
                 "TASTE", "TECH"]

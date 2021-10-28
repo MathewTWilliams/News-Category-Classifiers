@@ -63,7 +63,9 @@ if __name__ == "__main__":
             article_set[category] = []
             article_list = dataset[category]
             future = executor.submit(get_articles_for_category,
-            category = category, dataset = article_list, delay=delay)
+                                    category = category,   
+                                    dataset = article_list, 
+                                    delay=delay)
             futures.append(future)
 
     
