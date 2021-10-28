@@ -6,17 +6,13 @@
 
 
 from bs4 import BeautifulSoup
-import contractions
 from contractions import contractions_dict
 import re
 from nltk.probability import FreqDist
-
 from nltk.stem.wordnet import WordNetLemmatizer
 from nltk.stem import SnowballStemmer
 import nltk
 from num2words import num2words
-
-
 from constants import TEST_TEXT_PATH
 
 
@@ -115,7 +111,19 @@ def get_and_clean_text(text, remove_digits = False, num_to_word = True,
                             remove_special_chars = True, lemmatize_text = True, 
                             stem_text = False, expand_contractions = True, 
                             tokenize = True, lower_text = True, 
-                            num_freq_words_remove = 0, num_infreq_words_remove = 0 ): 
+                            num_freq_words_remove = 0, num_infreq_words_remove = 0):
+
+
+    if lower_text:
+        text = lower_text(text)
+    
+    if expand_contractions:
+        text = expand_contractions(text)
+    
+    if remove_special_chars: 
+        text = remove_special_chars(remove_digits)
+
+    if  
     
 
 if __name__ == "__main__":
