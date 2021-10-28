@@ -48,7 +48,7 @@ def expand_contractions(text):
     return expanded_text
 
 
-def tokenize(text):
+def tokenize_text(text):
     return nltk.word_tokenize(text)
     
 def lower_text(text):
@@ -94,36 +94,67 @@ def clean_html(html):
     return "".join([child.get_text() for child in content])
 
 
-def num_to_words(words): 
+def num_to_words(text): 
+
+    words = tokenize_text(text)
+
     for i in range(len(words)):
         if words[i].isdigit() or words[i].isdecimal():
             words[i] = num2words(words[i])
-    
-    updated_text = " ".join(words)
-    return tokenize(updated_text)
+
+    return " ".join(words)
 
 
 def remove_single_chars(words):
     return [word for word in words if len(word) > 1]
 
 def get_and_clean_text(text, remove_digits = False, num_to_word = True, 
-                            rem_single_chars = True, remove_stop_words = True, 
-                            remove_special_chars = True, lemmatize_text = True, 
-                            stem_text = False, expand_contractions = True, 
-                            tokenize = True, lower_text = True, 
-                            num_freq_words_remove = 0, num_infreq_words_remove = 0):
+                            rem_single_chars = True, rem_stop_words = True, 
+                            rem_special_chars = True, lemma = True, 
+                            stem = False, expand = True, 
+                            tokenize = True, lower = True, 
+                            num_freq_words_remove = 0, num_rare_words_remove = 0):
 
 
-    if lower_text:
+    if lower:
         text = lower_text(text)
     
     if expand_contractions:
         text = expand_contractions(text)
+
+    if num_to_word: 
+        text = num_to_word(text)
+
+    if expand: 
+        text = expand_contractions(text)
     
-    if remove_special_chars: 
+    if rem_special_chars: 
         text = remove_special_chars(remove_digits)
 
-    if  
+    if tokenize: 
+        words = tokenize_text(text)
+    
+    if lemma: 
+        words = lemmatize_text(words)
+
+    if stem: 
+        words = stem_text(words)
+
+    if rem_stop_words: 
+        words = remove_stop_words(words)
+
+    if rem_single_chars:
+        words = remove_single_chars(words)
+
+    words = remove_frequent_words(words, num_freq_words_remove)
+    words = remove_rare_words(words, num_rare_words_remove)
+    
+
+
+    
+
+    
+
     
 
 if __name__ == "__main__":
