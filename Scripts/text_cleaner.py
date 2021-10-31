@@ -5,25 +5,52 @@
 #Many of the NLP related preprocessing techniques found here come from or are influenced by this webpage. 
 
 
-from bs4 import BeautifulSoup
+
 from contractions import contractions_dict
 import re
 from nltk.probability import FreqDist
 from nltk.stem.wordnet import WordNetLemmatizer
 from nltk.stem import SnowballStemmer
+from nltk.corpus import wordnet
 import nltk
 from num2words import num2words
 from constants import TEST_TEXT_PATH
+from spellchecker import SpellChecker
 
 
 def lemmatize_text(words):
+
     """Given a list of words, return a list of words 
     where each word is ran through the WordNetLemmatizer"""
+
+    #referece: https://gaurav5430.medium.com/using-nltk-for-lemmatizing-sentences-c1bfff963258 
+    def convert_to_wordnet_tag(nltk_tag): 
+        if nltk_tag.startswith('J'): 
+            return wordnet.ADJ
+        elif nltk_tag.startswith("V"): 
+            return wordnet.VERB
+        elif nltk_tag.startswith("N"): 
+            return wordnet.NOUN
+        elif nltk_tag.startswith("R"): 
+            return wordnet.ADV
+        
+        return None
+
+
     tagged_words = nltk.pos_tag(words)
+    tagged_words = map(lambda word_tag: (word_tag[0], convert_to_wordnet_tag(word_tag[1])), tagged_words)
+
+
+
+
     lemma_words = []
     lemmatizer = WordNetLemmatizer()
     for (word, tag) in tagged_words: 
-        lemma_words.append(lemmatizer.lemmatize(word, tag))
+
+        if tag == None: 
+            lemma_words.append(word)
+        else: 
+            lemma_words.append(lemmatizer.lemmatize(word, tag))
 
     return lemma_words
         
@@ -80,20 +107,6 @@ def remove_frequent_words(words, num_to_remove = 10):
     return [word for word in words if word not in most_common_words]
 
 
-
-
-
-#in HuffPost articles, any div with the class ="primary-cli cli cli-text"
-#contains a portion of the article body. 
-def clean_html(html): 
-
-    soup = BeautifulSoup(html, "html.parser")
-    content = soup.find_all("div", 
-                        {"class": "primary-cli cli cli-text"})
-
-    return "".join([child.get_text() for child in content])
-
-
 def num_to_words(text): 
 
     words = tokenize_text(text)
@@ -108,28 +121,39 @@ def num_to_words(text):
 def remove_single_chars(words):
     return [word for word in words if len(word) > 1]
 
-def get_and_clean_text(text, remove_digits = False, num_to_word = True, 
-                            rem_single_chars = True, rem_stop_words = True, 
-                            rem_special_chars = True, lemma = True, 
-                            stem = False, expand = True, 
-                            tokenize = True, lower = True, 
-                            num_freq_words_remove = 0, num_rare_words_remove = 0):
+def fix_spelling(text): 
+    words = tokenize_text(text)
+    checker = SpellChecker() 
+    words = [checker.correction(word) for word in words]
+    return " ".join(words)
+
+
+
+def clean_text(text, remove_digits = False, num_to_word = True, 
+                rem_single_chars = True, rem_stop_words = True, 
+                rem_special_chars = True, lemma = True, 
+                stem = False, expand = True, 
+                tokenize = True, lower = True, 
+                num_freq_words_remove = 0, num_rare_words_remove = 0):
 
 
     if lower:
         text = lower_text(text)
-    
-    if expand_contractions:
+
+    #the contradictions dictionary I borrowed contains corrections
+    #for slang and 'leftover' words, which causes some non-contraction 
+    #words to be incorrectly expanded. So fix the  spelling mistakes. 
+    if expand:
         text = expand_contractions(text)
+        text = fix_spelling(text)
+
 
     if num_to_word: 
-        text = num_to_word(text)
-
-    if expand: 
-        text = expand_contractions(text)
-    
+        text = num_to_words(text)
+        
     if rem_special_chars: 
-        text = remove_special_chars(remove_digits)
+        text = remove_special_chars(text, remove_digits)
+
 
     if tokenize: 
         words = tokenize_text(text)
@@ -137,7 +161,7 @@ def get_and_clean_text(text, remove_digits = False, num_to_word = True,
     if lemma: 
         words = lemmatize_text(words)
 
-    if stem: 
+    if stem and not lemma: 
         words = stem_text(words)
 
     if rem_stop_words: 
@@ -149,17 +173,14 @@ def get_and_clean_text(text, remove_digits = False, num_to_word = True,
     words = remove_frequent_words(words, num_freq_words_remove)
     words = remove_rare_words(words, num_rare_words_remove)
     
-
-
-    
+    return " ".join(words)
 
     
-
-    
-
 if __name__ == "__main__":
     with open(TEST_TEXT_PATH, "r",  encoding='utf8') as file: 
         text = file.read()
-       
+        
+        #print(clean_text(text))
+        print(expand_contractions("Walmart"))
 
 

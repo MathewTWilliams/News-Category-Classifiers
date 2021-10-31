@@ -2,11 +2,26 @@
 #Version: 10.15.2021
 
 
+from bs4 import BeautifulSoup
 from constants import ARTICLE_SET_PATH
 from save_load_json import load_json
-from text_cleaner import clean_html
 from http import HTTPStatus
 import requests
+
+
+#in HuffPost articles, any div with the class ="primary-cli cli cli-text"
+#contains a portion of the article body. 
+def clean_html(html): 
+
+    soup = BeautifulSoup(html, "html.parser")
+    content = soup.find_all("div", 
+                        {"class": "primary-cli cli cli-text"})
+
+    text = " ".join([child.get_text() for child in content])
+
+    #remove any extra newline characters
+    text = text.translate(text.maketrans("\n\t\r", "   "))
+    return text
 
 
 
@@ -44,6 +59,7 @@ def scrape_articles():
         for url in article_list: 
             html = requests.get(url).text
             text = clean_html(html)
+            
 
 
 
