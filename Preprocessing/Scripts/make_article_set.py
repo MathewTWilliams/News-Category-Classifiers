@@ -13,6 +13,10 @@ import time
 
 
 def get_articles_for_category(**kwargs):
+    """ A method used to return a dictionary of our chosen articles from the data set.
+        The key of the dictionary is the name of a category. 
+        The value of the dictionary is a list of dictionaries, where each dictionary
+        contains the headline, link, and description of the article"""
     category = kwargs['category']
     delay = kwargs['delay']
     dataset = kwargs['dataset']
@@ -31,7 +35,7 @@ def get_articles_for_category(**kwargs):
             article_list.append(small_art_obj)
          
         counter += 1
-        print(category+ ":", len(article_list))
+        print(category+ ":", len(article_list), ". Searched:", counter)
         time.sleep(delay)
 
     
@@ -41,10 +45,7 @@ def get_articles_for_category(**kwargs):
 
 
 
-# A Method used to return a dictionary of our chosen articles from the data set.
-# The Key of the dictionary is the name of a category. 
-# The Value of the dictionary is a list of dictionaries, where each dictionary
-# contains the headline, link, and description of the article
+
 
 if __name__ == "__main__": 
 
@@ -53,7 +54,7 @@ if __name__ == "__main__":
 
     dataset = load_json(SORTED_DATA_PATH)
     article_set = {}
-    delay = 0.25
+    delay = 1 
     futures = []
 
 
