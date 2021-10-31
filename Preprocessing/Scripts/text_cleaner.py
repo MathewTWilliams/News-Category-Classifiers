@@ -1,12 +1,11 @@
 #Author: Matt Williams
-#Version: 10/27/2021
+#Version: 10/31/2021
 
 #Reference: https://dataaspirant.com/nlp-text-preprocessing-techniques-implementation-python/#t-1600081660730 
 #Many of the NLP related preprocessing techniques found here come from or are influenced by this webpage. 
 
 
-
-from contractions import contractions_dict
+import contractions
 import re
 from nltk.probability import FreqDist
 from nltk.stem.wordnet import WordNetLemmatizer
@@ -16,6 +15,17 @@ import nltk
 from num2words import num2words
 from constants import TEST_TEXT_PATH
 from spellchecker import SpellChecker
+
+
+#make our subset of the contractions_dict from the contractions package.
+#Only keys with "’" or "'" from the original map will be present.
+contraction_map = {}
+for key, val in contractions.contractions_dict.items():
+    if re.search("’|'", key):
+        key = key.replace("'", "’")
+        contraction_map[key] = val
+    else: 
+        print("Removing key:", key)
 
 
 def lemmatize_text(words):
@@ -63,12 +73,12 @@ def stem_text(words):
 
 
 def expand_contractions(text): 
-    contractions_pattern = re.compile('({})'.format('|'.join(contractions_dict.keys())),
+    contractions_pattern = re.compile('({})'.format('|'.join(contraction_map.keys())),
                                                     flags=re.IGNORECASE|re.DOTALL)
     
     def expand_contraction(contraction):
         match = contraction.group(0)
-        return contractions_dict.get(match)
+        return contraction_map.get(match)
 
     expanded_text = contractions_pattern.sub(expand_contraction, text)
     expanded_text = re.sub("'", "", expanded_text)
@@ -121,15 +131,14 @@ def num_to_words(text):
 def remove_single_chars(words):
     return [word for word in words if len(word) > 1]
 
-def fix_spelling(text): 
-    words = tokenize_text(text)
+def fix_spelling(words): 
     checker = SpellChecker() 
-    words = [checker.correction(word) for word in words]
-    return " ".join(words)
+    return [checker.correction(word) for word in words]
 
 
 
-def clean_text(text, remove_digits = False, num_to_word = True, 
+
+def clean_text(text, remove_digits = True, num_to_word = False, 
                 rem_single_chars = True, rem_stop_words = True, 
                 rem_special_chars = True, lemma = True, 
                 stem = False, expand = True, 
@@ -145,15 +154,12 @@ def clean_text(text, remove_digits = False, num_to_word = True,
     #words to be incorrectly expanded. So fix the  spelling mistakes. 
     if expand:
         text = expand_contractions(text)
-        text = fix_spelling(text)
 
-
-    if num_to_word: 
+    if num_to_word and not remove_digits: 
         text = num_to_words(text)
         
     if rem_special_chars: 
         text = remove_special_chars(text, remove_digits)
-
 
     if tokenize: 
         words = tokenize_text(text)
@@ -163,6 +169,9 @@ def clean_text(text, remove_digits = False, num_to_word = True,
 
     if stem and not lemma: 
         words = stem_text(words)
+
+    words = fix_spelling(words)
+
 
     if rem_stop_words: 
         words = remove_stop_words(words)
@@ -180,7 +189,8 @@ if __name__ == "__main__":
     with open(TEST_TEXT_PATH, "r",  encoding='utf8') as file: 
         text = file.read()
         
-        #print(clean_text(text))
-        print(expand_contractions("Walmart"))
+        print(clean_text(text))
+    
+
 
 
