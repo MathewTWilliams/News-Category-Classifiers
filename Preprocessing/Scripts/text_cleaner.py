@@ -17,15 +17,6 @@ from constants import TEST_TEXT_PATH
 from spellchecker import SpellChecker
 
 
-#make our subset of the contractions_dict from the contractions package.
-#Only keys with "’" or "'" from the original map will be present.
-contraction_map = {}
-for key, val in contractions.contractions_dict.items():
-    if re.search("’|'", key):
-        key = key.replace("'", "’")
-        contraction_map[key] = val
-    else: 
-        print("Removing key:", key)
 
 
 def lemmatize_text(words):
@@ -72,7 +63,11 @@ def stem_text(words):
     return [stemmer.stem(word) for word in words]
 
 
-def expand_contractions(text): 
+def expand_contractions(text, contraction_map): 
+
+    
+
+
     contractions_pattern = re.compile('({})'.format('|'.join(contraction_map.keys())),
                                                     flags=re.IGNORECASE|re.DOTALL)
     
@@ -144,16 +139,24 @@ def clean_text(text, remove_digits = True, num_to_word = False,
                 stem = False, expand = True, 
                 tokenize = True, lower = True, 
                 num_freq_words_remove = 0, num_rare_words_remove = 0):
+    """The default settings currenlty are the preferred settings."""
+
+    #make our subset of the contractions_dict from the contractions package.
+    #Only keys with "’" or "'" from the original map will be present.
+    contraction_map = {}
+    for key, val in contractions.contractions_dict.items():
+        if re.search("’|'", key):
+            key = key.replace("'", "’")
+            contraction_map[key] = val
+
 
 
     if lower:
         text = lower_text(text)
 
-    #the contradictions dictionary I borrowed contains corrections
-    #for slang and 'leftover' words, which causes some non-contraction 
-    #words to be incorrectly expanded. So fix the  spelling mistakes. 
+
     if expand:
-        text = expand_contractions(text)
+        text = expand_contractions(text, contraction_map)
 
     if num_to_word and not remove_digits: 
         text = num_to_words(text)

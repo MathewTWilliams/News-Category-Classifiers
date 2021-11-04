@@ -35,11 +35,13 @@ def load_json(path):
 
 def save_json(json_obj, path):
     """Given a json object and a file path, store the json object""" 
-    if os.path.exists(path): 
-        os.remove(path)
+
+    if path.split('.')[-1] == "json":
+        if os.path.exists(path): 
+            os.remove(path)
 
 
-    with open(path, "w+") as file: 
-        json.dump(json_obj, file, indent=1)
+        with open(path, "w+") as file: 
+            json.dump(json_obj, file, indent=1)
     
     

@@ -3,10 +3,16 @@
 
 
 from bs4 import BeautifulSoup
+from requests.api import request
+from constants import CATEGORIES, SCRAPPED_TEXT_PATH
+from save_load_json import save_json
 from constants import ARTICLE_SET_PATH
 from save_load_json import load_json
 from http import HTTPStatus
 import requests
+from concurrent.futures import ThreadPoolExecutor
+import time
+
 
 
 #in HuffPost articles, any div with the class ="primary-cli cli cli-text"
@@ -39,32 +45,59 @@ def check_if_page_exists(url):
     except: 
         return False
 
+
+def get_text_at_link(link): 
+    return clean_html(requests.get(link).text)
+
+def scrape_category_list(**kwargs):
     
-def test_page_exists():
-    bad_url = "https://www.huffingtonpost.com/entry/kaiser-carlile-dead_us_55bf5973e4b06363d5a2988e"
-    good_url = "https://www.huffpost.com/entry/donald-trump-mcondalds-tonight-show_n_5b093561e4b0fdb2aa53daba"
-    exists_redirect_url = "https://www.huffingtonpost.com/entry/thanksgiving-space-nasa-atronauts-iss-video_us_5baebc8ee4b014374e2eb14e"
+    article_objects = kwargs["article_objects"]
+    delay = kwargs["delay"]
+    category = kwargs["category"]
+    scraped_text_list = []
 
-    print(check_if_page_exists(bad_url))
-    print(check_if_page_exists(good_url))
-    print(check_if_page_exists(exists_redirect_url))
+    
+    for art_obj in article_objects: 
+        headline = art_obj['headline']
+        link = art_obj['link']
+        description = art_obj['short_description']
+        text = get_text_at_link(link)
+        text = " ".join([text, headline, description])
+        scraped_text_list.append(text)
+        print(category, " articles scrapped:", len(scraped_text_list))
+        time.sleep(delay)
+
+    return category, scraped_text_list
 
 
-
-
-def scrape_articles():
+def scrape_articles(): 
     article_set = load_json(ARTICLE_SET_PATH)
+    delay = 1.5
+    scraped_text = {}
+    futures = []
 
-    for category, article_list in article_set.items(): 
-        for url in article_list: 
-            html = requests.get(url).text
-            text = clean_html(html)
-            
+    with ThreadPoolExecutor(max_workers=len(CATEGORIES)) as executor: 
 
+        for category in CATEGORIES: 
+            scraped_text[category] = []
+            article_objects = article_set[category]
+            future = executor.submit(scrape_category_list, 
+                                    category = category, 
+                                    article_objects = article_objects, 
+                                    delay = delay)
+            futures.append(future)
 
+    for future in futures: 
+        category, scrapped_text_list = future.result()
+        scraped_text[category] = scrapped_text_list
+
+    save_json(scraped_text, SCRAPPED_TEXT_PATH)
 
 if __name__ == "__main__":
-    test_page_exists()
+    scrape_articles()
+
+    
+        
 
 
 

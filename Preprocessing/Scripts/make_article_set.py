@@ -44,11 +44,7 @@ def get_articles_for_category(**kwargs):
 
 
 
-
-
-
-if __name__ == "__main__": 
-
+def make_article_set(): 
     if not os.path.exists(SORTED_DATA_PATH): 
         sort_dataset()
 
@@ -76,6 +72,12 @@ if __name__ == "__main__":
 
 
     save_json(article_set, ARTICLE_SET_PATH)
+
+
+
+if __name__ == "__main__": 
+
+    make_article_set()
             
 
 
