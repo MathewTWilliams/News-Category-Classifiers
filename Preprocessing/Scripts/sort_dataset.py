@@ -1,3 +1,6 @@
+#Author: Matt Williams
+#Version: 11/7/2021
+
 from constants import *
 from save_load_json import load_json,save_json
 import json
@@ -5,8 +8,9 @@ import json
 
 
 def sort_dataset(): 
-    """ Take our original dataset and sort the articles using a dictionary.
-        Then save that to a file. Done to improve preprocessing speed. """
+    """The original dataset isn't sorted in any manner. This method using a dictionary to sort the articles
+        in order to increase other preprocessing tasks. Each key in the dictionary is a category and each
+        value is a list of article objects from the original dataset """
     dataset_lines = load_json(DATA_SET_PATH)
     sorted_dataset = {}
 

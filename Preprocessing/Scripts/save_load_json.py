@@ -1,6 +1,6 @@
 
 #Author: Matt Williams
-#Version: 10/19/2021
+#Version: 11/7/2021
 import json
 import os
 from constants import DATA_SET_PATH
@@ -34,7 +34,7 @@ def load_json(path):
 
 
 def save_json(json_obj, path):
-    """Given a json object and a file path, store the json object""" 
+    """Given a json object and a file path, store the json object at the given file path""" 
 
     if path.split('.')[-1] == "json":
         if os.path.exists(path): 

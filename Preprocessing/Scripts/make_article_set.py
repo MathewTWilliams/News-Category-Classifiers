@@ -1,11 +1,10 @@
 #Author: Matt Williams
-#Version: 10/21/2021
+#Version: 11/7/2021
 
 
 from sort_dataset import sort_dataset
 from web_scraper import check_if_page_exists
 from constants import * 
-import os
 from save_load_json import load_json,save_json
 from concurrent.futures import ThreadPoolExecutor
 import time
@@ -13,10 +12,12 @@ import time
 
 
 def get_articles_for_category(**kwargs):
-    """ A method used to return a dictionary of our chosen articles from the data set.
-        The key of the dictionary is the name of a category. 
-        The value of the dictionary is a list of dictionaries, where each dictionary
-        contains the headline, link, and description of the article"""
+    """ Given a list of keyword arguments which should contain a category, time delay, and 
+        a list of articles for the given category, return the given category and a sub set of the list
+        of articles. The dataset returned is a list of json objects where each object contains the
+        link, headline, and description of the article. Each article link is checked via a head
+        request to make sure the article is still accessible. If it is not, that article
+        is not added to the final article set to be returned."""
     category = kwargs['category']
     delay = kwargs['delay']
     dataset = kwargs['dataset']
@@ -44,9 +45,10 @@ def get_articles_for_category(**kwargs):
 
 
 
-def make_article_set(): 
-    if not os.path.exists(SORTED_DATA_PATH): 
-        sort_dataset()
+def make_article_set():
+    """The main method for this script. Load in our Sorted Data set. Then using
+        multi-threading and the method above to make our article sets for each category.
+        Then save the article to a json file.  """ 
 
     dataset = load_json(SORTED_DATA_PATH)
     article_set = {}
@@ -55,7 +57,7 @@ def make_article_set():
 
 
     with ThreadPoolExecutor(max_workers= len(CATEGORIES)) as executor: 
-        #start our threads
+        
         for category in CATEGORIES:
             article_set[category] = []
             article_list = dataset[category]
@@ -76,7 +78,6 @@ def make_article_set():
 
 
 if __name__ == "__main__": 
-
     make_article_set()
             
 

@@ -1,12 +1,13 @@
 #Author: Matt Williams
-#Version: 10/19/2021
+#Version: 11/7/2021
 
 from pathlib import PurePath, Path
 
-# A Simply Python File that contains constant values that are important
-#to the project. 
+# A Simple Python File that contains constant values that are important
+# to the Preprocessing Aspect of the Project. 
 
 #Dataset: https://www.kaggle.com/rmisra/news-category-dataset 
+
 #This file contains the original data set. 
 DATA_SET_PATH = PurePath.joinpath(Path(__file__).resolve().parent.parent,
                    "Data/News_Category_Dataset_v2.json").as_posix()
@@ -24,23 +25,25 @@ ARTICLE_SET_PATH = PurePath.joinpath(Path(__file__).resolve().parent.parent,
 TEST_TEXT_PATH = PurePath.joinpath(Path(__file__).resolve().parent.parent, 
                     "Data/test_text.txt").as_posix()
 
-#This file contains a category and a list of strings, where each string is 
+#This file contains a dictionary where each key category and a list of strings, where each string is 
 #is the scrapped text of an article. 
 SCRAPED_TEXT_PATH = PurePath.joinpath(Path(__file__).resolve().parent.parent, 
                     "Data/Scraped_Text.json").as_posix()      
 
-# This file contains the cleaned text from the Scrapped Text file
+# This file contains the cleaned text from the Scrapped Text file.
+# Contains a dictionary where each key is a category and each value is a 3d list: 
+# dict[category][i][j][k] - kth word in jth sentence in ith article
 CLEANED_TEXT_PATH = PurePath.joinpath(Path(__file__).resolve().parent.parent,
-                    "Data/Cleaned_Text.json")              
+                    "Data/Cleaned_Text.json").as_posix()              
 
 
 
-
+# List of categories to be used from the original dataset. 
 CATEGORIES = ["MEDIA", "WEIRD NEWS", "GREEN", "WORLDPOST",
                 "RELIGION", "STYLE", "SCIENCE", "WORLD NEWS",
                 "TASTE", "TECH"]
 
 
-VALID_SET_PERC = 10
-TEST_SET_PERC = 10
-TRAIN_SET_PERC = 80
+VALID_SET_PERC = 0.1
+TEST_SET_PERC = 0.1
+TRAIN_SET_PERC = 0.8
