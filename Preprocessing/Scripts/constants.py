@@ -47,3 +47,11 @@ CATEGORIES = ["MEDIA", "WEIRD NEWS", "GREEN", "WORLDPOST",
 VALID_SET_PERC = 0.1
 TEST_SET_PERC = 0.1
 TRAIN_SET_PERC = 0.8
+
+
+
+W2V_PATH_PREFIX = PurePath.joinpath(Path(__file__).resolve().parent.parent, "Models/")
+
+
+def get_w2v_path(name): 
+    return PurePath.joinpath(W2V_PATH_PREFIX, name).as_posix()
