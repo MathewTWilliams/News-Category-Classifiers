@@ -37,6 +37,16 @@ CLEANED_TEXT_PATH = PurePath.joinpath(Path(__file__).resolve().parent.parent,
                     "Data/Cleaned_Text.json").as_posix()              
 
 
+TRAIN_SET_PATH = PurePath.joinpath(Path(__file__).resolve().parent.parent, 
+                                    "Sets/training_set.json").as_posix()
+
+VALID_SET_PATH = PurePath.joinpath(Path(__file__).resolve().parent.parent, 
+                                    "Sets/validation_set.json").as_posix()
+
+
+TEST_SET_PATH = PurePath.joinpath(Path(__file__).resolve().parent.parent, 
+                                    "Sets/test_set.json").as_posix()
+
 
 # List of categories to be used from the original dataset. 
 CATEGORIES = ["MEDIA", "WEIRD NEWS", "GREEN", "WORLDPOST",
@@ -47,11 +57,11 @@ CATEGORIES = ["MEDIA", "WEIRD NEWS", "GREEN", "WORLDPOST",
 VALID_SET_PERC = 0.1
 TEST_SET_PERC = 0.1
 TRAIN_SET_PERC = 0.8
+TTS_RAND_STATE = 42
 
 
-
-W2V_PATH_PREFIX = PurePath.joinpath(Path(__file__).resolve().parent.parent, "Models/")
+W2V_DIR_PATH = PurePath.joinpath(Path(__file__).resolve().parent.parent, "Models/")
 
 
 def get_w2v_path(name): 
-    return PurePath.joinpath(W2V_PATH_PREFIX, name).as_posix()
+    return PurePath.joinpath(W2V_DIR_PATH, name).as_posix()
