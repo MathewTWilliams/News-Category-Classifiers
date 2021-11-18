@@ -114,7 +114,7 @@ def remove_special_chars(sentences, remove_digits = False):
     """Given a list of sentences, remove all special characters from those sentences and return the
         updated sentences. Method gives the option to remove digits."""
     # used to isolate special characters that might be next to a character.
-    isolate_pattern = re.compile(r'({.(-)!})')
+    isolate_pattern = re.compile(r'([{.(-)!}]|-)')
     special_char_pattern = re.compile(r'[^0-9a-zA-Z\s]+|\[|\]' if not remove_digits else r'[^-a-zA-Z\s]+|\[|\]')
 
     updated_sents = []

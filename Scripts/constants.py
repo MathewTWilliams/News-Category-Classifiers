@@ -60,8 +60,13 @@ TRAIN_SET_PERC = 0.8
 TTS_RAND_STATE = 42
 
 
-W2V_DIR_PATH = PurePath.joinpath(Path(__file__).resolve().parent.parent, "Models/")
+MODEL_DIR_PATH = PurePath.joinpath(Path(__file__).resolve().parent.parent, "Models/")
 
 
 def get_w2v_path(name): 
-    return PurePath.joinpath(W2V_DIR_PATH, name).as_posix()
+    return PurePath.joinpath(MODEL_DIR_PATH, name).as_posix()
+
+ARTICLE_VEC_DIR_PATH = PurePath.joinpath(Path(__file__).resolve().parent.parent, "Article_Vectors/")
+
+def get_article_vec_path(name):
+    return PurePath.joinpath(ARTICLE_VEC_DIR_PATH, name).as_posix()
