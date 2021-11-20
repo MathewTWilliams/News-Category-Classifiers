@@ -25,8 +25,8 @@ ARTICLE_SET_PATH = PurePath.joinpath(Path(__file__).resolve().parent.parent,
 TEST_TEXT_PATH = PurePath.joinpath(Path(__file__).resolve().parent.parent, 
                     "Data/test_text.txt").as_posix()
 
-#This file contains a dictionary where each key category and a list of strings, where each string is 
-#is the scrapped text of an article. 
+#This file contains a dictionary where each key is a category and each value a list of strings, 
+# where each string is the scrapped text of an article. 
 SCRAPED_TEXT_PATH = PurePath.joinpath(Path(__file__).resolve().parent.parent, 
                     "Data/Scraped_Text.json").as_posix()      
 
@@ -35,18 +35,6 @@ SCRAPED_TEXT_PATH = PurePath.joinpath(Path(__file__).resolve().parent.parent,
 # dict[category][i][j][k] - kth word in jth sentence in ith article
 CLEANED_TEXT_PATH = PurePath.joinpath(Path(__file__).resolve().parent.parent,
                     "Data/Cleaned_Text.json").as_posix()              
-
-
-TRAIN_SET_PATH = PurePath.joinpath(Path(__file__).resolve().parent.parent, 
-                                    "Sets/training_set.json").as_posix()
-
-VALID_SET_PATH = PurePath.joinpath(Path(__file__).resolve().parent.parent, 
-                                    "Sets/validation_set.json").as_posix()
-
-
-TEST_SET_PATH = PurePath.joinpath(Path(__file__).resolve().parent.parent, 
-                                    "Sets/test_set.json").as_posix()
-
 
 # List of categories to be used from the original dataset. 
 CATEGORIES = ["MEDIA", "WEIRD NEWS", "GREEN", "WORLDPOST",
@@ -66,7 +54,8 @@ MODEL_DIR_PATH = PurePath.joinpath(Path(__file__).resolve().parent.parent, "Mode
 def get_w2v_path(name): 
     return PurePath.joinpath(MODEL_DIR_PATH, name).as_posix()
 
-ARTICLE_VEC_DIR_PATH = PurePath.joinpath(Path(__file__).resolve().parent.parent, "Article_Vectors/")
 
-def get_article_vec_path(name):
-    return PurePath.joinpath(ARTICLE_VEC_DIR_PATH, name).as_posix()
+ARTICLE_VECS_DIR_PATH = PurePath.joinpath(Path(__file__).resolve().parent.parent, "Article_Vectors/")
+
+def get_article_vecs_path(name):
+    return PurePath.joinpath(ARTICLE_VECS_DIR_PATH, name).as_posix()
