@@ -45,4 +45,18 @@ pip install -r /path/to/requirements.txt
 7. Move the downloaded dataset (keeping the same name) into the newly made 'Data Folder'
 
 # Usage
-- 
+## Scripts 
+Here is a general overview of each script contained in the project. Each file contains comments that give more information on each script. 
+
+- sort_dataset.py: sort our dataset based on categories and saves to a JSON file. 
+
+- make_article_set.py: form our subset of the dataset to be used for the project. Grabs articles of the selected categories and makes sure the articles are still accessible. Set is saved to a JSON file. 
+
+- web_scraper.py: Scrape the article text for each article that was selected by 'make_article_set.py'. Scraped text is saved to a JSON file. 
+
+- clean_article_texts.py: Take all of the scrapped text and clean it using our 'text_cleaner.py' script.
+
+- download_vec_models.py: Download the selected pre-trained Word Vector Models and save them. 
+
+- get_vec_models.py: script used to access the downloaded Word Vector Models. 
+
