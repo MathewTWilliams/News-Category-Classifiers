@@ -54,9 +54,42 @@ Here is a general overview of each script contained in the project. Each file co
 
 - web_scraper.py: Scrape the article text for each article that was selected by 'make_article_set.py'. Scraped text is saved to a JSON file. 
 
+- text_cleaner.py: contains our methods to clean the text for the articles. Returns a a 2d-list where each row is a sentence and each column is a word in a sentence. 
+
 - clean_article_texts.py: Take all of the scrapped text and clean it using our 'text_cleaner.py' script.
 
 - download_vec_models.py: Download the selected pre-trained Word Vector Models and save them. 
 
 - get_vec_models.py: script used to access the downloaded Word Vector Models. 
+
+- make_article_vecs.py: take our cleaned text for each article and calculate an embedding for each article. After doing so for each article, make our training and test data set splits. 
+
+- get_article_vectors.py: Gives access to our article vectors. Can obtain either the training data set, test data, or both (combined). 
+
+
+## Utility Scripts
+- constant.py: contains constant values important to the project. Mostly contains file path related items. 
+
+- save_load_json.py: contains methods to load and save json files when not using Pandas related items. 
+
+- re-scrape.py: The full explanation of this script is found at the top of the script itself. Needed to rescrape certain urls that weren't successfully scraped from web_scraper.py due to overloading the HuffPost server with too many requests. 
+
+- classifier_metrics.py: calculates and saves a classification report given true labels, predictions, and the vector model used. 
+
+- cluster_metrics.py: calculates and saves a report of import clustering metrics given clustering results and true labels. Since true labels are known, a classification report is also done. 
+
+- visualize_article_vecs.py: used to visualizing plotting the article vectors and the results of the clustering algorithms. 
+
+## Sci-kit Learn related scripts:
+- Contains the implementations of the different ML related algorithms used. 
+  - k-means.py
+  - hierarchical_clustering.py
+  - db-scan.py
+  - spectral_clustering.py
+  - random_forest.py
+  - ml_perceptron.py
+  - naive_bayes.py
+  - knn.py
+  - svm.py
+  - logistic_regression.py
 
