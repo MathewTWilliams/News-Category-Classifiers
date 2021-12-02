@@ -93,3 +93,10 @@ Here is a general overview of each script contained in the project. Each file co
   - svm.py
   - logistic_regression.py
 
+# License
+Distributed under the MIT License. See ```LICENSE.txt``` for more information. 
+
+# Contact
+- Mathew Williams
+- email: williams.mathew.t@gmail.com
+- Project Link: https://github.com/MathewTWilliams/News-Category-Classifiers 
