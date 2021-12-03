@@ -1,5 +1,5 @@
 #Author: Matt Williams
-#Version: 11/21/2021
+#Version: 12/02/2021
 from constants import ARTICLE_VECS_DIR_PATH, get_article_vecs_path
 import os 
 import pandas as pd
@@ -25,15 +25,26 @@ def get_article_vectors(model_name, set):
 
 
 def get_training_info(model_name):
-    '''Given a model name, this method returns the training data and training labels as separate values.'''
+    '''Given a model name, this method returns the training data and training labels as a tuple.'''
     return get_article_vectors(model_name, set = "Train")
 
 def get_test_info(model_name):
-    '''Given a model name, this method returns the test data and test labels as separate values.'''
+    '''Given a model name, this method returns the test data and test labels as as a tuple.'''
     return get_article_vectors(model_name, set = "Test")
 
-    
+def get_combined_train_test_info(model_name): 
+    '''Given a vector model name, this method combines the test and training data/labels as a single 
+    DataFrame/Data Series respectively.'''
+    training_data, training_labels = get_training_info(model_name) 
+    test_data, test_labels = get_test_info(model_name)
+
+    return pd.concat([training_data, test_data]), pd.concat([training_labels, test_labels])
+
+
+
+
 if __name__ == "__main__":
+    #testing for nan values that were throwing errors
     data, labels = get_training_info("word2vec")
 
     r_index = np.isnan(data)

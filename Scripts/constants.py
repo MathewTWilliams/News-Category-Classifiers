@@ -1,8 +1,10 @@
 #Author: Matt Williams
-#Version: 11/21/2021
+#Version: 12/02/2021
 
 from pathlib import PurePath, Path
 import os
+import pandas as pd
+import numpy as np
 
 
 # A Simple Python File that contains constant values and methods important to the project. 
@@ -47,6 +49,7 @@ CATEGORIES = ["MEDIA", "WEIRD NEWS", "GREEN", "WORLDPOST",
 TEST_SET_PERC = 0.1
 TRAIN_SET_PERC = 0.9
 RAND_STATE = 42
+K_FOLDS = 10
 
 #File Path to the directory that contains our Models related to generating word embeddings. 
 MODEL_DIR_PATH = PurePath.joinpath(Path(__file__).resolve().parent.parent, "Models/")
@@ -54,6 +57,8 @@ MODEL_DIR_PATH = PurePath.joinpath(Path(__file__).resolve().parent.parent, "Mode
 
 def get_model_path(name): 
     '''Given the name of a file for a vector model, return the full file path for that file to be stored at.'''
+    if not os.path.exists(MODEL_DIR_PATH):
+        os.mkdir(MODEL_DIR_PATH)
     return PurePath.joinpath(MODEL_DIR_PATH, name).as_posix()
 
 
@@ -62,22 +67,66 @@ ARTICLE_VECS_DIR_PATH = PurePath.joinpath(Path(__file__).resolve().parent.parent
 
 def get_article_vecs_path(subfolder, name):
     '''Given subfolder(Train or Test) and the name of a file, return the full file path for that file to be stored at'''
+    if not os.path.exists(ARTICLE_VECS_DIR_PATH):
+        os.mkdir(ARTICLE_VECS_DIR_PATH)
     return PurePath.joinpath(ARTICLE_VECS_DIR_PATH, subfolder).joinpath(name).as_posix()
 
-#File Path to the directory where classification or clustering results are to bed stored.
+#File Path to the directory where classification or clustering results are to be stored.
 RESULTS_DIR_PATH = PurePath.joinpath(Path(__file__).resolve().parent.parent, 
                                                 "Results/")
 
-def get_result_path_with_name(subfolder): 
-    '''Given the name of a subfolder(Name of the Classification/Clustering algorithm), generate a name 
-        for the file results and return the full file path for the file to be stored at. '''
+def make_result_path(subfolder, vec_model): 
+    '''Given the name of a subfolder(Name of the Classification/Clustering algorithm) and the name
+        of the vector model, generate a name for the file and return the full file path for the file to be stored at.'''
+
+    if not os.path.exists(RESULTS_DIR_PATH):
+        os.mkdir(RESULTS_DIR_PATH)
+
     updated_path = PurePath.joinpath(RESULTS_DIR_PATH, subfolder)
 
     if not os.path.exists(updated_path): 
         os.mkdir(updated_path)
 
-    file_name = subfolder + "_results_" + str(len(os.listdir(updated_path))) + ".json"
+    file_name = vec_model + "_results_" + str(len(os.listdir(updated_path)) + 1) + ".json"
+    return updated_path.joinpath(file_name).as_posix()
+
+def get_result_path(subfolder, file_name): 
+    '''Get the full file path for the result with the given filename and the given subfolder.'''
+    return PurePath.joinpath(RESULTS_DIR_PATH, subfolder).joinpath(file_name).as_posix()
+
+#File Path to the directory where cross validation results are to be stored.
+CV_RESULTS_DIR_PATH = PurePath.joinpath(Path(__file__).resolve().parent.parent, 
+                                                "CV_Results/")
+
+def make_cv_result_path(subfolder, vec_model): 
+    '''Given the name of a subfolder(Name of the Classification/Clustering algorithm), generate a name 
+        for the file and return the full file path for the file to be stored at. '''
+    if not os.path.exists(CV_RESULTS_DIR_PATH): 
+        os.mkdir(CV_RESULTS_DIR_PATH)
+
+    updated_path = PurePath.joinpath(CV_RESULTS_DIR_PATH, subfolder)
+
+    if not os.path.exists(updated_path): 
+        os.mkdir(updated_path)
+
+    file_name = vec_model + "_cv_results_" + str(len(os.listdir(updated_path)) + 1) + ".json"
     return updated_path.joinpath(file_name).as_posix()
 
 
+def get_cv_result_path(subfolder, file_name): 
+    '''Get the full file path for the cross validation result with the given filename in the given subfolder.'''
+    return PurePath.joinpath(CV_RESULTS_DIR_PATH, subfolder).joinpath(file_name).as_posix()
 
+def convert_categories_to_numbers(labels):
+    '''given a pandas series that contains the different categories, convert those 
+    categories into integers. Integers represent location in CATEGORIES list.'''
+
+    if isinstance(labels, pd.Series):
+        for i,category in enumerate(CATEGORIES):
+            labels = labels.replace(category, i)
+    
+    elif isinstance(labels, np.ndarray):
+        for i,category in enumerate(CATEGORIES): 
+            labels[labels == category] = i
+
+    return labels

@@ -1,10 +1,13 @@
+#Author: Matt Williams
+#Version: 11/27/2021
+
+#Reference: https://www.kaggle.com/ananyabioinfo/text-classification-using-word2vec
 import pandas as pd
-from save_load_json import load_json
 from constants import *
-from multiprocessing import Pool
 from get_vec_models import *
 from sklearn.model_selection import train_test_split
 import os
+from save_load_json import load_json
 
 
 def make_article_vecs(category, article_list, model_wv, model_num, model_name): 
@@ -96,23 +99,23 @@ def combine_categroy_article_vecs(model_name):
     test_combined_df.to_json(get_article_vecs_path("Test", file_name))
 
 if __name__ == "__main__": 
-    #train_dict = load_json(CLEANED_TEXT_PATH)
+    train_dict = load_json(CLEANED_TEXT_PATH)
 
     #this is done so all 3 models aren't loaded into memory at once
-    #name, model_wv = get_w2v_model()
-    #for category in CATEGORIES: 
-    #    make_article_vecs(category, train_dict[category], model_wv, 1, name)
+    name, model_wv = get_w2v_model()
+    for category in CATEGORIES: 
+        make_article_vecs(category, train_dict[category], model_wv, 1, name)
 
-    #name, model_wv = get_fasttext_model()
-    #for category in CATEGORIES: 
-    #    make_article_vecs(category, train_dict[category], model_wv, 2, name)
+    name, model_wv = get_fasttext_model()
+    for category in CATEGORIES: 
+        make_article_vecs(category, train_dict[category], model_wv, 2, name)
 
-    #name, model_wv = get_glove_model()
-    #for category in CATEGORIES: 
-    #   make_article_vecs(category, train_dict[category], model_wv, 3, name)
+    name, model_wv = get_glove_model()
+    for category in CATEGORIES: 
+       make_article_vecs(category, train_dict[category], model_wv, 3, name)
 
     fill_article_nan_values("Train", "GREEN")
-    for name in get_model_names(): 
+    for name in get_vec_model_names(): 
         combine_categroy_article_vecs(name)
         
 

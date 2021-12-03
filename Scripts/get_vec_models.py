@@ -1,5 +1,5 @@
 #Author: Matt Williams
-#Version: 11/21/2021
+#Version: 12/02/2021
 
 import os
 from gensim.models import KeyedVectors
@@ -40,7 +40,7 @@ def get_glove_model():
     '''Returns the Glove Model's WordVectors'''
     return get_vec_model("glove.model")
 
-def get_model_names(): 
+def get_vec_model_names(): 
     '''Returns a list of names of the models used in this project, without the file extention.'''
     return ["word2vec", "fasttext", "glove"]
 

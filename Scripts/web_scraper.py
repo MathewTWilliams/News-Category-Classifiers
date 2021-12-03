@@ -3,7 +3,6 @@
 
 
 from bs4 import BeautifulSoup
-from requests.api import request
 from save_load_json import save_json, load_json
 from constants import ARTICLE_SET_PATH, CATEGORIES, SCRAPED_TEXT_PATH
 from http import HTTPStatus
