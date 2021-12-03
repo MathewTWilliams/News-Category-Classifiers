@@ -3,8 +3,7 @@
 from sklearn.cluster import KMeans
 from get_article_vectors import get_combined_train_test_info
 from constants import CATEGORIES, RAND_STATE, convert_categories_to_numbers
-from clustering_metrics import calculate_cluster_metrics
-from classifier_metrics import find_best_result
+from clustering_metrics import calculate_cluster_metrics, find_best_result
 from visualize_article_vecs import visualize_article_vecs
 import pandas as pd
 
@@ -39,11 +38,10 @@ def run_k_means(vec_model_name, n_init = 10, tol = 1e-4):
 
 
 if __name__ == "__main__": 
-    #uncommented lines had best accuracy
+    #uncommented ones have best silhouette score
     
     #default settings
-    w2v_preds = run_k_means("word2vec") 
-    visualize_article_vecs("word2vec", 2, w2v_preds)
+    #run_k_means("word2vec") 
     #run_k_means("fasttext")
     #run_k_means("glove")
 
@@ -56,34 +54,45 @@ if __name__ == "__main__":
     #run_k_means("glove", tol = 1e-5)
 
     #run_k_means("word2vec", n_init = 5)
-    ft_preds = run_k_means("fasttext", n_init = 5)
-    visualize_article_vecs("fasttext", 2, ft_preds)
+    #run_k_means("fasttext", n_init = 5)
     #run_k_means("glove", n_init = 5)
 
     #run_k_means("word2vec", n_init = 15)
     #run_k_means("fasttext", n_init = 15)
-    glv_preds = run_k_means("glove", n_init = 15)
-    visualize_article_vecs("glove", 2, glv_preds)
+    #run_k_means("glove", n_init = 15)
 
 
     #run_k_means("word2vec", tol = 1e-3, n_init = 5)
     #run_k_means("fasttext", tol = 1e-3, n_init = 5)
-    #run_k_means("glove", tol = 1e-3, n_init = 5)
+    glv_preds = run_k_means("glove", tol = 1e-3, n_init = 5)
+    visualize_article_vecs("glove", 2, glv_preds)
 
     #run_k_means("word2vec", tol = 1e-5, n_init = 5)
     #run_k_means("fasttext", tol = 1e-5, n_init = 5)
     #run_k_means("glove", tol = 1e-5, n_init = 5)
 
-    #run_k_means("word2vec", tol = 1e-3, n_init = 15)
+    w2v_preds = run_k_means("word2vec", tol = 1e-3, n_init = 15)
+    visualize_article_vecs("word2vec", 2, w2v_preds)
     #run_k_means("fasttext", tol = 1e-3, n_init = 15)
     #run_k_means("glove", tol = 1e-3, n_init = 15)
 
     #run_k_means("word2vec", tol = 1e-5, n_init = 15)
-    #run_k_means("fasttext", tol = 1e-5, n_init = 15)
+    ft_preds = run_k_means("fasttext", tol = 1e-5, n_init = 15)
+    visualize_article_vecs("fasttext",2,ft_preds)
     #run_k_means("glove", tol = 1e-5, n_init = 15)
 
-    
 
-    print("Word2Vec:",find_best_result("K_Means", "word2vec", "accuracy"))
-    print("FastText:", find_best_result("K_Means", "fasttext", "accuracy"))
-    print("Glove:", find_best_result("K_Means", "glove", "accuracy"))
+    #file, result = find_best_result("K_Means", "word2vec", "Silhouette_Score")
+    #print(file, "Silhouette_Score:", result)
+    #file, result = find_best_result("K_Means", "fasttext", "Silhouette_Score")
+    #print(file, "Silhouette_Score:", result)
+    #file, result = find_best_result("K_Means", "glove", "Silhouette_Score")
+    #print(file, "Silhouette_Score:", result)
+
+    #file, result = find_best_result("K_Means", "word2vec", "NMI")
+    #print(file, "NMI:", result)
+    #file, result = find_best_result("K_Means", "fasttext", "NMI")
+    #print(file, "NMI:", result)
+    #file, result = find_best_result("K_Means", "glove", "NMI")
+    #print(file, "NMI:", result)
+

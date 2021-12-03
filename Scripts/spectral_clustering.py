@@ -2,11 +2,10 @@
 #Version: 12/02/2021
 from sklearn.cluster import SpectralClustering
 from get_article_vectors import get_combined_train_test_info
-from clustering_metrics import calculate_cluster_metrics
+from clustering_metrics import calculate_cluster_metrics, find_best_result
 from constants import CATEGORIES, RAND_STATE, convert_categories_to_numbers
 import pandas as pd
 from visualize_article_vecs import visualize_article_vecs
-from classifier_metrics import find_best_result
 
 
 
@@ -38,8 +37,10 @@ def run_spectral_clustering(vec_model_name, affinity = "rbf"):
 
 if __name__ == "__main__": 
 
+    #uncommented ones have best silhouette score
     #run_spectral_clustering("word2vec")
-    #run_spectral_clustering("fasttext")
+    ft_preds = run_spectral_clustering("fasttext")
+    visualize_article_vecs("fasttext",2,ft_preds)
     #run_spectral_clustering("glove")
 
     #run_spectral_clustering("word2vec", affinity='nearest_neighbors')
@@ -47,20 +48,20 @@ if __name__ == "__main__":
     #run_spectral_clustering("glove", affinity='nearest_neighbors')
 
     #run_spectral_clustering("word2vec", affinity='linear')
-    ft_preds = run_spectral_clustering("fasttext", affinity='linear')
-    visualize_article_vecs('fasttext', 2, ft_preds)
+    #run_spectral_clustering("fasttext", affinity='linear')
     #run_spectral_clustering("glove", affinity='linear')
 
-    w2v_preds = run_spectral_clustering("word2vec", affinity='poly')
-    visualize_article_vecs("word2vec", 2, w2v_preds)
+    #run_spectral_clustering("word2vec", affinity='poly')
     #run_spectral_clustering("fasttext", affinity='poly')
-    #run_spectral_clustering("glove", affinity='poly')
+    glv_preds = run_spectral_clustering("glove", affinity='poly')
+    visualize_article_vecs("glove",2,glv_preds)
 
     #run_spectral_clustering("word2vec", affinity='polynomial')
     #run_spectral_clustering("fasttext", affinity='polynomial')
     #run_spectral_clustering("glove", affinity='polynomial')
 
-    #run_spectral_clustering("word2vec", affinity='laplacian')
+    w2v_preds = run_spectral_clustering("word2vec", affinity='laplacian')
+    visualize_article_vecs("word2vec",2,w2v_preds)
     #run_spectral_clustering("fasttext", affinity='laplacian')
     #run_spectral_clustering("glove", affinity='laplacian')
 
@@ -70,9 +71,20 @@ if __name__ == "__main__":
 
     #run_spectral_clustering("word2vec", affinity='cosine')
     #run_spectral_clustering("fasttext", affinity='cosine')
-    glv_preds = run_spectral_clustering("glove", affinity='cosine')
-    visualize_article_vecs('glove', 2, glv_preds)
+    #run_spectral_clustering("glove", affinity='cosine')
 
-    #print("Word2Vec:",find_best_result("Spectral_Clustering", "word2vec", "accuracy"))
-    #print("FastText:", find_best_result("Spectral_Clustering", "fasttext", "accuracy"))
-    #print("Glove:", find_best_result("Spectral_Clustering", "glove", "accuracy"))
+
+    #file, result = find_best_result("Spectral_Clustering", "word2vec", "Silhouette_Score")
+    #print(file, "Silhouette_Score:", result)
+    #file, result = find_best_result("Spectral_Clustering", "fasttext", "Silhouette_Score")
+    #print(file, "Silhouette_Score:", result)
+    #file, result = find_best_result("Spectral_Clustering", "glove", "Silhouette_Score")
+    #print(file, "Silhouette_Score:", result)
+
+    #file, result = find_best_result("Spectral_Clustering", "word2vec", "NMI")
+    #print(file, "NMI:", result)
+    #file, result = find_best_result("Spectral_Clustering", "fasttext", "NMI")
+    #print(file, "NMI:", result)
+    #file, result = find_best_result("Spectral_Clustering", "glove", "NMI")
+    #print(file, "NMI:", result)
+

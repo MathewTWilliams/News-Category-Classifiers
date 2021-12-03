@@ -29,7 +29,7 @@ def calculate_classifier_metrics(true_labels, predictions, model_details):
 
 def find_best_result(classifier_name, vec_model_name, metric, large = True): 
     '''Given the classifier name, the vector model used, and the name of the classifier metric, 
-    return the file name that contains the best metric value for the given parameters'''
+    return the file name that contains the best metric value for the given parameters and that score'''
     best_score = NINF if large else PINF
     best_file_name = ""
     for file in os.listdir(get_result_path(classifier_name,"")):
@@ -44,4 +44,4 @@ def find_best_result(classifier_name, vec_model_name, metric, large = True):
                 best_file_name = file
                 best_score = results[metric]
     
-    return best_file_name
+    return best_file_name, best_score
