@@ -40,9 +40,9 @@ pip install -r /path/to/requirements.txt
 ```
 5. Download the data set: https://www.kaggle.com/rmisra/news-category-dataset
 
-6. Make and folder Named 'Data' that sits in the same location as the Scripts folder from the repository.
+6. Make an folder Named 'Data' that sits in the same location as the Scripts folder from the repository.
 
-7. Move the downloaded dataset (keeping the same name) into the newly made 'Data Folder'
+7. Move the downloaded dataset (keeping the same name) into the newly made 'Data' Folder.
 
 # Usage
 ## Scripts 
@@ -76,15 +76,17 @@ Here is a general overview of each script contained in the project. Each file co
 
 - classifier_metrics.py: calculates and saves a classification report given true labels, predictions, and the vector model used. 
 
-- cluster_metrics.py: calculates and saves a report of import clustering metrics given clustering results and true labels. Since true labels are known, a classification report is also done. 
+- clustering_metrics.py: calculates and saves a report of import clustering metrics given clustering results and true labels. Since true labels are known, a classification report is also done. 
 
 - visualize_article_vecs.py: used to visualizing plotting the article vectors and the results of the clustering algorithms. 
+
+- cross_validation.py: Used for K-fold cross validation for classifiers. 
 
 ## Sci-kit Learn related scripts:
 - Contains the implementations of the different ML related algorithms used. 
   - k-means.py
   - hierarchical_clustering.py
-  - db-scan.py
+  - db_scan.py
   - spectral_clustering.py
   - random_forest.py
   - ml_perceptron.py
