@@ -72,15 +72,15 @@ Here is a general overview of each script contained in the project. Each file co
 
 - save_load_json.py: contains methods to load and save json files when not using Pandas related items. 
 
-- re-scrape.py: The full explanation of this script is found at the top of the script itself. Needed to rescrape certain urls that weren't successfully scraped from web_scraper.py due to overloading the HuffPost server with too many requests. 
+- re-scrape.py: The full explanation of this script is found at the top of the script itself. Needed to rescrape certain urls that weren't successfully scraped from web_scraper.py due to overloading the HuffPost server with too many requests.  
 
-- classifier_metrics.py: calculates and saves a classification report given true labels, predictions, and the vector model used. 
+- grid_search_util.py: Used for running the actual Grid Search Cross Validation method in 
+cross_validation.py. Done to prevent circular dependencies/imports. 
 
-- clustering_metrics.py: calculates and saves a report of import clustering metrics given clustering results and true labels. Since true labels are known, a classification report is also done. 
+- make_line_graphs.py: used for showing line graphs of different classifier metrics for each of the different classifiers. 
 
-- visualize_article_vecs.py: used to visualizing plotting the article vectors and the results of the clustering algorithms. 
+- visualize_box_plots.py: after grid search cross validation, this script is used to show box plots for each classifier for each vector model. Box plots are made for each metric: accuracy, precision, recall, and f1-score. The 10 chosen hyper-parameter combinations are based on the highest accuracy. This holds true for the precision, recall, and f1-score box plots as well. 
 
-- cross_validation.py: Used for K-fold cross validation for classifiers. 
 
 ## Sci-kit Learn related scripts:
 - Contains the implementations of the different ML related algorithms used. 
@@ -94,6 +94,16 @@ Here is a general overview of each script contained in the project. Each file co
   - knn.py
   - svm.py
   - logistic_regression.py
+
+- classifier_metrics.py: calculates and saves a classification report given true labels, predictions, and the vector model used. 
+
+- clustering_metrics.py: calculates and saves a report of import clustering metrics given clustering results and true labels. Since true labels are known, a classification report is also done. 
+
+- visualize_article_vecs.py: used to visualizing plotting the article vectors and the results of the clustering algorithms. 
+
+- cross_validation.py: Used for K-fold cross validation for classifiers.
+
+- make_confusion_matrix.py: used to show the confusion matrix for a classifier. 
 
 # License
 Distributed under the MIT License. See ```LICENSE.txt``` for more information. 
