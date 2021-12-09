@@ -1,11 +1,12 @@
 #Author: Matt Williams
-#Version: 11/27/2021
-from get_vec_models import get_vec_model_names
+#Version: 12/8/2021
+
 from sklearn.ensemble import RandomForestClassifier
 from get_article_vectors import get_training_info, get_test_info
 from classifier_metrics import calculate_classifier_metrics
 import numpy as np
 from constants import RAND_STATE
+from make_confusion_matrix import show_confusion_matrix
 
 
 #Param Grid for Grid Search Cross Validation
@@ -14,7 +15,7 @@ rand_forest_param_grid = {
     'criterion' : ['entropy', 'gini'], 
     'random_state' : [RAND_STATE],
     'max_features' : [None],
-    'max_samples' : [(0.1 * i) for i in range(1, 7)]
+    'max_samples' : [(0.1 * i) for i in range(1, 4)]
 }
 
 
@@ -37,22 +38,22 @@ def run_random_forrest(vec_model_name, n_estimators = 100,
 
     model_details = {
         'Vector_Model' : vec_model_name, 
-        'Model' : "Random_Forest",
+        'Model' : "Random Forest",
         'n_estimators': n_estimators, 
         'criterion': criterion,
         'Max Samples (as fraction)' : max_samples
     }
 
     calculate_classifier_metrics(test_labels, predictions, model_details)
-
+    show_confusion_matrix(test_labels, predictions, "Random Forest w/" + vec_model_name + " Confusion Matrix")
 
 
 
 if __name__ == "__main__":
 
-    vec_model_name = get_vec_model_names()[1]
-    run_random_forrest(vec_model_name)
-
+    run_random_forrest("word2vec", n_estimators=500, criterion='entropy', max_samples=0.3)
+    run_random_forrest("fasttext", n_estimators=500, criterion='gini', max_samples=0.3)
+    run_random_forrest("glove", n_estimators=500, criterion='entropy', max_samples=0.3)
 
 
 

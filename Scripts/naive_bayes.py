@@ -1,7 +1,7 @@
 #Author: Matt Williams
-#Version: 11/27/2021
+#Version: 12/08/2021
 from sklearn.naive_bayes import GaussianNB
-from get_vec_models import get_vec_model_names
+from make_confusion_matrix import show_confusion_matrix
 from get_article_vectors import get_training_info, get_test_info
 from classifier_metrics import calculate_classifier_metrics
 
@@ -11,14 +11,14 @@ gnb_param_grid_1 = {
 }
 
 #From using the previous param grid, we know our best var smoothing value is
-#around 1e-4 for all 3 vec models (first 3 results in CV_Results folder)
+#around 1e-4 for all 3 vec models 
 
 gnb_param_grid_2 = {
     'var_smoothing' : [8e-2, 1e-3, 2e-3, 4e-3, 6e-3, 8e-3, 1e-4, 2e-4, 4e-4, 6e-4, 8e-4]
 }
 
 #From using the second param grid, we know out best var smoothing value for each
-#vec model is (from last 3 results in CV_Results Folder): 
+#vec model is 
 #Glove: 2e-3
 #Word2Vec and FastText: 8e-3
 
@@ -35,11 +35,12 @@ def run_naive_bayes(vec_model_name, var_smoothing = 1e-9):
 
     model_details = {
         'Vector_Model': vec_model_name, 
-        'Model' : "Gaussian_NB",
+        'Model' : "Gaussian Naive Bayes",
         'var_smoothing' : var_smoothing
     }
 
     calculate_classifier_metrics(test_labels, predictions, model_details)
+    show_confusion_matrix(test_labels, predictions, "Gaussian Naive Bayes w/" + vec_model_name + " Confusion Matrix")
 
 
 

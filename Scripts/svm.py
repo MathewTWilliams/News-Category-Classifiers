@@ -1,10 +1,10 @@
 #Author: Matt Williams
-#Version: 11/27/2021
+#Version: 12/8/2021
 from sklearn.svm import SVC
 from get_article_vectors import get_test_info, get_training_info
 from classifier_metrics import calculate_classifier_metrics
-from get_vec_models import get_vec_model_names
 from constants import RAND_STATE
+from make_confusion_matrix import show_confusion_matrix
 
 #Param Grid for Grid Seartch Cross Validation
 svm_param_grid = {
@@ -39,9 +39,13 @@ def run_svm(vec_model_name, C = 1.0, kernel = 'rbf',
     }
 
     calculate_classifier_metrics(test_labels, predictions, model_details)
+    show_confusion_matrix(test_labels, predictions, "Support Vector Machine w/" + vec_model_name + " Confusion Matrix")
 
 
 
 if __name__ == "__main__":
-    vec_model_name = get_vec_model_names()[0]
-    run_svm(vec_model_name)
+   
+   #using best params from grid search cross validation
+   run_svm("word2vec", C=2, kernel="poly", decision_function_shape='ovr')
+   run_svm("fasttext", C=2, kernel='poly', decision_function_shape='ovr')
+   run_svm("glove" ,C=2, kernel='poly', decision_function_shape='ovr')

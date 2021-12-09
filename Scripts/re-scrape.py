@@ -96,6 +96,7 @@ def scrape_again():
     print("Final Num Rescrapped:", num_rescraped)
     print("Final Num Successful:", num_successful)
 
+
 if __name__ == "__main__":
     #scrape_again()
     make_final_scrapped_set()

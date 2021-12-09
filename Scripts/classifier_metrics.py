@@ -1,5 +1,5 @@
 #Author: Matt Williams
-#Version: 12/02/2021
+#Version: 12/08/2021
 
 from sklearn.metrics import classification_report, hamming_loss, jaccard_score  
 from save_load_json import save_json
@@ -32,6 +32,8 @@ def find_best_result(classifier_name, vec_model_name, metric, large = True):
     return the file name that contains the best metric value for the given parameters and that score'''
     best_score = NINF if large else PINF
     best_file_name = ""
+    if not os.path.exists(get_result_path(classifier_name,"")):
+        return
     for file in os.listdir(get_result_path(classifier_name,"")):
         if file.startswith(vec_model_name):
             results = load_json(get_result_path(classifier_name, file))['Classification_Report']

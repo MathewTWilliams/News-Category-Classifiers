@@ -9,7 +9,7 @@ from sklearn.model_selection import train_test_split
 import os
 from save_load_json import load_json
 
-#Reference: https://www.kaggle.com/ananyabioinfo/text-classification-using-word2vec 
+
 def make_article_vecs(category, article_list, model_wv, model_num, model_name): 
     '''given a category, article_list, and a model's word vectors, 
     calculate the average word vector for each article. Then split the 
@@ -55,6 +55,10 @@ def fill_article_nan_values(subfolder, category, model_name= ""):
     associated with those values. replace any NaN values found with the median value of the NaN value
     is found in. '''
 
+
+    if not os.path.exists(get_article_vecs_path(subfolder,"")):
+        return
+        
     for file in os.listdir(get_article_vecs_path(subfolder,"")): 
         model_check = True if model_name == "" else file.startswith(model_name)
         if model_check and file.find(category) != -1: 

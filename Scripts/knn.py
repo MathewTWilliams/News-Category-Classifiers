@@ -1,10 +1,10 @@
 #Author: Matt Williams
-#Version: 12/02/2021
+#Version: 12/08/2021
 from sklearn.neighbors import KNeighborsClassifier
 from get_article_vectors import get_test_info, get_training_info
-from get_vec_models import get_vec_model_names
+from make_confusion_matrix import show_confusion_matrix
 from classifier_metrics import calculate_classifier_metrics
-from cross_validation import run_cross_validation
+
 
 #Param grid for Grid Search Cross Validation
 knn_param_grid = {
@@ -25,8 +25,7 @@ def run_knn(vec_model_name, n_neighbors = 5, weights = 'uniform',
 
     knn = KNeighborsClassifier(n_neighbors=n_neighbors, weights=weights, algorithm=algorithm, 
                                 p=p)
-
-    #run_cross_validation(knn, "K-Nearest Neighbor", vec_model_name)
+                                
     knn.fit(training_data, training_labels)
     predictions = knn.predict(test_data)
 
@@ -40,10 +39,12 @@ def run_knn(vec_model_name, n_neighbors = 5, weights = 'uniform',
     }
 
     calculate_classifier_metrics(test_labels, predictions, model_details)
-
+    show_confusion_matrix(test_labels, predictions, "KNN w/" + vec_model_name + " Confusion Matrix")
         
         
 
 if __name__ == "__main__": 
-    for vec_model_name in get_vec_model_names(): 
-        run_knn(vec_model_name)
+    
+    run_knn("word2vec", n_neighbors=10, weights='distance', algorithm='ball_tree', p=1)
+    run_knn("fasttext", n_neighbors=8, weights='distance', algorithm='ball_tree', p=1)
+    run_knn("glove", n_neighbors=10, weights='distance', algorithm='ball_tree', p = 3)

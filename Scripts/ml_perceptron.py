@@ -1,16 +1,16 @@
 #Author: Matt Williams
-#Version: 11/27/2021
+#Version: 12/08/2021
 from sklearn.neural_network import MLPClassifier
 from get_article_vectors import get_test_info, get_training_info
 from classifier_metrics import calculate_classifier_metrics
-from get_vec_models import get_vec_model_names
+from make_confusion_matrix import show_confusion_matrix
 from constants import RAND_STATE
 
 #Param Grid for Grid Search Cross Validation
 mlp_param_grid = {
-    'hidden_layer_sizes': [(1,), (10,)], 
+    'hidden_layer_sizes': [(10,), (10,10)], 
     'activation' : ['identity', 'logistic', 'tanh', 'relu'],
-    'solver' : ['lbfgs', 'sgd', 'adam'],
+    'solver' : ['adam'],
     'alpha' : [1e-3, 1e-4, 1e-5], 
     'early_stopping' : [True],
     'validation_fraction' : [0.1],
@@ -44,8 +44,10 @@ def run_mlp(vec_model_name, hl_sizes = (100,), activation = "relu", solver = 'ad
     }
 
     calculate_classifier_metrics(test_labels, predictions, model_details)
-
+    show_confusion_matrix(test_labels, predictions, "ML-Perceptron w/" + vec_model_name + " Confusion Matrix")
     
 if __name__ == "__main__": 
-    vec_model_name = get_vec_model_names()[0]
-    run_mlp(vec_model_name)
+    
+    run_mlp("word2vec", hl_sizes=(10,), activation='tanh', solver='adam', alpha=1e-3)
+    run_mlp("fasttext", hl_sizes=(10,), activation='tanh', solver='adam', alpha=1e-3)
+    run_mlp("glove", hl_sizes=(10,), activation='tanh', solver='adam', alpha=1e-3)
