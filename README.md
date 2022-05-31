@@ -1,5 +1,5 @@
 # News-Category-Classifiers-and-Clusterings
-A repository for my Project for Data Mining I and Concepts in Artifical Intelligence. My goal is to build a few different news category classifiers and compare them. In addition to this, I want to implement a few clustering algorithms and see how well the different algorithms can cluster the same articles. Both the Classifiers and the Clustering algorithms will be tested on multiple dense word vector representation (Word2Vec, GLoVe, and FastText). 
+A repository for my for graduate Data Mining I semester project. The goal of the project is to make and compare different News Category Classification models trained on the average Word Vector Embeddings of articles.    
 
 
 ## Built With: 
