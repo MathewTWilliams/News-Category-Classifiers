@@ -1,44 +1,42 @@
 #Author: Matt Williams
 #Version: 12/08/2021
 
-from pathlib import PurePath, Path
 import os
 import pandas as pd
 import numpy as np
-
+import re
 
 # A Simple Python File that contains constant values and methods important to the project. 
 # Most of these values are file path related. 
 
 #Dataset: https://www.kaggle.com/rmisra/news-category-dataset 
 
+
+CWD_PATH = os.path.abspath(os.getcwd())
+DATA_DIR_PATH = os.path.join(CWD_PATH, "Data")
+
 #This file contains the original data set. 
-DATA_SET_PATH = PurePath.joinpath(Path(__file__).resolve().parent.parent,
-                   "Data/News_Category_Dataset_v2.json").as_posix()
+DATA_SET_PATH = os.path.join(DATA_DIR_PATH, "News_Category_Dataset_v2.json")
 
 #This file contains the original data set sorted by article category
-SORTED_DATA_PATH = PurePath.joinpath(Path(__file__).resolve().parent.parent, 
-                    "Data/Sorted_Data_Set.json").as_posix()
+SORTED_DATA_PATH = os.path.join(DATA_DIR_PATH, "Sorted_Data_Set.json")
 
 #This file contains the articles to be used for the project.
-ARTICLE_SET_PATH = PurePath.joinpath(Path(__file__).resolve().parent.parent,
-                    "Data/Article_Set.json").as_posix()
+ARTICLE_SET_PATH = os.path.join(DATA_DIR_PATH, "Article_Set.json")
 
 #This file contains some text to test text_cleaner.py on before cleaning 
 #all the articles. 
-TEST_TEXT_PATH = PurePath.joinpath(Path(__file__).resolve().parent.parent, 
-                    "Data/test_text.txt").as_posix()
+TEST_TEXT_PATH = os.path.join(DATA_DIR_PATH, "test_text.txt")
 
 #This file contains a dictionary where each key is a category and each value a list of strings, 
-# where each string is the scrapped text of an article. 
-SCRAPED_TEXT_PATH = PurePath.joinpath(Path(__file__).resolve().parent.parent, 
-                    "Data/Scraped_Text.json").as_posix()      
+# where each string is the scrapped text of an article.   
+SCRAPED_TEXT_PATH = os.path.join(DATA_DIR_PATH, "Scraped_Text.json")
+
 
 # This file contains the cleaned text from the Scrapped Text file.
 # Contains a dictionary where each key is a category and each value is a 3d list: 
 # dict[category][i][j][k] - kth word in jth sentence in ith article for the given category
-CLEANED_TEXT_PATH = PurePath.joinpath(Path(__file__).resolve().parent.parent, 
-                    "Data/Cleaned_Text.json").as_posix()              
+CLEANED_TEXT_PATH = os.path.join(DATA_DIR_PATH, "Cleaned_Text.json")      
 
 # List of categories to be used from the original dataset. 
 CATEGORIES = ["MEDIA", "WEIRD NEWS", "GREEN", "WORLDPOST",
@@ -52,28 +50,41 @@ RAND_STATE = 42
 K_FOLDS = 10
 
 #File Path to the directory that contains our Models related to generating word embeddings. 
-MODEL_DIR_PATH = PurePath.joinpath(Path(__file__).resolve().parent.parent, "Models/")
-
+MODEL_DIR_PATH = os.path.join(CWD_PATH, "Models")
 
 def get_model_path(name): 
     '''Given the name of a file for a vector model, return the full file path for that file to be stored at.'''
     if not os.path.exists(MODEL_DIR_PATH):
         os.mkdir(MODEL_DIR_PATH)
-    return PurePath.joinpath(MODEL_DIR_PATH, name).as_posix()
+    return os.path.join(MODEL_DIR_PATH, name)
 
 
 #File Path to the directory where the article vectors are to be stored.
-ARTICLE_VECS_DIR_PATH = PurePath.joinpath(Path(__file__).resolve().parent.parent, "Article_Vectors/")
+ARTICLE_VECS_DIR_PATH = os.path.join(CWD_PATH, "Article_Vectors")
 
 def get_article_vecs_path(subfolder, name):
     '''Given subfolder(Train or Test) and the name of a file, return the full file path for that file to be stored at'''
     if not os.path.exists(ARTICLE_VECS_DIR_PATH):
         os.mkdir(ARTICLE_VECS_DIR_PATH)
-    return PurePath.joinpath(ARTICLE_VECS_DIR_PATH, subfolder).joinpath(name).as_posix()
+    res_path = os.path.join(ARTICLE_VECS_DIR_PATH, subfolder)
+    return os.path.join(res_path, name)
 
 #File Path to the directory where classification or clustering results are to be stored.
-RESULTS_DIR_PATH = PurePath.joinpath(Path(__file__).resolve().parent.parent, 
-                                                "Results/")
+RESULTS_DIR_PATH = os.path.join(CWD_PATH, "Results")
+
+def find_json_file_name_number(folder):
+    '''Given a file path to a folder containing .json files, find the highest number associated with a filename in that
+    folder, then increment that number by 1 and return it '''
+    highest_num = 0
+    num_pattern = re.compile(r"[0-9]+\.json")
+    for file in os.listdir(folder):
+        match = num_pattern.search(file).group()
+        num = int(match.split(".")[0])
+        if num > highest_num: 
+            highest_num = num
+    
+    return highest_num + 1
+        
 
 def make_result_path(subfolder, vec_model): 
     '''Given the name of a subfolder(Name of the Classification/Clustering algorithm) and the name
@@ -82,21 +93,23 @@ def make_result_path(subfolder, vec_model):
     if not os.path.exists(RESULTS_DIR_PATH):
         os.mkdir(RESULTS_DIR_PATH)
 
-    updated_path = PurePath.joinpath(RESULTS_DIR_PATH, subfolder)
+    updated_path = os.path.join(RESULTS_DIR_PATH, subfolder)
 
     if not os.path.exists(updated_path): 
         os.mkdir(updated_path)
 
-    file_name = vec_model + "_results_" + str(len(os.listdir(updated_path)) + 1) + ".json"
-    return updated_path.joinpath(file_name).as_posix()
+    num = find_json_file_name_number(updated_path)
+    file_name = vec_model + "_results_{}.json".format(num)
+    return os.path.join(updated_path, file_name)
+
 
 def get_result_path(subfolder, file_name): 
     '''Get the full file path for the result with the given filename and the given subfolder.'''
-    return PurePath.joinpath(RESULTS_DIR_PATH, subfolder).joinpath(file_name).as_posix()
+    res_path = os.path.join(RESULTS_DIR_PATH, subfolder)
+    return os.path.join(res_path, file_name)
 
 #File Path to the directory where cross validation results are to be stored.
-CV_RESULTS_DIR_PATH = PurePath.joinpath(Path(__file__).resolve().parent.parent, 
-                                                "CV_Results/")
+CV_RESULTS_DIR_PATH = os.path.join(CWD_PATH,"CV_Results")
 
 def make_cv_result_path(subfolder, vec_model): 
     '''Given the name of a subfolder(Name of the Classification/Clustering algorithm), generate a name 
@@ -104,18 +117,20 @@ def make_cv_result_path(subfolder, vec_model):
     if not os.path.exists(CV_RESULTS_DIR_PATH): 
         os.mkdir(CV_RESULTS_DIR_PATH)
 
-    updated_path = PurePath.joinpath(CV_RESULTS_DIR_PATH, subfolder)
+    updated_path = os.path.join(CV_RESULTS_DIR_PATH, subfolder)
 
     if not os.path.exists(updated_path): 
         os.mkdir(updated_path)
 
-    file_name = vec_model + "_cv_results_" + str(len(os.listdir(updated_path)) + 1) + ".json"
-    return updated_path.joinpath(file_name).as_posix()
+    num = find_json_file_name_number(updated_path)
+    file_name = vec_model + "_cv_results_{}.json".format(num) 
+    return os.path.join(updated_path, file_name)
 
 
 def get_cv_result_path(subfolder, file_name): 
     '''Get the full file path for the cross validation result with the given filename in the given subfolder.'''
-    return PurePath.joinpath(CV_RESULTS_DIR_PATH, subfolder).joinpath(file_name).as_posix()
+    res_path = os.path.join(CV_RESULTS_DIR_PATH, subfolder)
+    return os.path.join(res_path, file_name)
 
 def convert_categories_to_numbers(labels):
     '''given a pandas series that contains the different categories, convert those 
