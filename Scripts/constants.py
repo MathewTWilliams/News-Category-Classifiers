@@ -1,6 +1,7 @@
 #Author: Matt Williams
 #Version: 12/08/2021
 
+from enum import Enum
 import os
 import pandas as pd
 import numpy as np
@@ -9,9 +10,19 @@ import re
 # A Simple Python File that contains constant values and methods important to the project. 
 # Most of these values are file path related. 
 
+
+class Datasets(Enum): 
+    TRAIN = "Train"
+    VALID = "Valid"
+    TEST = "Test"
+
+class WordVectorModels(Enum): 
+    FASTTEXT = "fasttext"
+    GLOVE = "glove"
+    WORD2VEC = "word2vec"
+
+
 #Dataset: https://www.kaggle.com/rmisra/news-category-dataset 
-
-
 CWD_PATH = os.path.abspath(os.getcwd())
 DATA_DIR_PATH = os.path.join(CWD_PATH, "Data")
 
@@ -48,6 +59,7 @@ TEST_SET_PERC = 0.1
 TRAIN_SET_PERC = 0.9
 RAND_STATE = 42
 K_FOLDS = 10
+
 
 #File Path to the directory that contains our Models related to generating word embeddings. 
 MODEL_DIR_PATH = os.path.join(CWD_PATH, "Models")
