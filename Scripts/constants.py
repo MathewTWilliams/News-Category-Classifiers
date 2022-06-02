@@ -13,7 +13,6 @@ import re
 
 class Datasets(Enum): 
     TRAIN = "Train"
-    VALID = "Valid"
     TEST = "Test"
 
 class WordVectorModels(Enum): 
@@ -21,6 +20,13 @@ class WordVectorModels(Enum):
     GLOVE = "glove"
     WORD2VEC = "word2vec"
 
+class ClassificationModels(Enum): 
+    KNN = "K-Nearest Neighbor"
+    SVM = "Support Vector Machine"
+    RF = "Random Forest"
+    GNB = "Gaussian Naive Bayes"
+    LOG_REG = "Logistic Regression"
+    MLP = "Muti-Layer Perceptron"
 
 #Dataset: https://www.kaggle.com/rmisra/news-category-dataset 
 CWD_PATH = os.path.abspath(os.getcwd())
