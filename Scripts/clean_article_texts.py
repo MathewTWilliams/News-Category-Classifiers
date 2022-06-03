@@ -29,12 +29,14 @@ def clean_article_texts():
     """Main method for this script. Load in our scraped texts, then use
         multiprocessing with the method above to help clean the articles faster. 
         Once all articles are cleaned, save the cleaned texts to a new json file"""
-    cleaned_texts_dict = {category: [] for category in CATEGORIES}
+
+    categories = Categories.get_values_as_list()
+    cleaned_texts_dict = {category: [] for category in categories}
     scraped_texts = load_json(SCRAPED_TEXT_PATH)
 
-    with Pool(processes=len(CATEGORIES)) as pool: 
+    with Pool(processes=len(categories)) as pool: 
 
-        inputs = zip(CATEGORIES, [scraped_texts[category] for category in CATEGORIES])
+        inputs = zip(categories, [scraped_texts[category] for category in categories])
         ret_values = pool.starmap(clean_category_texts, inputs )
 
         for (category, cleaned_texts) in ret_values: 

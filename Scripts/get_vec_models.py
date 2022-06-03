@@ -3,8 +3,7 @@
 
 import os
 from gensim.models import KeyedVectors
-from constants import MODEL_DIR_PATH, get_model_path
-
+from constants import MODEL_DIR_PATH, get_model_path, WordVectorModels
 
 def get_vec_models(): 
     """Returns a list of word2vec gensim models found in the models folder."""
@@ -42,9 +41,10 @@ def get_glove_model():
 
 def get_vec_model_names(): 
     '''Returns a list of names of the models used in this project, without the file extention.'''
-    return ["word2vec", "fasttext", "glove"]
+    return WordVectorModels.get_values_as_list()
 
 
 if __name__ == "__main__":
-    models = get_vec_models()
-    print(len(models.items()))
+    #models = get_vec_models()
+    #print(len(models.items()))
+    print(get_vec_model_names())

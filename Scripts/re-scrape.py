@@ -34,7 +34,7 @@ def make_final_scrapped_set():
         only contains the headline and description of the article, that article is removed from the file."""
     article_set = load_json(ARTICLE_SET_PATH)
     scraped_texts = load_json(SCRAPED_TEXT_PATH)
-    final_scraped_texts = {category: [] for category in CATEGORIES}
+    final_scraped_texts = {category: [] for category in Categories.get_values_as_list()}
 
     for category, art_obj_list in article_set.items(): 
         for index, art_obj in enumerate(art_obj_list):
@@ -61,7 +61,7 @@ def scrape_again():
     scraped_texts = load_json(SCRAPED_TEXT_PATH)
 
     updated_texts = {}
-    for category in CATEGORIES: 
+    for category in Categories.get_values_as_list(): 
         updated_texts[category] = []
 
 

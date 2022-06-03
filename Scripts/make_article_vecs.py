@@ -47,8 +47,8 @@ def make_article_vecs(category, article_list, model_wv, model_num, model_name):
                                                         random_state= RAND_STATE)
     #Save each set to a different folder
     name = model_name + "_" + category + "_" + "article_vecs.json"
-    train_cat_df.to_json(get_article_vecs_path("Train" , name))
-    test_cat_df.to_json(get_article_vecs_path("Test" , name))
+    train_cat_df.to_json(get_article_vecs_path(Datasets.TRAIN.value , name))
+    test_cat_df.to_json(get_article_vecs_path(Datasets.TEST.value, name))
 
 def fill_article_nan_values(subfolder, category, model_name= ""): 
     '''Given a subfolder(Train or Test), a category, and a model_name load in the article vectors
@@ -81,44 +81,45 @@ def combine_categroy_article_vecs(model_name):
     combine them into a single dataframe.  '''
     #combine all training data frames related to the given model
     train_combined_df = pd.DataFrame()
-    for file in os.listdir(get_article_vecs_path("Train", "")): 
+    for file in os.listdir(get_article_vecs_path(Datasets.TRAIN.value, "")): 
         if file.startswith(model_name): 
-            category_df_path = get_article_vecs_path("Train", file)
+            category_df_path = get_article_vecs_path(Datasets.TRAIN.value, file)
             category_df = pd.read_json(category_df_path)
             train_combined_df = train_combined_df.append(category_df, ignore_index=True)
            
     file_name = model_name + "_training_set.json"
-    train_combined_df.to_json(get_article_vecs_path("Train", file_name))
+    train_combined_df.to_json(get_article_vecs_path(Datasets.TRAIN.value, file_name))
 
     #combine all test data frames related to the given model
     test_combined_df = pd.DataFrame()
-    for file in os.listdir(get_article_vecs_path("Test", "")): 
+    for file in os.listdir(get_article_vecs_path(Datasets.TEST.value, "")): 
         if file.startswith(model_name): 
-            category_df_path = get_article_vecs_path("Test", file)
+            category_df_path = get_article_vecs_path(Datasets.TEST.value, file)
             category_df = pd.read_json(category_df_path)
             test_combined_df = test_combined_df.append(category_df, ignore_index=True)
            
 
     file_name = model_name + "_test_set.json"
-    test_combined_df.to_json(get_article_vecs_path("Test", file_name))
+    test_combined_df.to_json(get_article_vecs_path(Datasets.TEST.value, file_name))
 
 if __name__ == "__main__": 
     train_dict = load_json(CLEANED_TEXT_PATH)
 
     #this is done so all 3 models aren't loaded into memory at once
     name, model_wv = get_w2v_model()
-    for category in CATEGORIES: 
+    categories = Categories.get_values_as_list()
+    for category in categories: 
         make_article_vecs(category, train_dict[category], model_wv, 1, name)
 
     name, model_wv = get_fasttext_model()
-    for category in CATEGORIES: 
+    for category in categories: 
         make_article_vecs(category, train_dict[category], model_wv, 2, name)
 
     name, model_wv = get_glove_model()
-    for category in CATEGORIES: 
+    for category in categories: 
        make_article_vecs(category, train_dict[category], model_wv, 3, name)
 
-    fill_article_nan_values("Train", "GREEN")
+    fill_article_nan_values(Datasets.TRAIN.value, "GREEN")
     for name in get_vec_model_names(): 
         combine_categroy_article_vecs(name)
         

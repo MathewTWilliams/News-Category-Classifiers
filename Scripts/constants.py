@@ -20,6 +20,10 @@ class WordVectorModels(Enum):
     GLOVE = "glove"
     WORD2VEC = "word2vec"
 
+    @classmethod
+    def get_values_as_list(self): 
+        return [model.value for model in WordVectorModels]
+
 class ClassificationModels(Enum): 
     KNN = "K-Nearest Neighbor"
     SVM = "Support Vector Machine"
@@ -27,6 +31,27 @@ class ClassificationModels(Enum):
     GNB = "Gaussian Naive Bayes"
     LOG_REG = "Logistic Regression"
     MLP = "Muti-Layer Perceptron"
+    ADA = "Ada-Boost"
+
+    @classmethod
+    def get_values_as_list(self): 
+        return [model.value for model in ClassificationModels]
+
+class Categories(Enum): 
+    MEDIA = "MEDIA"
+    WEIRD = "WEIRD NEWS"
+    GREEN =  "GREEN"
+    POST =  "WORLDPOST"
+    RELIGION = "RELIGION"
+    STYLE =  "STYLE"
+    SCIENCE =  "SCIENCE"
+    NEWS =  "WORLD NEWS"
+    TASTE = "TASTE"
+    TECH =  "TECH"
+
+    @classmethod
+    def get_values_as_list(self): 
+        return [cat.value for cat in Categories]
 
 #Dataset: https://www.kaggle.com/rmisra/news-category-dataset 
 CWD_PATH = os.path.abspath(os.getcwd())
@@ -54,11 +79,6 @@ SCRAPED_TEXT_PATH = os.path.join(DATA_DIR_PATH, "Scraped_Text.json")
 # Contains a dictionary where each key is a category and each value is a 3d list: 
 # dict[category][i][j][k] - kth word in jth sentence in ith article for the given category
 CLEANED_TEXT_PATH = os.path.join(DATA_DIR_PATH, "Cleaned_Text.json")      
-
-# List of categories to be used from the original dataset. 
-CATEGORIES = ["MEDIA", "WEIRD NEWS", "GREEN", "WORLDPOST",
-                "RELIGION", "STYLE", "SCIENCE", "WORLD NEWS",
-                "TASTE", "TECH"]
 
 
 TEST_SET_PERC = 0.1
@@ -155,11 +175,11 @@ def convert_categories_to_numbers(labels):
     categories into integers. Integers represent location in CATEGORIES list.'''
 
     if isinstance(labels, pd.Series):
-        for i,category in enumerate(CATEGORIES):
+        for i,category in enumerate(Categories.get_values_as_list()):
             labels = labels.replace(category, i)
     
     elif isinstance(labels, np.ndarray):
-        for i,category in enumerate(CATEGORIES): 
+        for i,category in enumerate(Categories.get_values_as_list()): 
             labels[labels == category] = i
 
     return labels

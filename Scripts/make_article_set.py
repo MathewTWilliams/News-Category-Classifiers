@@ -54,10 +54,10 @@ def make_article_set():
     delay = 1 
     futures = []
 
-
-    with ThreadPoolExecutor(max_workers= len(CATEGORIES)) as executor: 
+    categories = Categories.get_values_as_list()
+    with ThreadPoolExecutor(max_workers= len(categories)) as executor: 
         
-        for category in CATEGORIES:
+        for category in categories:
             article_set[category] = []
             article_list = dataset[category]
             future = executor.submit(get_articles_for_category,

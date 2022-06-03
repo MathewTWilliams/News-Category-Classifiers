@@ -4,7 +4,7 @@
 from sklearn.linear_model import LogisticRegression
 from get_article_vectors import get_test_info, get_training_info
 from classifier_metrics import calculate_classifier_metrics
-from constants import RAND_STATE
+from constants import RAND_STATE, WordVectorModels, ClassificationModels
 from make_confusion_matrix import show_confusion_matrix
 
 #Param Grids for Grid Search Cross Validation
@@ -45,7 +45,7 @@ def run_logistic_regression(vec_model_name, penalty = 'l2', tol = 1e-4, C = 1,
 
     model_details = {
         'Vector_Model': vec_model_name, 
-        'Model' : "Logistic Regression",
+        'Model' : ClassificationModels.LOG_REG.value,
         'Penalty_Function' : penalty, 
         'tolerance' : tol, 
         'Solver': solver,
@@ -60,6 +60,6 @@ def run_logistic_regression(vec_model_name, penalty = 'l2', tol = 1e-4, C = 1,
 
 if __name__ == "__main__": 
     
-    run_logistic_regression("word2vec", penalty="l1", tol=1e-3, C=2, solver = "saga", max_iter=200)
-    run_logistic_regression("fasttext", penalty="none", tol=1e-3, C=0.5, solver = "saga", max_iter=100)
-    run_logistic_regression("glove", penalty='l2', tol=1e-4, C=2, max_iter=100)
+    run_logistic_regression(WordVectorModels.WORD2VEC.value, penalty="l1", tol=1e-3, C=2, solver = "saga", max_iter=200)
+    run_logistic_regression(WordVectorModels.FASTTEXT.value, penalty="none", tol=1e-3, C=0.5, solver = "saga", max_iter=100)
+    run_logistic_regression(WordVectorModels.GLOVE.value, penalty='l2', tol=1e-4, C=2, max_iter=100)

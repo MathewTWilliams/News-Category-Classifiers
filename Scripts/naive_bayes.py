@@ -1,6 +1,7 @@
 #Author: Matt Williams
 #Version: 12/08/2021
 from sklearn.naive_bayes import GaussianNB
+from constants import ClassificationModels, WordVectorModels
 from make_confusion_matrix import show_confusion_matrix
 from get_article_vectors import get_training_info, get_test_info
 from classifier_metrics import calculate_classifier_metrics
@@ -35,7 +36,7 @@ def run_naive_bayes(vec_model_name, var_smoothing = 1e-9):
 
     model_details = {
         'Vector_Model': vec_model_name, 
-        'Model' : "Gaussian Naive Bayes",
+        'Model' : ClassificationModels.GNB.value,
         'var_smoothing' : var_smoothing
     }
 
@@ -46,7 +47,7 @@ def run_naive_bayes(vec_model_name, var_smoothing = 1e-9):
 
 if __name__ == "__main__": 
 
-    run_naive_bayes("word2vec", var_smoothing= 8e-3)
-    run_naive_bayes("fasttext", var_smoothing= 8e-3)
-    run_naive_bayes("glove", var_smoothing = 2e-3)
+    run_naive_bayes(WordVectorModels.WORD2VEC.value, var_smoothing= 8e-3)
+    run_naive_bayes(WordVectorModels.FASTTEXT.value, var_smoothing= 8e-3)
+    run_naive_bayes(WordVectorModels.GLOVE.value, var_smoothing = 2e-3)
     

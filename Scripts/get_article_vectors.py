@@ -1,6 +1,6 @@
 #Author: Matt Williams
 #Version: 12/02/2021
-from constants import ARTICLE_VECS_DIR_PATH, get_article_vecs_path
+from constants import ARTICLE_VECS_DIR_PATH, get_article_vecs_path, Datasets, WordVectorModels
 import os 
 import pandas as pd
 import numpy as np
@@ -26,11 +26,11 @@ def get_article_vectors(model_name, set):
 
 def get_training_info(model_name):
     '''Given a model name, this method returns the training data and training labels as a tuple.'''
-    return get_article_vectors(model_name, set = "Train")
+    return get_article_vectors(model_name, set = Datasets.TRAIN.value)
 
 def get_test_info(model_name):
     '''Given a model name, this method returns the test data and test labels as as a tuple.'''
-    return get_article_vectors(model_name, set = "Test")
+    return get_article_vectors(model_name, set = Datasets.TEST.value)
 
 def get_combined_train_test_info(model_name): 
     '''Given a vector model name, this method combines the test and training data/labels as a single 
@@ -45,7 +45,7 @@ def get_combined_train_test_info(model_name):
 
 if __name__ == "__main__":
     #testing for nan values that were throwing errors
-    data, labels = get_training_info("word2vec")
+    data, labels = get_training_info(WordVectorModels.WORD2VEC.value)
 
     r_index = np.isnan(data)
     for r in r_index:

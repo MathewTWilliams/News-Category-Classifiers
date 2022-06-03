@@ -1,9 +1,10 @@
 #Author: Matt Williams
 #Version: 12/8/2021
+from msilib.schema import Class
 from sklearn.svm import SVC
 from get_article_vectors import get_test_info, get_training_info
 from classifier_metrics import calculate_classifier_metrics
-from constants import RAND_STATE
+from constants import RAND_STATE, ClassificationModels, WordVectorModels
 from make_confusion_matrix import show_confusion_matrix
 
 #Param Grid for Grid Seartch Cross Validation
@@ -32,7 +33,7 @@ def run_svm(vec_model_name, C = 1.0, kernel = 'rbf',
 
     model_details = {
         'Vector_Model': vec_model_name, 
-        'Model' : "Support Vector Machine",
+        'Model' : ClassificationModels.SVM.value,
         "C" : C,
         "kernel" : kernel, 
         "Decision Function Shape" : decision_function_shape 
@@ -46,6 +47,6 @@ def run_svm(vec_model_name, C = 1.0, kernel = 'rbf',
 if __name__ == "__main__":
    
    #using best params from grid search cross validation
-   run_svm("word2vec", C=2, kernel="poly", decision_function_shape='ovr')
-   run_svm("fasttext", C=2, kernel='poly', decision_function_shape='ovr')
-   run_svm("glove" ,C=2, kernel='poly', decision_function_shape='ovr')
+   run_svm(WordVectorModels.WORD2VEC.value, C=2, kernel="poly", decision_function_shape='ovr')
+   run_svm(WordVectorModels.FASTTEXT.value, C=2, kernel='poly', decision_function_shape='ovr')
+   run_svm(WordVectorModels.GLOVE.value,C=2, kernel='poly', decision_function_shape='ovr')

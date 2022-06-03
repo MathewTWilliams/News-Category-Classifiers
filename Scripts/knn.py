@@ -4,7 +4,7 @@ from sklearn.neighbors import KNeighborsClassifier
 from get_article_vectors import get_test_info, get_training_info
 from make_confusion_matrix import show_confusion_matrix
 from classifier_metrics import calculate_classifier_metrics
-
+from constants import WordVectorModels, ClassificationModels
 
 #Param grid for Grid Search Cross Validation
 knn_param_grid = {
@@ -31,7 +31,7 @@ def run_knn(vec_model_name, n_neighbors = 5, weights = 'uniform',
 
     model_details = {
         'Vector_Model': vec_model_name, 
-        'Model' : "K-Nearest Neighbor",
+        'Model' : ClassificationModels.KNN.value,
         'N_Neighbors': n_neighbors, 
         "Weights" : weights,
         "algorithm" : algorithm, 
@@ -45,6 +45,6 @@ def run_knn(vec_model_name, n_neighbors = 5, weights = 'uniform',
 
 if __name__ == "__main__": 
     
-    run_knn("word2vec", n_neighbors=10, weights='distance', algorithm='ball_tree', p=1)
-    run_knn("fasttext", n_neighbors=8, weights='distance', algorithm='ball_tree', p=1)
-    run_knn("glove", n_neighbors=10, weights='distance', algorithm='ball_tree', p = 3)
+    run_knn(WordVectorModels.WORD2VEC.value, n_neighbors=10, weights='distance', algorithm='ball_tree', p=1)
+    run_knn(WordVectorModels.FASTTEXT.value, n_neighbors=8, weights='distance', algorithm='ball_tree', p=1)
+    run_knn(WordVectorModels.GLOVE.value, n_neighbors=10, weights='distance', algorithm='ball_tree', p = 3)

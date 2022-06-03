@@ -3,8 +3,9 @@
 
 
 from bs4 import BeautifulSoup
+from Scripts.constants import Categories
 from save_load_json import save_json, load_json
-from constants import ARTICLE_SET_PATH, CATEGORIES, SCRAPED_TEXT_PATH
+from constants import ARTICLE_SET_PATH, SCRAPED_TEXT_PATH
 from http import HTTPStatus
 import requests
 from concurrent.futures import ThreadPoolExecutor
@@ -78,9 +79,10 @@ def scrape_articles():
     scraped_text = {}
     futures = []
 
-    with ThreadPoolExecutor(max_workers=len(CATEGORIES)) as executor: 
+    categories = Categories.get_values_as_list()
+    with ThreadPoolExecutor(max_workers=len(categories)) as executor: 
 
-        for category in CATEGORIES: 
+        for category in categories: 
             scraped_text[category] = []
             article_objects = article_set[category]
             future = executor.submit(scrape_category_list, 

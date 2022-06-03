@@ -4,7 +4,7 @@ from sklearn.neural_network import MLPClassifier
 from get_article_vectors import get_test_info, get_training_info
 from classifier_metrics import calculate_classifier_metrics
 from make_confusion_matrix import show_confusion_matrix
-from constants import RAND_STATE
+from constants import RAND_STATE, ClassificationModels, WordVectorModels
 
 #Param Grid for Grid Search Cross Validation
 mlp_param_grid = {
@@ -36,7 +36,7 @@ def run_mlp(vec_model_name, hl_sizes = (100,), activation = "relu", solver = 'ad
 
     model_details = {
         'Vector_Model': vec_model_name, 
-        'Model' : "Multi-Layer Perceptron",
+        'Model' : ClassificationModels.MLP.value,
         "Hidden Layer Sizes" : hl_sizes ,
         "activation" : activation, 
         "solver" : solver,
@@ -48,6 +48,6 @@ def run_mlp(vec_model_name, hl_sizes = (100,), activation = "relu", solver = 'ad
     
 if __name__ == "__main__": 
     
-    run_mlp("word2vec", hl_sizes=(10,), activation='tanh', solver='adam', alpha=1e-3)
-    run_mlp("fasttext", hl_sizes=(10,), activation='tanh', solver='adam', alpha=1e-3)
-    run_mlp("glove", hl_sizes=(10,), activation='tanh', solver='adam', alpha=1e-3)
+    run_mlp(WordVectorModels.WORD2VEC.value, hl_sizes=(10,), activation='tanh', solver='adam', alpha=1e-3)
+    run_mlp(WordVectorModels.FASTTEXT.value, hl_sizes=(10,), activation='tanh', solver='adam', alpha=1e-3)
+    run_mlp(WordVectorModels.GLOVE.value, hl_sizes=(10,), activation='tanh', solver='adam', alpha=1e-3)
