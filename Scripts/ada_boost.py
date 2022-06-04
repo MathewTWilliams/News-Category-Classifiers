@@ -2,10 +2,8 @@
 #Version: 6/02/2022
 
 from sklearn.ensemble import AdaBoostClassifier
-from constants import WordVectorModels
-from make_confusion_matrix import show_confusion_matrix
-from get_article_vectors import get_test_info, get_training_info
-from classifier_metrics import calculate_classifier_metrics
+from constants import WordVectorModels, ClassificationModels
+from run_classification import run_classifier
 
 ada_param_grid = {
     "algorithm" : ['SAMME' , 'SAMME.R'],
@@ -18,26 +16,18 @@ def run_ada(vec_model_name, algorithm = "SAMME.R", n_estimators = 50, learning_r
     '''Given the name of the vector model to train on and the values of the difference hyperparameters, 
     run the Ada-Boost Classification algorithm and save the results to a json file.'''
 
-
-    training_data, training_labels = get_training_info(vec_model_name)
-    test_data, test_labels = get_test_info(vec_model_name)
-
     ada = AdaBoostClassifier(n_estimators=n_estimators, learning_rate=learning_rate,
                             algorithm= algorithm)
 
-    ada.fit(training_data, training_labels)
-    predictions = ada.predict(test_data)
-
     model_details = {
         "Vector_Model" : vec_model_name, 
-        "Model" : "Ada-Boost", 
+        "Model" : ClassificationModels.ADA.value, 
         "Algorithm" : algorithm, 
         "Learning Rate" : learning_rate, 
         "N_Estimators" : n_estimators,
     }
 
-    calculate_classifier_metrics(test_labels, predictions, model_details)
-    show_confusion_matrix(test_labels, predictions, "Ada-Boost w/{} Confusion Matrix".format(vec_model_name))
+    run_classifier(vec_model_name, ada, model_details)
 
 
 if __name__ == "__main__": 

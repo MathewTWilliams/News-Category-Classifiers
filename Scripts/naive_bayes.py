@@ -2,9 +2,7 @@
 #Version: 12/08/2021
 from sklearn.naive_bayes import GaussianNB
 from constants import ClassificationModels, WordVectorModels
-from make_confusion_matrix import show_confusion_matrix
-from get_article_vectors import get_training_info, get_test_info
-from classifier_metrics import calculate_classifier_metrics
+from run_classification import run_classifier
 
 #Param Grids for Grid Search Cross Validation
 gnb_param_grid_1 = {
@@ -27,12 +25,8 @@ def run_naive_bayes(vec_model_name, var_smoothing = 1e-9):
 
     '''Given the name of the vector model to train on and the values of the different hyperparameters, 
     run the Gaussian Naive Bayes Classification algorithm and save the results to a json file.'''
-    training_data, training_labels = get_training_info(vec_model_name)
-    test_data, test_labels = get_test_info(vec_model_name)
     gauss = GaussianNB(var_smoothing = var_smoothing)
 
-    gauss.fit(training_data, training_labels)
-    predictions = gauss.predict(test_data)
 
     model_details = {
         'Vector_Model': vec_model_name, 
@@ -40,8 +34,7 @@ def run_naive_bayes(vec_model_name, var_smoothing = 1e-9):
         'var_smoothing' : var_smoothing
     }
 
-    calculate_classifier_metrics(test_labels, predictions, model_details)
-    show_confusion_matrix(test_labels, predictions, "Gaussian Naive Bayes w/" + vec_model_name + " Confusion Matrix")
+    run_classifier(vec_model_name, gauss, model_details)
 
 
 

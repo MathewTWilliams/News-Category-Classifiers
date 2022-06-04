@@ -2,12 +2,9 @@
 #Version: 12/8/2021
 
 from sklearn.ensemble import RandomForestClassifier
-from get_article_vectors import get_training_info, get_test_info
-from classifier_metrics import calculate_classifier_metrics
 import numpy as np
 from constants import RAND_STATE, ClassificationModels, WordVectorModels
-from make_confusion_matrix import show_confusion_matrix
-
+from run_classification import run_classifier
 
 #Param Grid for Grid Search Cross Validation
 rand_forest_param_grid = {
@@ -25,16 +22,10 @@ def run_random_forrest(vec_model_name, n_estimators = 100,
 
     '''Given the name of the vector model to train on and the values of the different hyperparameters, 
     run the Random Forest Classification algorithm and save the results to a json file.'''
-    training_data, training_labels = get_training_info(vec_model_name)
-    test_data, test_labels = get_test_info(vec_model_name)
 
 
     rf = RandomForestClassifier(criterion= criterion, n_estimators=n_estimators, random_state=RAND_STATE, 
                                 max_features=None, max_samples = max_samples)
-
-    rf.fit(training_data, training_labels)
-    predictions = rf.predict(test_data)
-
 
     model_details = {
         'Vector_Model' : vec_model_name, 
@@ -44,8 +35,7 @@ def run_random_forrest(vec_model_name, n_estimators = 100,
         'Max Samples (as fraction)' : max_samples
     }
 
-    calculate_classifier_metrics(test_labels, predictions, model_details)
-    show_confusion_matrix(test_labels, predictions, "Random Forest w/" + vec_model_name + " Confusion Matrix")
+    run_classifier(vec_model_name, rf, model_details)
 
 
 

@@ -1,10 +1,8 @@
 #Author: Matt Williams
 #Version: 12/08/2021
 from sklearn.neighbors import KNeighborsClassifier
-from get_article_vectors import get_test_info, get_training_info
-from make_confusion_matrix import show_confusion_matrix
-from classifier_metrics import calculate_classifier_metrics
 from constants import WordVectorModels, ClassificationModels
+from run_classification import run_classifier
 
 #Param grid for Grid Search Cross Validation
 knn_param_grid = {
@@ -20,15 +18,10 @@ def run_knn(vec_model_name, n_neighbors = 5, weights = 'uniform',
             algorithm = 'auto', p = 2):
     '''Given the name of the vector model to train on and the values of the different hyperparameters, 
     run the K-Nearest Neighbors Classification algorithm and save the results to a json file.'''
-    training_data, training_labels = get_training_info(vec_model_name)
-    test_data, test_labels = get_test_info(vec_model_name)
-
+   
     knn = KNeighborsClassifier(n_neighbors=n_neighbors, weights=weights, algorithm=algorithm, 
                                 p=p)
                                 
-    knn.fit(training_data, training_labels)
-    predictions = knn.predict(test_data)
-
     model_details = {
         'Vector_Model': vec_model_name, 
         'Model' : ClassificationModels.KNN.value,
@@ -38,8 +31,7 @@ def run_knn(vec_model_name, n_neighbors = 5, weights = 'uniform',
         "p" : p, 
     }
 
-    calculate_classifier_metrics(test_labels, predictions, model_details)
-    show_confusion_matrix(test_labels, predictions, "KNN w/" + vec_model_name + " Confusion Matrix")
+    run_classifier(vec_model_name, knn, model_details)
         
         
 

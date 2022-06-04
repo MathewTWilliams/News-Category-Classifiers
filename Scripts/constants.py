@@ -32,6 +32,7 @@ class ClassificationModels(Enum):
     LOG_REG = "Logistic Regression"
     MLP = "Muti-Layer Perceptron"
     ADA = "Ada-Boost"
+    BAG = "Bagging"
 
     @classmethod
     def get_values_as_list(self): 
