@@ -28,11 +28,14 @@ class ClassificationModels(Enum):
     KNN = "K-Nearest Neighbor"
     SVM = "Support Vector Machine"
     RF = "Random Forest"
-    GNB = "Gaussian Naive Bayes"
     LOG_REG = "Logistic Regression"
-    MLP = "Muti-Layer Perceptron"
     ADA = "Ada-Boost"
     BAG = "Bagging"
+    GRD_BST = "Gradient Boosting"
+    CENT = "Nearest Centroid"
+    RAD = "Radius Neighbors"
+    CNB = "Complement Naive Bayes"
+
 
     @classmethod
     def get_values_as_list(self): 
