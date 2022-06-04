@@ -1,6 +1,6 @@
 #Author: Matt Williams
 #Version: 12/08/2021
-from sklearn.naive_bayes import GaussianNB
+from sklearn.naive_bayes import ComplementNB
 from constants import ClassificationModels, WordVectorModels
 from run_classification import run_classifier
 
@@ -25,12 +25,12 @@ def run_naive_bayes(vec_model_name, var_smoothing = 1e-9):
 
     '''Given the name of the vector model to train on and the values of the different hyperparameters, 
     run the Gaussian Naive Bayes Classification algorithm and save the results to a json file.'''
-    gauss = GaussianNB(var_smoothing = var_smoothing)
+    gauss = ComplementNB(var_smoothing = var_smoothing)
 
 
     model_details = {
         'Vector_Model': vec_model_name, 
-        'Model' : ClassificationModels.GNB.value,
+        'Model' : ClassificationModels.CNB.value,
         'var_smoothing' : var_smoothing
     }
 
