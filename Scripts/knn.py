@@ -6,21 +6,22 @@ from run_classification import run_classifier
 
 #Param grid for Grid Search Cross Validation
 knn_param_grid = {
-    "n_neighbors" : [5, 8, 10],
+    "n_neighbors" : list(range(5, 30, 5)),
     "weights" : ['uniform', 'distance'], 
     "algorithm" : ['ball_tree', 'kd_tree'],
-    "p" : [1,2,3],
+    "p" : list(range(1,5)),
+    "leaf_size" : list(range(10, 60, 10))
 
 }
 
 
 def run_knn(vec_model_name, n_neighbors = 5, weights = 'uniform', 
-            algorithm = 'auto', p = 2):
+            algorithm = 'auto', p = 2, leaf_size = 30):
     '''Given the name of the vector model to train on and the values of the different hyperparameters, 
     run the K-Nearest Neighbors Classification algorithm and save the results to a json file.'''
    
     knn = KNeighborsClassifier(n_neighbors=n_neighbors, weights=weights, algorithm=algorithm, 
-                                p=p)
+                                p=p, leaf_size=leaf_size)
                                 
     model_details = {
         'Vector_Model': vec_model_name, 
@@ -29,6 +30,7 @@ def run_knn(vec_model_name, n_neighbors = 5, weights = 'uniform',
         "Weights" : weights,
         "algorithm" : algorithm, 
         "p" : p, 
+        "leaf_size" : leaf_size
     }
 
     run_classifier(vec_model_name, knn, model_details)

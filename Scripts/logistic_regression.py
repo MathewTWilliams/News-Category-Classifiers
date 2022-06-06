@@ -9,19 +9,21 @@ from run_classification import run_classifier
 #Param Grids for Grid Search Cross Validation
 log_regr_param_grid= {
     'penalty' : ['l1', 'l2', 'elasticnet', 'none'],
-    'tol' : [1e-3, 1e-4, 1e-5], 
-    'C' : [0.5, 1.0, 2.0], 
+    'tol' : [10**i for i in range(-4, 1)], 
+    'C' : list(range(0.2,1.2,0.2)), 
     'solver' : ['saga'], 
-    'max_iter' : [100, 200, 300],
-    'random_state' : [RAND_STATE]
+    'max_iter' : list(range(100, 600, 100)),
+    'random_state' : [RAND_STATE], 
+    'multi_class' : ["ovr", "multinomial"], 
+
 }
 
 def run_logistic_regression(vec_model_name, penalty = 'l2', tol = 1e-4, C = 1,
-                            solver = 'saga',  max_iter = 100):
+                            solver = 'saga',  max_iter = 100, multi_class = "multinomial"):
 
     '''Given the name of the vector model to train on and the values of the different hyperparameters, 
     run the Logistic Regression Classification algorithm and save the results to a json file.'''
-    training_data, training_labels = get_training_info(vec_model_name)
+    _, training_labels = get_training_info(vec_model_name)
 
     weights_dict = {}
     for category in training_labels: 
@@ -36,7 +38,7 @@ def run_logistic_regression(vec_model_name, penalty = 'l2', tol = 1e-4, C = 1,
 
 
     lr = LogisticRegression(penalty=penalty, random_state=RAND_STATE, tol= tol, solver=solver, 
-                            class_weight= weights_dict, C=C, max_iter=max_iter)
+                            class_weight= weights_dict, C=C, max_iter=max_iter, multi_class=multi_class)
 
 
     model_details = {
@@ -46,7 +48,8 @@ def run_logistic_regression(vec_model_name, penalty = 'l2', tol = 1e-4, C = 1,
         'tolerance' : tol, 
         'Solver': solver,
         'C' : C,
-        'Max Iterations': max_iter
+        'Max Iterations': max_iter, 
+        "multi_class" : multi_class
 
     }
 

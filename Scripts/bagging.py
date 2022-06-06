@@ -7,20 +7,18 @@ from constants import WordVectorModels, ClassificationModels
 from run_classification import run_classifier
 
 bagging_parap_grid = {
-    "n_estimators" : [],
-    "max_samples" : [],
-    "max_features" : [],
-    "bootstrap" : [True, False], 
-    "bootstrap_features" : [True, False],
-    "warm_start" : [True, False],
+    "n_estimators" : list(range(30, 80, 10)),
+    "max_samples" : list(range(1000, 16000, 1000)),
+    "max_features" : list(range(50, 300, 50)),
+    "bootstrap" : [False], 
+    "bootstrap_features" : [False]
 }
 
 
-def run_bagging(vec_model_name, n_estimators = 10, max_samples = 1.0, max_features = 1.0, \
-                bootstrap = True, bootstrap_features = False, warm_start = False): 
+def run_bagging(vec_model_name, n_estimators = 10, max_samples = 1.0, max_features = 1.0): 
 
-    bagging = BaggingClassifier(n_estimators=n_estimators, max_samples=max_samples, max_features=max_features,\
-                                bootstrap=bootstrap, bootstrap_features=bootstrap_features, warm_start=warm_start)
+    bagging = BaggingClassifier(base_estimator = None, n_estimators=n_estimators, max_samples=max_samples,\
+        max_features=max_features,bootstrap=False, bootstrap_features=False, warm_start=False, oob_score=False)
 
     model_details = {
         "Vector_Model" : vec_model_name,
@@ -28,9 +26,8 @@ def run_bagging(vec_model_name, n_estimators = 10, max_samples = 1.0, max_featur
         "N_Estimators" : n_estimators, 
         "Max Samples" : max_samples, 
         "Max Features" : max_features, 
-        "Bootstrap" : bootstrap, 
-        "Bootstrap_Features" : bootstrap_features, 
-        "Warm Start" : warm_start
+        "bootstrap" : False, 
+        "bootstrap_features" : False
     }
 
     run_classifier(vec_model_name, bagging, model_details)

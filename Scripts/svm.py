@@ -7,27 +7,37 @@ from run_classification import run_classifier
 
 #Param Grid for Grid Seartch Cross Validation
 svm_param_grid = {
-    'C': [0.25, 0.5, 1, 1.5, 2], 
+    'C': list(range(0.2, 1.2, 0.2)), 
     'kernel' : ['linear', 'poly', 'rbf', 'sigmoid'],
     'break_ties' : [True],
-    'decision_function_shape' : ['ovr', 'ovo']
+    'decision_function_shape' : ['ovr', 'ovo'], 
+    'degree' : list(range(2, 7)), 
+    'coef0' : list(range(0.1, 0.6, 0.1)), 
+    'tol' : [10 ** i for i in range(-4,1)], 
+    'class_weight' : ['balanced']
 }
 
-def run_svm(vec_model_name, C = 1.0, kernel = 'rbf',
-              decision_function_shape = 'ovr'):
+def run_svm(vec_model_name, C = 1.0, kernel = 'rbf', decision_function_shape = 'ovr', \
+        degree = 3, coef0 = 0.0, tol = 1e-3):
 
     '''Given the name of the vector model to train on and the values of the different hyperparameters, 
     run the Support Vector Machine Classification algorithm and save the results to a json file.'''
 
-    svm = SVC(C=C, kernel=kernel,decision_function_shape=decision_function_shape,
-                random_state=RAND_STATE, break_ties=True)
+    svm = SVC(C=C, kernel=kernel,decision_function_shape=decision_function_shape, random_state=RAND_STATE, \
+            break_ties=True, degree=degree, coef0=coef0, class_weight="balanced", tol=tol)
 
     model_details = {
         'Vector_Model': vec_model_name, 
         'Model' : ClassificationModels.SVM.value,
         "C" : C,
         "kernel" : kernel, 
-        "Decision Function Shape" : decision_function_shape 
+        "Decision Function Shape" : decision_function_shape, 
+        "break_ties" : True, 
+        "degree" : degree, 
+        "coef0" : coef0, 
+        "tol" : tol, 
+        "class_weights" : "balanced"
+
     }
 
     run_classifier(vec_model_name, svm, model_details)

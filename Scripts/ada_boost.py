@@ -7,10 +7,9 @@ from run_classification import run_classifier
 
 ada_param_grid = {
     "algorithm" : ['SAMME' , 'SAMME.R'],
-    "n_estimators" : [30, 40, 50, 60, 70], 
+    "n_estimators" : list(range(30, 80, 10)),
     "learning_rate" : [1e-4, 1e-3, 1e-2, 1e-1, 1]
 }
-
 
 def run_ada(vec_model_name, algorithm = "SAMME.R", n_estimators = 50, learning_rate = 1.0): 
     '''Given the name of the vector model to train on and the values of the difference hyperparameters, 
@@ -31,6 +30,6 @@ def run_ada(vec_model_name, algorithm = "SAMME.R", n_estimators = 50, learning_r
 
 
 if __name__ == "__main__": 
-     run_ada(WordVectorModels.WORD2VEC.value)
-     run_ada(WordVectorModels.FASTTEXT.value)
-     run_ada(WordVectorModels.GLOVE.value)
+    run_ada(WordVectorModels.WORD2VEC.value)
+    run_ada(WordVectorModels.FASTTEXT.value)
+    run_ada(WordVectorModels.GLOVE.value)
