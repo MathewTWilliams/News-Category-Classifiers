@@ -21,7 +21,7 @@ class WordVectorModels(Enum):
     WORD2VEC = "word2vec"
 
     @classmethod
-    def get_values_as_list(self): 
+    def get_values_as_list(cls): 
         return [model.value for model in WordVectorModels]
 
 class ClassificationModels(Enum): 
@@ -38,7 +38,7 @@ class ClassificationModels(Enum):
 
 
     @classmethod
-    def get_values_as_list(self): 
+    def get_values_as_list(cls): 
         return [model.value for model in ClassificationModels]
 
 class Categories(Enum): 
@@ -54,7 +54,7 @@ class Categories(Enum):
     TECH =  "TECH"
 
     @classmethod
-    def get_values_as_list(self): 
+    def get_values_as_list(cls): 
         return [cat.value for cat in Categories]
 
 #Dataset: https://www.kaggle.com/rmisra/news-category-dataset 
@@ -88,7 +88,7 @@ CLEANED_TEXT_PATH = os.path.join(DATA_DIR_PATH, "Cleaned_Text.json")
 TEST_SET_PERC = 0.1
 TRAIN_SET_PERC = 0.9
 RAND_STATE = 42
-K_FOLDS = 10
+K_FOLDS = 5
 
 
 #File Path to the directory that contains our Models related to generating word embeddings. 
