@@ -4,10 +4,10 @@
 from sklearn.neighbors import RadiusNeighborsClassifier
 from constants import ClassificationModels, WordVectorModels
 from run_classification import run_classifier
-
+import numpy as np
 
 near_rad_param_grid = {
-    "radius" : list(range(0.5, 3.0, 0.5)), 
+    "radius" : np.arange(0.5, 3.0, 0.5).tolist(), #here
     "algorithm" : ["ball_tree, kd_tree"], 
     "leaf_size" : list(range(10, 60, 10)), 
     "p" : list(range(1,5)), 

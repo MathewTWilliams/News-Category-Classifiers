@@ -4,10 +4,11 @@
 from sklearn.neighbors import NearestCentroid
 from constants import ClassificationModels, WordVectorModels
 from run_classification import run_classifier
+import numpy as np
 
 near_cent_param_grid = {
     "metric" : ["cosine", "euclidean", "manhattan"], 
-    "shrink_threshold" : list(range(0.1, 0.6, 0.1))
+    "shrink_threshold" : np.arange(0.1, 0.6, 0.1).tolist()
 }
 
 

@@ -5,14 +5,15 @@
 from sklearn.ensemble import GradientBoostingClassifier
 from constants import ClassificationModels, WordVectorModels
 from run_classification import run_classifier
+import numpy as np
 
 grad_boost_param_grid = {
     "loss" : ["log_loss", "exponential"],
     "learning_rate" : [10**i for i in range(-4,1)], 
     "n_estimators" : list(range(80,130, 10)), 
-    "subsample" : list(range(0.2, 1.1, 0.2)),
+    "subsample" : np.arange(0.2, 1.1, 0.2).tolist(),
     "criterion" : ["friedman_mse", "squared_error"],
-    "min_weight_fraction_leaf" : list(range(0.1, 0.6, 0.1)),
+    "min_weight_fraction_leaf" : np.arange(0.1, 0.6, 0.1).tolist(),
     "max_depth" : list(range(3,8)), 
     "max_features" : ["sqrt", "log2"],
     "min_impurity_decrease" : [0.0001],

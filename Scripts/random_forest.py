@@ -12,8 +12,8 @@ rand_forest_param_grid = {
     'criterion' : ['entropy', 'gini', "log_loss"], 
     'random_state' : [RAND_STATE],
     'max_features' : [None, "sqrt", "log2"],
-    'max_samples' : list(range(0.4, 0.9, 0.1)), 
-    'min_weight_fraction_leaf' : list(range(0.1,0.6,0.1)), 
+    'max_samples' : np.arange(0.4, 0.9, 0.1).tolist(),
+    'min_weight_fraction_leaf' : np.arange(0.1,0.6,0.1).tolist(),
     "min_impurity_decrease" : [0.0001],
     "class_weight" : ["balanced"]
 }

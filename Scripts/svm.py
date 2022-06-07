@@ -4,15 +4,16 @@
 from sklearn.svm import SVC
 from constants import RAND_STATE, ClassificationModels, WordVectorModels
 from run_classification import run_classifier
+import numpy as np
 
 #Param Grid for Grid Seartch Cross Validation
 svm_param_grid = {
-    'C': list(range(0.2, 1.2, 0.2)), 
+    'C': np.arange(0.2, 1.2, 0.2).tolist(),
     'kernel' : ['linear', 'poly', 'rbf', 'sigmoid'],
     'break_ties' : [True],
     'decision_function_shape' : ['ovr', 'ovo'], 
     'degree' : list(range(2, 7)), 
-    'coef0' : list(range(0.1, 0.6, 0.1)), 
+    'coef0' : np.arange(0.1, 0.6, 0.1).tolist(),
     'tol' : [10 ** i for i in range(-4,1)], 
     'class_weight' : ['balanced']
 }

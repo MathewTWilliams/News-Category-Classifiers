@@ -5,12 +5,13 @@ from sklearn.linear_model import LogisticRegression
 from get_article_vectors import get_training_info
 from constants import RAND_STATE, WordVectorModels, ClassificationModels
 from run_classification import run_classifier
+import numpy as np
 
 #Param Grids for Grid Search Cross Validation
 log_regr_param_grid= {
     'penalty' : ['l1', 'l2', 'elasticnet', 'none'],
     'tol' : [10**i for i in range(-4, 1)], 
-    'C' : list(range(0.2,1.2,0.2)), 
+    'C' : np.arange(0.2,1.2,0.2).tolist(),
     'solver' : ['saga'], 
     'max_iter' : list(range(100, 600, 100)),
     'random_state' : [RAND_STATE], 
