@@ -45,6 +45,7 @@ Once all the articles for each category were scrapped for the web, the number of
 
 ### Prerequisites
 - A newer version of Python must be installed. This was made using Python 3.7.9
+- edit: project has been update for Python 3.10.2
 
 ### Installation
 1. Clone the repository: 
@@ -92,8 +93,6 @@ Here is a general overview of each script contained in the project. Each file co
 
 - get_article_vectors.py: Gives access to our article vectors. Can obtain either the training data set, test data, or both (combined). 
 
-
-### Utility Scripts
 - constant.py: contains constant values important to the project. Mostly contains file path related items. 
 
 - save_load_json.py: contains methods to load and save json files when not using Pandas related items. 
@@ -107,19 +106,18 @@ cross_validation.py. Done to prevent circular dependencies/imports.
 
 - visualize_box_plots.py: after grid search cross validation, this script is used to show box plots for each classifier for each vector model. Box plots are made for each metric: accuracy, precision, recall, and f1-score. The 10 chosen hyper-parameter combinations are based on the highest accuracy. This holds true for the precision, recall, and f1-score box plots as well. 
 
-
-### Sci-kit Learn related scripts:
 - Contains the implementations of the different ML related algorithms used. 
   - k-means.py
-  - hierarchical_clustering.py
-  - db_scan.py
-  - spectral_clustering.py
   - random_forest.py
-  - ml_perceptron.py
   - naive_bayes.py
   - knn.py
   - svm.py
   - logistic_regression.py
+  - near_centroid.py
+  - near_radius.py
+  - ada_boost.py
+  - bagging.py
+  - grad_boost.py
 
 - classifier_metrics.py: calculates and saves a classification report given true labels, predictions, and the vector model used. 
 
