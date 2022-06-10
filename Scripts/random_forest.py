@@ -6,7 +6,7 @@ import numpy as np
 from constants import RAND_STATE, ClassificationModels, WordVectorModels
 from run_classification import run_classifier
 
-#Param Grid for Grid Search Cross Validation
+#Parameter grid for cross validation
 rand_forest_param_grid = {
     'n_estimators' : list(range(80,130, 10)), 
     'criterion' : ['entropy', 'gini', "log_loss"], 

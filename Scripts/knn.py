@@ -4,7 +4,7 @@ from sklearn.neighbors import KNeighborsClassifier
 from constants import WordVectorModels, ClassificationModels
 from run_classification import run_classifier
 
-#Param grid for Grid Search Cross Validation
+#Parameter grid for Cross Validation
 knn_param_grid = {
     "n_neighbors" : list(range(5, 30, 5)),
     "weights" : ['uniform', 'distance'], 

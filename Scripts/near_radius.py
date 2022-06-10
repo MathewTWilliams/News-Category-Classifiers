@@ -6,6 +6,7 @@ from constants import ClassificationModels, WordVectorModels
 from run_classification import run_classifier
 import numpy as np
 
+# Parameter grid for cross validation
 near_rad_param_grid = {
     "radius" : np.arange(0.5, 3.0, 0.5).tolist(), #here
     "algorithm" : ["ball_tree, kd_tree"], 

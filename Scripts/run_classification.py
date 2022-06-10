@@ -7,7 +7,8 @@ from classifier_metrics import calculate_classifier_metrics
 from make_confusion_matrix import show_confusion_matrix
 
 def run_classifier(vec_model_name, classifier, classifier_details):
-    
+    '''Given the name of the word vector model, a sklearn classifier instance, and a dictionary of the classifier details,
+    load the dataset and run the classification algorithm. The results are then saved to a JSON file. '''
     training_data, training_labels = get_training_info(vec_model_name)
     test_data, test_labels = get_test_info(vec_model_name)
 

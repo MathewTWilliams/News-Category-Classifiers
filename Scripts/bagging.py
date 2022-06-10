@@ -6,6 +6,7 @@ from sklearn.ensemble import BaggingClassifier
 from constants import WordVectorModels, ClassificationModels
 from run_classification import run_classifier
 
+# Parameter Grid for cross validation
 bagging_parap_grid = {
     "n_estimators" : list(range(30, 80, 10)),
     "max_samples" : list(range(1000, 16000, 1000)),
@@ -16,7 +17,8 @@ bagging_parap_grid = {
 
 
 def run_bagging(vec_model_name, n_estimators = 10, max_samples = 1.0, max_features = 1.0): 
-
+    '''Given the name of the vector model to train on and the values of the difference hyperparameters, 
+    run the Bagging Classification algorithm and save the results to a json file.'''
     bagging = BaggingClassifier(base_estimator = None, n_estimators=n_estimators, max_samples=max_samples,\
         max_features=max_features,bootstrap=False, bootstrap_features=False, warm_start=False, oob_score=False)
 

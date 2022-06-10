@@ -6,6 +6,7 @@ from constants import ClassificationModels, WordVectorModels
 from run_classification import run_classifier
 import numpy as np
 
+# Parameter grid for cross validation
 near_cent_param_grid = {
     "metric" : ["cosine", "euclidean", "manhattan"], 
     "shrink_threshold" : np.arange(0.1, 0.6, 0.1).tolist()
@@ -13,7 +14,8 @@ near_cent_param_grid = {
 
 
 def run_near_centroid(vec_model_name, metric = "euclidean", shrink_threshold = None): 
-    
+    '''Given the name of the vector model to train on and the values of the difference hyperparameters, 
+    run the Nearest Centroid Classification algorithm and save the results to a json file.'''
     near_cent = NearestCentroid(metric=metric, shrink_threshold=shrink_threshold)
 
     model_details = {

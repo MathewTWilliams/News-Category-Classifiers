@@ -5,6 +5,7 @@ from sklearn.ensemble import AdaBoostClassifier
 from constants import WordVectorModels, ClassificationModels
 from run_classification import run_classifier
 
+# Parameter grid for cross validation
 ada_param_grid = {
     "algorithm" : ['SAMME' , 'SAMME.R'],
     "n_estimators" : list(range(30, 80, 10)),

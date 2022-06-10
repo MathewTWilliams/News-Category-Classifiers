@@ -3,7 +3,8 @@
 from sklearn.naive_bayes import ComplementNB
 from constants import ClassificationModels, WordVectorModels
 from run_classification import run_classifier
-
+ 
+# Parameter grid for cross validation
 nb_param_grid = {
     "alpha" : [10 ** i for i in range(-3,1)], 
     "norm" : [True, False]

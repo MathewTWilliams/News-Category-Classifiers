@@ -10,9 +10,8 @@
 
 # This script goes through the Scrapped_Text.json file and tries to re-scrape
 # the text for those articles that didn't have their text scrapped the first time.
-# The script will run through the file and try to rescrape the artciles that where
-# not correctly scraped the previous time (if the scraped text from the previous time only contains
-# the headline and description of the article).  
+# If the scraped text from the previous time only contains the headline and description of the article, 
+# then the article wasn't correctly scrapped the first time.  
 
 # This time, no concurrency will be used and the delay between requests will
 # be longer to make sure we don't overload the server. 

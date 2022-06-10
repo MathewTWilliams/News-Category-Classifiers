@@ -6,7 +6,7 @@ from constants import RAND_STATE, ClassificationModels, WordVectorModels
 from run_classification import run_classifier
 import numpy as np
 
-#Param Grid for Grid Seartch Cross Validation
+#Parameter grid for cross validation
 svm_param_grid = {
     'C': np.arange(0.2, 1.2, 0.2).tolist(),
     'kernel' : ['linear', 'poly', 'rbf', 'sigmoid'],

@@ -7,6 +7,7 @@ from constants import ClassificationModels, WordVectorModels
 from run_classification import run_classifier
 import numpy as np
 
+# Parameter grid for cross validation
 grad_boost_param_grid = {
     "loss" : ["log_loss", "exponential"],
     "learning_rate" : [10**i for i in range(-4,1)], 
@@ -26,7 +27,8 @@ def run_grad_boost(vec_model_name, loss = "log_loss", learning_rate = 0.1, n_est
                 subsample = 1.0, criterion = "friedman_mse", min_weight_fraction_leaf = 0.0,\
                 max_depth = 3, max_features = None, min_impurity_decrease = 0.0, n_iter_no_change = None,\
                 tol = 1e-4): 
-    
+    '''Given the name of the vector model to train on and the values of the difference hyperparameters, 
+    run the Gradient Boost Classification algorithm and save the results to a json file.'''
     grad_boost = GradientBoostingClassifier(loss=loss, learning_rate=learning_rate, n_estimators=n_estimators, \
                                         subsample=subsample, criterion=criterion, min_weight_fraction_leaf=min_weight_fraction_leaf, \
                                         max_depth=max_depth, max_features=max_features, min_impurity_decrease=min_impurity_decrease, \
