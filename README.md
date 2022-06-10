@@ -1,6 +1,32 @@
-# News-Category-Classifiers-and-Clusterings
-A repository for my for graduate Data Mining I semester project. The goal of the project is to make and compare different News Category Classification models trained on the average Word Vector Embeddings of articles.    
+# News-Category-Classifiers
+A repository for my for graduate Data Mining I semester project. 
 
+## Problem Description
+Given the words from an article's headline, description, and body, predict which sugject/category the article belongs to. 
+
+## Dataset
+The dataset used for this project can be found at the link below. 
+
+- [News Category Dataset](https://www.kaggle.com/rmisra/news-category-dataset)
+
+The dataset contain information (the category, the link, etc.) about ~200k news articles from HuffPost, which were collected between 2012 and 2018.
+
+The original dataset contained 41 categories, for this project I used a subset of 10 categories. I choose the 10 categories that would theoretically give use the most balanced subset. 
+
+The 10 categories chosen were: media, weird news, green, worldpost, religion, style, science, world news, taste, and tech. 
+
+Once all the articles for each category were scrapped for the web, the number of articles for each category decreased due to the fact that some of the article weren't available anymore. Below you can find the category, the number of articles used, and the number of articles in the data set. 
+
+- Media: 2505 / 2815
+- Weird News: 2372 / 2670
+- Green: 2284 / 2622
+- WorldPost: 2549 / 2579
+- Religion: 2455 / 2556
+- Style: 2232 / 2254
+- Science: 2016 / 2178
+- World News: 2172 / 2177
+- Taste: 2068 / 2096
+- Tech: 1773 / 2082
 
 ## Built With: 
 - [BeautifulSoup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/)
@@ -15,12 +41,13 @@ A repository for my for graduate Data Mining I semester project. The goal of the
 - [requests](https://docs.python-requests.org/en/latest/)
 - [Sci-Kit Learn](https://scikit-learn.org/stable/)
 
-# Getting Started
+## Getting Started
 
-## Prerequisites
+### Prerequisites
 - A newer version of Python must be installed. This was made using Python 3.7.9
+- edit: project has been update for Python 3.10.2
 
-## Installation
+### Installation
 1. Clone the repository: 
 ```sh
 git clone https://github.com/MathewTWilliams/News-Category-Classifiers
@@ -44,8 +71,8 @@ pip install -r /path/to/requirements.txt
 
 7. Move the downloaded dataset (keeping the same name) into the newly made 'Data' Folder.
 
-# Usage
-## Scripts 
+## Usage
+### Scripts 
 Here is a general overview of each script contained in the project. Each file contains comments that give more information on each script. 
 
 - sort_dataset.py: sort our dataset based on categories and saves to a JSON file. 
@@ -66,8 +93,6 @@ Here is a general overview of each script contained in the project. Each file co
 
 - get_article_vectors.py: Gives access to our article vectors. Can obtain either the training data set, test data, or both (combined). 
 
-
-## Utility Scripts
 - constant.py: contains constant values important to the project. Mostly contains file path related items. 
 
 - save_load_json.py: contains methods to load and save json files when not using Pandas related items. 
@@ -81,19 +106,18 @@ cross_validation.py. Done to prevent circular dependencies/imports.
 
 - visualize_box_plots.py: after grid search cross validation, this script is used to show box plots for each classifier for each vector model. Box plots are made for each metric: accuracy, precision, recall, and f1-score. The 10 chosen hyper-parameter combinations are based on the highest accuracy. This holds true for the precision, recall, and f1-score box plots as well. 
 
-
-## Sci-kit Learn related scripts:
 - Contains the implementations of the different ML related algorithms used. 
   - k-means.py
-  - hierarchical_clustering.py
-  - db_scan.py
-  - spectral_clustering.py
   - random_forest.py
-  - ml_perceptron.py
   - naive_bayes.py
   - knn.py
   - svm.py
   - logistic_regression.py
+  - near_centroid.py
+  - near_radius.py
+  - ada_boost.py
+  - bagging.py
+  - grad_boost.py
 
 - classifier_metrics.py: calculates and saves a classification report given true labels, predictions, and the vector model used. 
 
@@ -105,10 +129,10 @@ cross_validation.py. Done to prevent circular dependencies/imports.
 
 - make_confusion_matrix.py: used to show the confusion matrix for a classifier. 
 
-# License
+## License
 Distributed under the MIT License. See ```LICENSE.txt``` for more information. 
 
-# Contact
+## Contact
 - Mathew Williams
 - email: williams.mathew.t@gmail.com
 - Project Link: https://github.com/MathewTWilliams/News-Category-Classifiers 
