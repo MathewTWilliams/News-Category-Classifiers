@@ -3,7 +3,7 @@
 #Version: 12/08/021
 from sklearn.linear_model import LogisticRegression
 from get_article_vectors import get_training_info
-from constants import RAND_STATE, WordVectorModels, ClassificationModels
+from utils import RAND_STATE, WordVectorModels, ClassificationModels
 from run_classification import run_classifier
 import numpy as np
 

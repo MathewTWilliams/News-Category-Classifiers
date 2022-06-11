@@ -21,7 +21,7 @@
 # we see no more successful rescrapes. 
 
 
-from constants import *
+from utils import *
 from save_load_json import load_json, save_json
 import time
 from web_scraper import get_text_at_link

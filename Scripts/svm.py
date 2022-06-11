@@ -2,7 +2,7 @@
 #Version: 12/8/2021
 
 from sklearn.svm import SVC
-from constants import RAND_STATE, ClassificationModels, WordVectorModels
+from utils import RAND_STATE, ClassificationModels, WordVectorModels
 from run_classification import run_classifier
 import numpy as np
 

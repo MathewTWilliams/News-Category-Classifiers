@@ -1,7 +1,7 @@
 #Author: Matt Williams
 #Version: 12/08/2021
 from sklearn.neighbors import KNeighborsClassifier
-from constants import WordVectorModels, ClassificationModels
+from utils import WordVectorModels, ClassificationModels
 from run_classification import run_classifier
 
 #Parameter grid for Cross Validation

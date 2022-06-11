@@ -3,7 +3,7 @@
 
 
 from sklearn.ensemble import BaggingClassifier
-from constants import WordVectorModels, ClassificationModels
+from utils import WordVectorModels, ClassificationModels
 from run_classification import run_classifier
 
 # Parameter Grid for cross validation

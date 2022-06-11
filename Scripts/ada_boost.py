@@ -2,7 +2,7 @@
 #Version: 6/02/2022
 
 from sklearn.ensemble import AdaBoostClassifier
-from constants import WordVectorModels, ClassificationModels
+from utils import WordVectorModels, ClassificationModels
 from run_classification import run_classifier
 
 # Parameter grid for cross validation

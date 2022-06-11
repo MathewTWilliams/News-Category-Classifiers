@@ -3,7 +3,7 @@
 
 #Reference: https://www.kaggle.com/ananyabioinfo/text-classification-using-word2vec
 import pandas as pd
-from constants import *
+from utils import *
 from get_vec_models import *
 from sklearn.model_selection import train_test_split
 import os

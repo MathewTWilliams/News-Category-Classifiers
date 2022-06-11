@@ -3,7 +3,7 @@
 
 
 from sklearn.ensemble import GradientBoostingClassifier
-from constants import ClassificationModels, WordVectorModels
+from utils import ClassificationModels, WordVectorModels
 from run_classification import run_classifier
 import numpy as np
 

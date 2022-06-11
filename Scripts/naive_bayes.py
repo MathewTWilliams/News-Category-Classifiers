@@ -1,7 +1,7 @@
 #Author: Matt Williams
 #Version: 12/08/2021
 from sklearn.naive_bayes import ComplementNB
-from constants import ClassificationModels, WordVectorModels
+from utils import ClassificationModels, WordVectorModels
 from run_classification import run_classifier
  
 # Parameter grid for cross validation

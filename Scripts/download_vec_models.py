@@ -3,7 +3,7 @@
 
 
 import gensim.downloader as api
-from constants import get_model_path
+from utils import get_model_path
 
 
 def download_models():

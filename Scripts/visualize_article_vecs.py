@@ -6,7 +6,7 @@ from get_article_vectors import get_combined_train_test_info
 from get_vec_models import get_vec_model_names
 import matplotlib.pyplot as plt
 from sklearn.manifold import TSNE
-from constants import RAND_STATE
+from utils import RAND_STATE
 
 
 

@@ -3,7 +3,7 @@
 
 from sklearn.ensemble import RandomForestClassifier
 import numpy as np
-from constants import RAND_STATE, ClassificationModels, WordVectorModels
+from utils import RAND_STATE, ClassificationModels, WordVectorModels
 from run_classification import run_classifier
 
 #Parameter grid for cross validation

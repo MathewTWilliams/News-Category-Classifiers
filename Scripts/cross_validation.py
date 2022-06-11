@@ -10,7 +10,7 @@ from sklearn.experimental import enable_halving_search_cv
 from sklearn.model_selection import HalvingGridSearchCV
 from get_article_vectors import get_training_info
 from save_load_json import save_json
-from constants import make_cv_result_path, K_FOLDS
+from utils import make_cv_result_path, K_FOLDS
 
 def run_grid_cv(classifier, param_grid, vec_model_name, c_name, n_jobs = 3):
     '''Given a classifier instance, its associated param grid, the name of the vector model

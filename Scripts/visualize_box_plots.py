@@ -3,7 +3,7 @@
 
 
 import matplotlib.pyplot as plt 
-from constants import get_cv_result_path, K_FOLDS
+from utils import get_cv_result_path, K_FOLDS
 from save_load_json import load_json
 import os
 from get_vec_models import get_vec_model_names

@@ -3,7 +3,7 @@
 
 import os
 from gensim.models import KeyedVectors
-from constants import MODEL_DIR_PATH, get_model_path, WordVectorModels
+from utils import MODEL_DIR_PATH, get_model_path, WordVectorModels
 
 def get_vec_models(): 
     """Returns a list of word2vec gensim models found in the models folder."""

@@ -5,7 +5,7 @@
 
 import matplotlib.pyplot as plt
 from save_load_json import load_json
-from constants import get_result_path
+from utils import get_result_path
 from get_vec_models import get_vec_model_names
 import os
 

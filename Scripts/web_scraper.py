@@ -3,9 +3,9 @@
 
 
 from bs4 import BeautifulSoup
-from Scripts.constants import Categories
+from Scripts.utils import Categories
 from save_load_json import save_json, load_json
-from constants import ARTICLE_SET_PATH, SCRAPED_TEXT_PATH
+from utils import ARTICLE_SET_PATH, SCRAPED_TEXT_PATH
 from http import HTTPStatus
 import requests
 from concurrent.futures import ThreadPoolExecutor

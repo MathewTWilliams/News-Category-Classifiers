@@ -15,7 +15,7 @@ from nltk.stem import SnowballStemmer
 from nltk.corpus import wordnet
 import nltk
 from num2words import num2words
-from constants import TEST_TEXT_PATH
+from utils import TEST_TEXT_PATH
 from spellchecker import SpellChecker
 
 

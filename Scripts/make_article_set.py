@@ -3,7 +3,7 @@
 
 
 from web_scraper import check_if_page_exists
-from constants import * 
+from utils import * 
 from save_load_json import load_json,save_json
 from concurrent.futures import ThreadPoolExecutor
 import time

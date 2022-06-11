@@ -2,7 +2,7 @@
 #Version: 6/04/2022
 
 from sklearn.neighbors import NearestCentroid
-from constants import ClassificationModels, WordVectorModels
+from utils import ClassificationModels, WordVectorModels
 from run_classification import run_classifier
 import numpy as np
 

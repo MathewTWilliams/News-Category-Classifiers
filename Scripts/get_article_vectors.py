@@ -1,6 +1,6 @@
 #Author: Matt Williams
 #Version: 12/02/2021
-from constants import ARTICLE_VECS_DIR_PATH, get_article_vecs_path, Datasets, WordVectorModels
+from utils import ARTICLE_VECS_DIR_PATH, get_article_vecs_path, Datasets, WordVectorModels
 import os 
 import pandas as pd
 import numpy as np
