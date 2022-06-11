@@ -72,8 +72,10 @@ pip install -r /path/to/requirements.txt
 7. Move the downloaded dataset (keeping the same name) into the newly made 'Data' Folder.
 
 ## Usage
-### Scripts 
-Here is a general overview of each script contained in the project. Each file contains comments that give more information on each script. 
+### Custom Python Modules: 
+- classifier_metrics.py: contains a method to calculate different classification metrics on the results of a classifier's predictions and save those metrics to a JSON file. Also has a method to find the best result for a given classifier and word vector model based on a specified metric. 
+
+### Order of Scripts
 
 ## License
 Distributed under the MIT License. See ```LICENSE.txt``` for more information. 
