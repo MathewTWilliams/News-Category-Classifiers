@@ -72,10 +72,31 @@ pip install -r /path/to/requirements.txt
 7. Move the downloaded dataset (keeping the same name) into the newly made 'Data' Folder.
 
 ## Usage
-### Custom Python Modules: 
+### Modules: 
 - **classifier_metrics.py**: contains a method to calculate different classification metrics on the results of a classifier's predictions and save those metrics to a JSON file. Also has a method to find the best result for a given classifier and word vector model based on a specified metric. 
+
 -  **cross_validation.py**: contains a method to run [Halving Grid Search Cross Validation](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.HalvingGridSearchCV.html) on a given classifier and parameter grid. 
 
+- **get_article_vectors.py**: contains methods for accessing the mean word embedding for each scrapped article in the training and test sets. 
+
+- **run_classification.py**: contains a method for running the given classifier on the test set and saving the results of the predictions to a JSON file. 
+
+- **save_load_json.py**: contains methods for loading and saving json files. 
+
+- **text_cleaner.py**: contains a method for cleaning a given string of text. The file contains the following capabilities:
+
+  - Removing digits
+  - Converting numbers to words
+  - Removing single characters
+  - Removing stop words
+  - Removing special characters
+  - Lemmatization
+  - Stemming
+  - Expanding contractions
+  - Converting Uppercase to lower case letters
+  - Removing a given number of the most and least frequent words in the given text
+
+- **utils.py**: contains global variables, enumeration definitions, and provides file path related methods. 
 ### Order of Scripts
 
 ## License
