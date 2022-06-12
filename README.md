@@ -73,7 +73,8 @@ pip install -r /path/to/requirements.txt
 
 ## Usage
 ### Custom Python Modules: 
-- classifier_metrics.py: contains a method to calculate different classification metrics on the results of a classifier's predictions and save those metrics to a JSON file. Also has a method to find the best result for a given classifier and word vector model based on a specified metric. 
+- **classifier_metrics.py**: contains a method to calculate different classification metrics on the results of a classifier's predictions and save those metrics to a JSON file. Also has a method to find the best result for a given classifier and word vector model based on a specified metric. 
+-  **cross_validation.py**: contains a method to run [Halving Grid Search Cross Validation](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.HalvingGridSearchCV.html) on a given classifier and parameter grid. 
 
 ### Order of Scripts
 
