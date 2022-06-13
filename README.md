@@ -83,6 +83,8 @@ pip install -r /path/to/requirements.txt
 
 - **save_load_json.py**: contains methods for loading and saving json files. 
 
+- **get_vec_models.py**: contains methods to load and return the downloaded word vector models. 
+
 - **text_cleaner.py**: contains a method for cleaning a given string of text. The file contains the following capabilities:
 
   - Removing digits
@@ -98,7 +100,14 @@ pip install -r /path/to/requirements.txt
 
 - **utils.py**: contains global variables, enumeration definitions, and provides file path related methods. 
 ### Order of Scripts
-
+1. **sort_dataset.py**: the original data set contains ~200k json objects. This script will group those JSON objects in a dictionary based on the category that each article object belongs to. That dictionary is then saved to a new JSON file. 
+2. **make_article_set.py**: using the new JSON object from the previous script, we make another JSON file that contains the important information for each article of the categories we have chosen for this project. An article isn't added to the set if its article no longer exists. This article set is saved to a new JSON file.  
+3. **web_scraper.py**: using multi-threading, scrape the text for each article found in the JSON file made by the previous script. A new JSOn file is created to store the scraped text, where they are stored in a dictionary based on their respective categories. 
+4. **re-scrape.py**: this script tries to re-scrape articles that weren't successfully scraped by the previous script. This script doesn't use multi-threading in order to prevent too many requests being sent in a short period of time, which is the most likely reason why articles weren't correctly scrapped the first time.
+5. **clean_article_texts.py**: this script utilizes multi-processing and the text_cleaner.py module in order to clean the scrapped texts. The cleaned texts are saved to a new JSON file where the texts are grouped by category. The value of the dictionary is a 3 dimensional list. 
+6. **download_vec_models.py**: a simple script to download and save the word vector models I've chosen for this project via the Gensim library.
+7. **make_article_vecs.py**: using the cleaned text of the articles, the mean word vector for each article is calculated and saved to new JSON files. This is down for each word vector model on both the training and test sets. 
+8. **cross_validation_util.py**: runs Halving Grid Search cross validation on all of our classifiers. Each classifier has a parameter grid defined in their respective files. These can be edited for greater hyper-parameter tuning. 
 ## License
 Distributed under the MIT License. See ```LICENSE.txt``` for more information. 
 
