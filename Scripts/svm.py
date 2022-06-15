@@ -10,7 +10,7 @@ import numpy as np
 svm_param_grid = {
     'C': np.arange(0.2, 1.2, 0.2).tolist(),
     'kernel' : ['linear', 'poly', 'rbf', 'sigmoid'],
-    'break_ties' : [True],
+    'break_ties' : [False],
     'decision_function_shape' : ['ovr', 'ovo'], 
     'degree' : list(range(2, 7)), 
     'coef0' : np.arange(0.1, 0.6, 0.1).tolist(),
@@ -25,7 +25,7 @@ def run_svm(vec_model_name, C = 1.0, kernel = 'rbf', decision_function_shape = '
     run the Support Vector Machine Classification algorithm and save the results to a json file.'''
 
     svm = SVC(C=C, kernel=kernel,decision_function_shape=decision_function_shape, random_state=RAND_STATE, \
-            break_ties=True, degree=degree, coef0=coef0, class_weight="balanced", tol=tol)
+            break_ties=False, degree=degree, coef0=coef0, class_weight="balanced", tol=tol)
 
     model_details = {
         'Vector_Model': vec_model_name, 
