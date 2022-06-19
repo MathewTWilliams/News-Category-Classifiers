@@ -5,11 +5,12 @@
 from sklearn.ensemble import BaggingClassifier
 from utils import WordVectorModels, ClassificationModels
 from run_classification import run_classifier
+import numpy as np
 
 # Parameter Grid for cross validation
 bagging_parap_grid = {
     "n_estimators" : list(range(30, 80, 10)),
-    "max_samples" : list(range(1000, 16000, 1000)),
+    "max_samples" : np.arange(0.1, 1.1, 0.1).tolist(),
     "max_features" : list(range(50, 300, 50)),
     "bootstrap" : [False], 
     "bootstrap_features" : [False]

@@ -16,7 +16,7 @@ log_regr_param_grid= {
     'max_iter' : list(range(100, 600, 100)),
     'random_state' : [RAND_STATE], 
     'multi_class' : ["ovr", "multinomial"], 
-    'l1-ratio' : np.arange(0, 1.25, 0.25)
+    'l1_ratio' : np.arange(0, 1.25, 0.25)
 }
 
 def run_logistic_regression(vec_model_name, penalty = 'l2', tol = 1e-4, C = 1,

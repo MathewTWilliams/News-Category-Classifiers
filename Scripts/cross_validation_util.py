@@ -35,10 +35,10 @@ if __name__ == "__main__":
         run_grid_cv(KNeighborsClassifier(), knn_param_grid, name, "K-Nearest Neighbor")
         run_grid_cv(ComplementNB(), nb_param_grid, name, "Complement Naive Bayes")
         run_grid_cv(LogisticRegression(), log_regr_param_grid, name, "Logistic Regression")
-        run_grid_cv(AdaBoostClassifier, ada_param_grid, "Ada-Boost")
-        run_grid_cv(GradientBoostingClassifier, grad_boost_param_grid, "Gradient Boosted Decision Trees")
-        run_grid_cv(BaggingClassifier, bagging_parap_grid, "Bagging")
-        run_grid_cv(RadiusNeighborsClassifier, near_rad_param_grid, "Near Radius")
-        run_grid_cv(NearestCentroid, near_cent_param_grid, "Nearest Centroid")        
+        run_grid_cv(AdaBoostClassifier(), ada_param_grid, name, "Ada-Boost")
+        run_grid_cv(GradientBoostingClassifier(), grad_boost_param_grid, name, "Gradient Boosted Decision Trees")
+        run_grid_cv(BaggingClassifier(), bagging_parap_grid, name, "Bagging")
+        run_grid_cv(RadiusNeighborsClassifier(), near_rad_param_grid, name,  "Near Radius")
+        run_grid_cv(NearestCentroid(), near_cent_param_grid, name, "Nearest Centroid")        
 
 
