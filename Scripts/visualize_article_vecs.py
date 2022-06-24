@@ -1,5 +1,5 @@
 #Author: Matt Williams
-#Version: 11/27/2021
+#Version: 06/24/2022
 
 #Reference: https://towardsdatascience.com/google-news-and-leo-tolstoy-visualizing-word2vec-word-embeddings-with-t-sne-11558d8bd4d
 from get_article_vectors import get_combined_train_test_info
@@ -45,6 +45,7 @@ def visualize_article_vecs(vec_model_name, n_components, labels = []):
     use T-SNE to visualized the article vectors with the given labels. If labels is left as an empty list, 
     then we are just visualizing the article vectors and their real labels'''
 
+    rand_state = 42
     if n_components < 2 or n_components > 3: 
         return
 
@@ -53,7 +54,7 @@ def visualize_article_vecs(vec_model_name, n_components, labels = []):
     else: 
         data, _ = get_combined_train_test_info(vec_model_name)
 
-    tsne = TSNE(n_components=n_components, init="pca", random_state=RAND_STATE)
+    tsne = TSNE(n_components=n_components, init="pca", random_state=rand_state)
 
 
     new_values = tsne.fit_transform(data)

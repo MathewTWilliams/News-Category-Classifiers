@@ -1,8 +1,9 @@
 #Author: Matt Williams
-#Version: 12/08/2021
+#Version: 06/24/2022
 from sklearn.neighbors import KNeighborsClassifier
-from utils import WordVectorModels, ClassificationModels
+from utils import WordVectorModels, ClassificationModels, CV_BEST_DICT_KEY
 from run_classification import run_classifier
+from save_load_json import load_cv_result
 
 #Parameter grid for Cross Validation
 knn_param_grid = {
@@ -15,22 +16,18 @@ knn_param_grid = {
 }
 
 
-def run_knn(vec_model_name, n_neighbors = 5, weights = 'uniform', 
-            algorithm = 'auto', p = 2, leaf_size = 30):
+def run_knn(vec_model_name):
     '''Given the name of the vector model to train on and the values of the different hyperparameters, 
     run the K-Nearest Neighbors Classification algorithm and save the results to a json file.'''
-   
-    knn = KNeighborsClassifier(n_neighbors=n_neighbors, weights=weights, algorithm=algorithm, 
-                                p=p, leaf_size=leaf_size)
+    
+    cv_results_dict = load_cv_result(ClassificationModels.KNN.value, vec_model_name)
+    best_params_dict = cv_results_dict[CV_BEST_DICT_KEY]
+    knn = KNeighborsClassifier(**best_params_dict)
                                 
     model_details = {
         'Vector_Model': vec_model_name, 
         'Model' : ClassificationModels.KNN.value,
-        'N_Neighbors': n_neighbors, 
-        "Weights" : weights,
-        "algorithm" : algorithm, 
-        "p" : p, 
-        "leaf_size" : leaf_size
+        CV_BEST_DICT_KEY : best_params_dict, 
     }
 
     run_classifier(vec_model_name, knn, model_details)
@@ -39,6 +36,6 @@ def run_knn(vec_model_name, n_neighbors = 5, weights = 'uniform',
 
 if __name__ == "__main__": 
     
-    run_knn(WordVectorModels.WORD2VEC.value, n_neighbors=10, weights='distance', algorithm='ball_tree', p=1)
-    run_knn(WordVectorModels.FASTTEXT.value, n_neighbors=8, weights='distance', algorithm='ball_tree', p=1)
-    run_knn(WordVectorModels.GLOVE.value, n_neighbors=10, weights='distance', algorithm='ball_tree', p = 3)
+    run_knn(WordVectorModels.WORD2VEC.value)
+    run_knn(WordVectorModels.FASTTEXT.value)
+    run_knn(WordVectorModels.GLOVE.value)

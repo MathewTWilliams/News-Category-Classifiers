@@ -1,10 +1,11 @@
 #Author: Matt Williams
-#Version: 6/04/2022
+#Version: 6/24/2022
 
 from sklearn.neighbors import RadiusNeighborsClassifier
-from utils import ClassificationModels, WordVectorModels
+from utils import ClassificationModels, WordVectorModels, CV_BEST_DICT_KEY
 from run_classification import run_classifier
 import numpy as np
+from save_load_json import load_cv_result
 
 # Parameter grid for cross validation
 near_rad_param_grid = {
@@ -17,21 +18,17 @@ near_rad_param_grid = {
 }
 
 
-def run_near_radius(vec_model_name, radius = 1.0, algorithm = "auto", leaf_size = 30, \
-                p = 2, metric = "minkowski"): 
+def run_near_radius(vec_model_name): 
     
-    near_radius = RadiusNeighborsClassifier(radius=radius, algorithm=algorithm, leaf_size=leaf_size, \
-                                        p=p, metric=metric, weights="distance")
+    cv_result_dict = load_cv_result(ClassificationModels.RAD.value, vec_model_name)
+    best_params_dict = cv_result_dict[CV_BEST_DICT_KEY]
+    best_params_dict['weights'] = "distance"
+    near_radius = RadiusNeighborsClassifier(**best_params_dict)
 
     model_details = {
         "Vector_Model" : vec_model_name, 
         "Model" : ClassificationModels.RAD.value, 
-        "radius" : radius, 
-        "algorithm" : algorithm, 
-        "leaf_size" : leaf_size, 
-        "p" : p, 
-        "metric" : metric, 
-        "weights" : "distance"
+        CV_BEST_DICT_KEY : best_params_dict, 
     }
 
     run_classifier(vec_model_name, near_radius, model_details)

@@ -1,5 +1,5 @@
 #Author: Matt Williams
-#Version: 12/02/2021
+#Version: 06/24/2022
 
 #Grid Search Cross Validation is done so we can get a better understanding
 #of the hyperparameter settings we need in order to optimize the algorithms for
@@ -12,7 +12,7 @@ from sklearn.naive_bayes import ComplementNB
 from sklearn.preprocessing import minmax_scale
 from get_article_vectors import get_training_info
 from save_load_json import save_json
-from utils import make_cv_result_path, K_FOLDS
+from utils import make_cv_result_path, K_FOLDS, CV_BEST_DICT_KEY
 
 def run_grid_cv(classifier, param_grid, vec_model_name, c_name, n_jobs = 3):
     '''Given a classifier instance, its associated param grid, the name of the vector model
@@ -35,7 +35,7 @@ def run_grid_cv(classifier, param_grid, vec_model_name, c_name, n_jobs = 3):
     for key in cv_results.keys(): 
         if isinstance(cv_results[key], ndarray): 
             cv_results[key] = cv_results[key].tolist()
-    cv_results['best params'] = grid_search_cv.best_params_
+    cv_results[CV_BEST_DICT_KEY] = grid_search_cv.best_params_
     cv_results['Word Vector Model'] = vec_model_name
     cv_results['best score'] = grid_search_cv.best_score_
     save_json(cv_results, file_path)

@@ -1,5 +1,5 @@
 #Author: Matt Williams
-#Version: 12/08/2021
+#Version: 06/24/2022
 
 from enum import Enum
 import os
@@ -58,6 +58,10 @@ class Categories(Enum):
     def get_values_as_list(cls): 
         return [cat.value for cat in Categories]
 
+
+CV_BEST_DICT_KEY = "best params"
+
+
 #Dataset: https://www.kaggle.com/rmisra/news-category-dataset 
 CWD_PATH = os.path.abspath(os.getcwd())
 DATA_DIR_PATH = os.path.join(CWD_PATH, "Data")
@@ -88,7 +92,6 @@ CLEANED_TEXT_PATH = os.path.join(DATA_DIR_PATH, "Cleaned_Text.json")
 
 TEST_SET_PERC = 0.1
 TRAIN_SET_PERC = 0.9
-RAND_STATE = 42
 K_FOLDS = 5
 
 

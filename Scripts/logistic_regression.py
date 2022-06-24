@@ -1,11 +1,12 @@
 
 #Author: Matt Williams
-#Version: 12/08/021
+#Version: 06/24/2022
 from sklearn.linear_model import LogisticRegression
 from get_article_vectors import get_training_info
-from utils import RAND_STATE, WordVectorModels, ClassificationModels
+from utils import WordVectorModels, ClassificationModels, CV_BEST_DICT_KEY
 from run_classification import run_classifier
 import numpy as np
+from save_load_json import load_cv_result
 
 #Parameter grid for cross validation
 log_regr_param_grid= {
@@ -14,7 +15,6 @@ log_regr_param_grid= {
     'C' : np.arange(0.2,1.2,0.2).tolist(),
     'solver' : ['saga'], 
     'max_iter' : list(range(100, 600, 100)),
-    'random_state' : [RAND_STATE], 
     'multi_class' : ["ovr", "multinomial"], 
     'l1_ratio' : np.arange(0, 1.25, 0.25)
 }
@@ -36,21 +36,16 @@ def run_logistic_regression(vec_model_name, penalty = 'l2', tol = 1e-4, C = 1,
     for category in weights_dict.keys(): 
         weights_dict[category] /= len(training_labels)
     
+    cv_results = load_cv_result(ClassificationModels.LOG_REG.value, vec_model_name)
+    best_params_dict = cv_results[CV_BEST_DICT_KEY]
 
-
-    lr = LogisticRegression(penalty=penalty, random_state=RAND_STATE, tol= tol, solver=solver, 
-                            class_weight= weights_dict, C=C, max_iter=max_iter, multi_class=multi_class)
+    lr = LogisticRegression(class_weight= weights_dict, **best_params_dict)
 
 
     model_details = {
         'Vector_Model': vec_model_name, 
         'Model' : ClassificationModels.LOG_REG.value,
-        'Penalty_Function' : penalty, 
-        'tolerance' : tol, 
-        'Solver': solver,
-        'C' : C,
-        'Max Iterations': max_iter, 
-        "multi_class" : multi_class
+        CV_BEST_DICT_KEY : best_params_dict, 
 
     }
 
@@ -59,6 +54,6 @@ def run_logistic_regression(vec_model_name, penalty = 'l2', tol = 1e-4, C = 1,
 
 if __name__ == "__main__": 
     
-    run_logistic_regression(WordVectorModels.WORD2VEC.value, penalty="l1", tol=1e-3, C=2, solver = "saga", max_iter=200)
-    run_logistic_regression(WordVectorModels.FASTTEXT.value, penalty="none", tol=1e-3, C=0.5, solver = "saga", max_iter=100)
-    run_logistic_regression(WordVectorModels.GLOVE.value, penalty='l2', tol=1e-4, C=2, max_iter=100)
+    run_logistic_regression(WordVectorModels.WORD2VEC.value)
+    run_logistic_regression(WordVectorModels.FASTTEXT.value)
+    run_logistic_regression(WordVectorModels.GLOVE.value)

@@ -1,11 +1,12 @@
 #Author: Matt Williams
-#Version: 6/04/2022
+#Version: 6/24/2022
 
 
 from sklearn.ensemble import GradientBoostingClassifier
-from utils import ClassificationModels, WordVectorModels
+from utils import ClassificationModels, WordVectorModels, CV_BEST_DICT_KEY
 from run_classification import run_classifier
 import numpy as np
+from save_load_json import load_cv_result
 
 # Parameter grid for cross validation
 grad_boost_param_grid = {
@@ -23,32 +24,22 @@ grad_boost_param_grid = {
 
 }
 
-def run_grad_boost(vec_model_name, loss = "log_loss", learning_rate = 0.1, n_estimators = 100,\
-                subsample = 1.0, criterion = "friedman_mse", min_weight_fraction_leaf = 0.0,\
-                max_depth = 3, max_features = None, min_impurity_decrease = 0.0, n_iter_no_change = None,\
-                tol = 1e-4): 
+def run_grad_boost(vec_model_name ): 
     '''Given the name of the vector model to train on and the values of the difference hyperparameters, 
     run the Gradient Boost Classification algorithm and save the results to a json file.'''
-    grad_boost = GradientBoostingClassifier(loss=loss, learning_rate=learning_rate, n_estimators=n_estimators, \
-                                        subsample=subsample, criterion=criterion, min_weight_fraction_leaf=min_weight_fraction_leaf, \
-                                        max_depth=max_depth, max_features=max_features, min_impurity_decrease=min_impurity_decrease, \
-                                        n_iter_no_change=n_iter_no_change, tol=tol)
+
+
+
+    cv_results_dict = load_cv_result(ClassificationModels.GRAD.value, vec_model_name)
+    best_params_dict = cv_results_dict[CV_BEST_DICT_KEY]
+
+    grad_boost = GradientBoostingClassifier(**best_params_dict)
 
 
     model_details = {
         "Vector_Model" : vec_model_name, 
-        "Model" : ClassificationModels.GRD_BST.value,
-        "loss" : loss, 
-        "learning_rate" : learning_rate, 
-        "n_estimators" : n_estimators, 
-        "subsample" : subsample, 
-        "criterion" : criterion, 
-        "min_weight_fraction_leaf" : min_weight_fraction_leaf, 
-        "max_depth" : max_depth, 
-        "max_features" : max_features, 
-        "min_impurity_decrease" : min_impurity_decrease, 
-        "n_iter_no_change" : n_iter_no_change, 
-        "tol" : tol
+        "Model" : ClassificationModels.GRAD.value,
+        CV_BEST_DICT_KEY : best_params_dict, 
     }
 
     run_classifier(vec_model_name, grad_boost, model_details)
