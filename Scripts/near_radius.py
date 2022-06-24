@@ -8,7 +8,7 @@ import numpy as np
 
 # Parameter grid for cross validation
 near_rad_param_grid = {
-    "radius" : np.arange(0.5, 3.0, 0.5).tolist(), #here
+    "radius" : np.arange(10, 51, 10).tolist(), #here
     "algorithm" : ["ball_tree", "kd_tree"], 
     "leaf_size" : list(range(10, 60, 10)), 
     "p" : list(range(1,5)), 

@@ -31,10 +31,11 @@ class ClassificationModels(Enum):
     LOG_REG = "Logistic Regression"
     ADA = "Ada-Boost"
     BAG = "Bagging"
-    GRD_BST = "Gradient Boosting"
+    MLP = "Multi-Layer Perceptron"
     CENT = "Nearest Centroid"
     RAD = "Radius Neighbors"
     CNB = "Complement Naive Bayes"
+    GRAD = "Gradient Boosted Trees"
 
 
     @classmethod

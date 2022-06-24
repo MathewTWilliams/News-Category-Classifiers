@@ -3,9 +3,8 @@
 #Version: 11/7/2021
 import json
 import os
-from utils import DATA_SET_PATH
-
-
+from utils import DATA_SET_PATH, CV_RESULTS_DIR_PATH
+import re
 
 def load_json(path): 
     """ Method that takes in the file path of a .json file and returns the 
@@ -45,3 +44,17 @@ def save_json(json_obj, path):
             json.dump(json_obj, file, indent=1)
     
     
+
+def load_cv_result(subfolder, word_model): 
+
+    file_pattern = re.compile(word_model)
+
+    path = os.path.join(CV_RESULTS_DIR_PATH, subfolder)
+
+    for file in os.listdir(path): 
+        match = file_pattern.search(file)
+        if match != None: 
+            return load_json(os.path.join(path, file))
+
+
+    return None

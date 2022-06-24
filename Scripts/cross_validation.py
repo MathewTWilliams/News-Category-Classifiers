@@ -21,7 +21,7 @@ def run_grid_cv(classifier, param_grid, vec_model_name, c_name, n_jobs = 3):
 
     training_data, training_labels = get_training_info(vec_model_name)
     grid_search_cv = HalvingGridSearchCV(classifier, param_grid, n_jobs=n_jobs, verbose=2, cv = K_FOLDS, refit=False,
-                                    scoring='accuracy') 
+                                    scoring='accuracy', min_resources=100) 
 
 
 
