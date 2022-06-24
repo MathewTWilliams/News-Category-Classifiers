@@ -1,5 +1,5 @@
 #Author: Matt Williams
-#Version: 11/27/2021
+#Version: 06/24/2022
 
 #Reference: https://www.kaggle.com/ananyabioinfo/text-classification-using-word2vec
 import pandas as pd
@@ -43,8 +43,7 @@ def make_article_vecs(category, article_list, model_wv, model_num, model_name):
     # Make our train and test split
     train_cat_df, test_cat_df = train_test_split(cat_df, \
                                                         train_size=TRAIN_SET_PERC, \
-                                                        test_size=TEST_SET_PERC, \
-                                                        random_state= RAND_STATE)
+                                                        test_size=TEST_SET_PERC)
     #Save each set to a different folder
     name = model_name + "_" + category + "_" + "article_vecs.json"
     train_cat_df.to_json(get_article_vecs_path(Datasets.TRAIN.value , name))

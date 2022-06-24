@@ -1,5 +1,5 @@
 #Author: Matt Williams
-#Version: 12/5/2021
+#Version: 06/24/2022
 
 from knn import knn_param_grid
 from logistic_regression import log_regr_param_grid
