@@ -32,8 +32,3 @@ def run_near_radius(vec_model_name):
     }
 
     run_classifier(vec_model_name, near_radius, model_details)
-
-if __name__ == "__main__": 
-    run_near_radius(WordVectorModels.WORD2VEC.value)
-    run_near_radius(WordVectorModels.FASTTEXT.value)
-    run_near_radius(WordVectorModels.GLOVE.value)

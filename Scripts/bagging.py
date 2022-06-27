@@ -40,9 +40,3 @@ def run_bagging(vec_model_name):
 
     run_classifier(vec_model_name, bagging, model_details)
 
-
-
-if __name__ == "__main__": 
-    run_bagging(WordVectorModels.WORD2VEC.value)
-    run_bagging(WordVectorModels.FASTTEXT.value)
-    run_bagging(WordVectorModels.GLOVE.value)

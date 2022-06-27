@@ -28,9 +28,3 @@ def run_near_centroid(vec_model_name):
     }
 
     run_classifier(vec_model_name, near_cent, model_details)
-
-
-if __name__ == "__main__": 
-    run_near_centroid(WordVectorModels.WORD2VEC.value)
-    run_near_centroid(WordVectorModels.FASTTEXT.value)
-    run_near_centroid(WordVectorModels.GLOVE.value)

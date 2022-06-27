@@ -27,11 +27,3 @@ def run_naive_bayes(vec_model_name):
 
     run_classifier(vec_model_name, gauss, model_details)
 
-
-
-if __name__ == "__main__": 
-
-    run_naive_bayes(WordVectorModels.WORD2VEC.value)
-    run_naive_bayes(WordVectorModels.FASTTEXT.value)
-    run_naive_bayes(WordVectorModels.GLOVE.value)
-    

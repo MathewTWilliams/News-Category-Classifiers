@@ -32,10 +32,4 @@ def run_knn(vec_model_name):
 
     run_classifier(vec_model_name, knn, model_details)
         
-        
-
-if __name__ == "__main__": 
     
-    run_knn(WordVectorModels.WORD2VEC.value)
-    run_knn(WordVectorModels.FASTTEXT.value)
-    run_knn(WordVectorModels.GLOVE.value)

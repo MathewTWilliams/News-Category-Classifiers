@@ -29,9 +29,3 @@ def run_ada(vec_model_name):
     }
 
     run_classifier(vec_model_name, ada, model_details)
-
-
-if __name__ == "__main__": 
-    run_ada(WordVectorModels.WORD2VEC.value)
-    run_ada(WordVectorModels.FASTTEXT.value)
-    run_ada(WordVectorModels.GLOVE.value)

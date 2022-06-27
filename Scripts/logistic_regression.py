@@ -50,10 +50,3 @@ def run_logistic_regression(vec_model_name, penalty = 'l2', tol = 1e-4, C = 1,
     }
 
     run_classifier(vec_model_name, lr, model_details)
-
-
-if __name__ == "__main__": 
-    
-    run_logistic_regression(WordVectorModels.WORD2VEC.value)
-    run_logistic_regression(WordVectorModels.FASTTEXT.value)
-    run_logistic_regression(WordVectorModels.GLOVE.value)

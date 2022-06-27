@@ -36,9 +36,3 @@ def run_mlp(vec_model_name):
     }
 
     run_classifier(vec_model_name, mlp, model_details)
-
-
-if __name__ == "__main__": 
-    run_mlp(WordVectorModels.WORD2VEC.value)
-    run_mlp(WordVectorModels.FASTTEXT.value)
-    run_mlp(WordVectorModels.GLOVE.value)

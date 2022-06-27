@@ -25,4 +25,4 @@ def run_classifier(vec_model_name, classifier, classifier_details):
 
     calculate_classifier_metrics(test_labels, predictions, classifier_details)
     title = "{} w/{} Confusion Matrix".format(classifier_details['Model'], vec_model_name)
-    show_confusion_matrix(test_labels, predictions)
+    #show_confusion_matrix(test_labels, predictions)

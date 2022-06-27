@@ -43,9 +43,3 @@ def run_grad_boost(vec_model_name ):
     }
 
     run_classifier(vec_model_name, grad_boost, model_details)
-
-
-if __name__ == "__main__": 
-    run_grad_boost(WordVectorModels.WORD2VEC.value)
-    run_grad_boost(WordVectorModels.FASTTEXT.value)
-    run_grad_boost(WordVectorModels.GLOVE.value)

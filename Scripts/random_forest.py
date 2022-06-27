@@ -17,7 +17,7 @@ rand_forest_param_grid = {
     "min_impurity_decrease" : [0.0001],
     "class_weight" : ["balanced"]
 }
-def run_random_forrest(vec_model_name): 
+def run_random_forest(vec_model_name): 
     '''Given the name of the vector model to train on and the values of the different hyperparameters, 
     run the Random Forest Classification algorithm and save the results to a json file.'''
 
@@ -34,13 +34,6 @@ def run_random_forrest(vec_model_name):
 
     run_classifier(vec_model_name, rf, model_details)
 
-
-
-if __name__ == "__main__":
-
-    run_random_forrest(WordVectorModels.WORD2VEC.value)
-    run_random_forrest(WordVectorModels.FASTTEXT.value)
-    run_random_forrest(WordVectorModels.GLOVE.value)
 
 
 

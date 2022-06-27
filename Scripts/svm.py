@@ -37,12 +37,3 @@ def run_svm(vec_model_name):
     }
 
     run_classifier(vec_model_name, svm, model_details)
-
-
-
-if __name__ == "__main__":
-   
-   #using best params from grid search cross validation
-   run_svm(WordVectorModels.WORD2VEC.value, C=2, kernel="poly", decision_function_shape='ovr')
-   run_svm(WordVectorModels.FASTTEXT.value, C=2, kernel='poly', decision_function_shape='ovr')
-   run_svm(WordVectorModels.GLOVE.value,C=2, kernel='poly', decision_function_shape='ovr')
