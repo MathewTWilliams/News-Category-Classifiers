@@ -3,7 +3,7 @@
 #Version: 06/24/2022
 import json
 import os
-from utils import DATA_SET_PATH, CV_RESULTS_DIR_PATH
+from utils import DATA_SET_PATH, CV_RESULTS_DIR_PATH, RESULTS_DIR_PATH
 import re
 
 def load_json(path): 
@@ -45,11 +45,10 @@ def save_json(json_obj, path):
     
     
 
-def load_cv_result(subfolder, word_model): 
-
+def _load_result(folder, subfolder, word_model): 
     file_pattern = re.compile(word_model)
 
-    path = os.path.join(CV_RESULTS_DIR_PATH, subfolder)
+    path = os.path.join(folder, subfolder)
 
     for file in os.listdir(path): 
         match = file_pattern.search(file)
@@ -58,3 +57,10 @@ def load_cv_result(subfolder, word_model):
 
 
     return None
+
+
+def load_cv_result(subfolder, word_model): 
+    return _load_result(CV_RESULTS_DIR_PATH, subfolder=subfolder, word_model=word_model)
+
+def load_test_result(subfolder, word_model):
+    return _load_result(RESULTS_DIR_PATH, subfolder=subfolder, word_model=word_model)

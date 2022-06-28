@@ -191,3 +191,8 @@ def convert_categories_to_numbers(labels):
             labels[labels == category] = i
 
     return labels
+
+RESULT_VISUALS_PATH = os.path.join(CWD_PATH, "Visuals")
+
+def get_result_visual_path(filename): 
+    return os.path.join(RESULT_VISUALS_PATH, filename)
