@@ -1,63 +1,65 @@
 #Author: Matt Williams
-#Version: 12/08/2021
-#Reference: https://datatofish.com/line-chart-python-matplotlib/
-####
+#Version: 06/29/2022
 
 import matplotlib.pyplot as plt
-from save_load_json import load_json
-from utils import get_result_path
-from get_vec_models import get_vec_model_names
+from save_load_json import load_test_result
+from utils import get_result_path, ClassificationModels, WordVectorModels, get_result_bar_graph_path
 import os
+import numpy as np
 
-def show_line_graph(x_labels, y_values, x_title, y_title, graph_title): 
-    '''Given the name of the x axis labels, the values in the y axis, the title of the 
-    x and y axes, and the title of the graph: make a line graph and display it to the user'''
+def show_bar_graph(y_labels, x_values, y_title, x_title, graph_title):
 
-    plt.figure(figsize=(12,12))
-    plt.plot(x_labels, y_values, color = 'blue', marker = 'o')
-    plt.title(graph_title, fontsize = 14)
-    plt.xlabel(x_title, fontsize = 14)
-    for label in plt.gca().get_xticklabels(): 
-        label.set_rotation(30)
-        label.set_fontsize(9)
-    plt.ylabel(y_title, fontsize = 14)
-    plt.grid(True)
-    plt.show()
+    min = x_values[0]
+    max = x_values[0]
 
+    for i in range(1, len(x_values)): 
+        if x_values[i] < min: 
+            min = x_values[i]
+        elif x_values[i] > max: 
+            max = x_values[i]
 
-def find_results_file(classifier, vec_model):
-    '''Given a classifier, and the vector model name, find
-    the JSON file that contains the results assciated with the classifier
-    and vector model.'''
-    for file in os.listdir(get_result_path(classifier,'')): 
-         if file.startswith(vec_model): 
-             return get_result_path(classifier,file)
+    y_pos = np.arange(len(y_labels)) 
 
-
-if __name__ == "__main__":
-
-    metrics = ['precision', 'recall', 'f1-score', 'accuracy']
+    fig, ax = plt.subplots()
+    fig.set_figheight(10)
+    fig.set_figwidth(20)
+    ax.barh(y_pos, x_values, align = "center")
+    ax.set_yticks(y_pos)
+    ax.set_yticklabels(y_labels)
+    ax.invert_yaxis()
+    ax.set_xlabel(x_title)
+    ax.set_ylabel(y_title)
+    ax.set_title(graph_title)
+    plt.xlim([min - 0.1, max])
+    plt.savefig(get_result_bar_graph_path(graph_title + ".png"))
 
 
-    x_labels = ['Gaussian Naive Bayes', 'K-Nearest Neighbor', 'Logistic Regression', \
-        'Multi-Layer Perceptron', 'Random Forest', 'Support Vector Machine']
+if __name__ == "__main__": 
 
-    #For each vector model, make a line graph for each metric above.
-    for vec_model_name in get_vec_model_names(): 
-        y_values = {metric: [] for metric in metrics}
+    classifiers = ClassificationModels.get_values_as_list()
+    wv_models = WordVectorModels.get_values_as_list()
 
-        for classifier in x_labels: 
-            file_path = find_results_file(classifier, vec_model_name)
-            results = load_json(file_path)
-            
-            for metric in metrics:
-                if metric == 'accuracy': 
-                    y_values[metric].append(results['Classification_Report']['accuracy'])
-                else: 
-                    y_values[metric].append(results['Classification_Report']['weighted avg'][metric])
-        
+    classifier_acc_dict = {classifier:[] for classifier in classifiers}
+    wv_model_acc_dict = {wv_model:[] for wv_model in wv_models}
 
-        for metric in metrics: 
-            show_line_graph(x_labels, y_values[metric], "Classifiers", metric +" values", \
-                "Classifier " + metric.capitalize() + " values with " + vec_model_name.capitalize())
-                
+    for wv_model in wv_models: 
+        for classifier in classifiers:
+            accuracy = load_test_result(classifier, wv_model)["Classification_Report"]["accuracy"]
+            classifier_acc_dict[classifier].append(accuracy)
+            wv_model_acc_dict[wv_model].append(accuracy)
+
+
+    for classifier in classifiers:
+        x_values = classifier_acc_dict[classifier]
+        y_labels = wv_models
+        show_bar_graph(y_labels, x_values, "Word Vector Models", "Accuracy", "{} accuracies".format(classifier))
+
+    for wv_model in wv_models: 
+        x_values = wv_model_acc_dict[wv_model]
+        y_labels = classifiers
+        show_bar_graph(y_labels, x_values, "Classifiers", "Accuracy", "{} accuracies".format(wv_model))
+
+    
+    
+
+

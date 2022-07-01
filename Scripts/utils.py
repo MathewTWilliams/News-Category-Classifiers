@@ -40,7 +40,8 @@ class ClassificationModels(Enum):
 
     @classmethod
     def get_values_as_list(cls): 
-        return [model.value for model in ClassificationModels]
+        return [model.value for model in ClassificationModels 
+                    if model not in [ClassificationModels.GRAD, ClassificationModels.RAD]]
 
 class Categories(Enum): 
     MEDIA = "MEDIA"
@@ -98,11 +99,25 @@ K_FOLDS = 5
 #File Path to the directory that contains our Models related to generating word embeddings. 
 MODEL_DIR_PATH = os.path.join(CWD_PATH, "Models")
 
+def _create_file_path(folder, file_name, subfolder = None):
+    """Given the file path to specified folder, a file_name, and an optional subfolder name, make the folders
+    if the folders don't exist and return the full filepath."""
+    if not os.path.exists(folder): 
+        os.mkdir(folder)
+
+    if subfolder != None:
+        res_dir = os.path.join(folder, subfolder)
+        if not os.path.exists(res_dir): 
+            os.mkdir(res_dir)
+        
+        return os.path.join(res_dir, file_name)
+
+    return os.path.join(folder, file_name)
+        
+
 def get_model_path(name): 
     '''Given the name of a file for a vector model, return the full file path for that file to be stored at.'''
-    if not os.path.exists(MODEL_DIR_PATH):
-        os.mkdir(MODEL_DIR_PATH)
-    return os.path.join(MODEL_DIR_PATH, name)
+    return _create_file_path(MODEL_DIR_PATH, name)
 
 
 #File Path to the directory where the article vectors are to be stored.
@@ -110,17 +125,19 @@ ARTICLE_VECS_DIR_PATH = os.path.join(CWD_PATH, "Article_Vectors")
 
 def get_article_vecs_path(subfolder, name):
     '''Given subfolder(Train or Test) and the name of a file, return the full file path for that file to be stored at'''
-    if not os.path.exists(ARTICLE_VECS_DIR_PATH):
-        os.mkdir(ARTICLE_VECS_DIR_PATH)
-    res_path = os.path.join(ARTICLE_VECS_DIR_PATH, subfolder)
-    return os.path.join(res_path, name)
+
+    return _create_file_path(ARTICLE_VECS_DIR_PATH, name, subfolder=subfolder)
 
 #File Path to the directory where classification or clustering results are to be stored.
 RESULTS_DIR_PATH = os.path.join(CWD_PATH, "Results")
 
-def find_json_file_name_number(folder):
+def _find_json_file_name_number(folder):
     '''Given a file path to a folder containing .json files, find the highest number associated with a filename in that
     folder, then increment that number by 1 and return it '''
+
+    if not os.path.exists(folder): 
+        return -1
+
     highest_num = 0
     num_pattern = re.compile(r"[0-9]+\.json")
     for file in os.listdir(folder):
@@ -130,29 +147,20 @@ def find_json_file_name_number(folder):
             highest_num = num
     
     return highest_num + 1
-        
 
 def make_result_path(subfolder, vec_model): 
     '''Given the name of a subfolder(Name of the Classification/Clustering algorithm) and the name
         of the vector model, generate a name for the file and return the full file path for the file to be stored at.'''
 
-    if not os.path.exists(RESULTS_DIR_PATH):
-        os.mkdir(RESULTS_DIR_PATH)
-
     updated_path = os.path.join(RESULTS_DIR_PATH, subfolder)
-
-    if not os.path.exists(updated_path): 
-        os.mkdir(updated_path)
-
-    num = find_json_file_name_number(updated_path)
+    num = _find_json_file_name_number(updated_path)
     file_name = vec_model + "_results_{}.json".format(num)
-    return os.path.join(updated_path, file_name)
-
+    return _create_file_path(RESULTS_DIR_PATH, file_name, subfolder=subfolder)
 
 def get_result_path(subfolder, file_name): 
     '''Get the full file path for the result with the given filename and the given subfolder.'''
-    res_path = os.path.join(RESULTS_DIR_PATH, subfolder)
-    return os.path.join(res_path, file_name)
+
+    return _create_file_path(RESULTS_DIR_PATH, file_name, subfolder=subfolder)
 
 #File Path to the directory where cross validation results are to be stored.
 CV_RESULTS_DIR_PATH = os.path.join(CWD_PATH,"CV_Results")
@@ -160,23 +168,16 @@ CV_RESULTS_DIR_PATH = os.path.join(CWD_PATH,"CV_Results")
 def make_cv_result_path(subfolder, vec_model): 
     '''Given the name of a subfolder(Name of the Classification/Clustering algorithm), generate a name 
         for the file and return the full file path for the file to be stored at. '''
-    if not os.path.exists(CV_RESULTS_DIR_PATH): 
-        os.mkdir(CV_RESULTS_DIR_PATH)
 
     updated_path = os.path.join(CV_RESULTS_DIR_PATH, subfolder)
-
-    if not os.path.exists(updated_path): 
-        os.mkdir(updated_path)
-
-    num = find_json_file_name_number(updated_path)
+    num = _find_json_file_name_number(updated_path)
     file_name = vec_model + "_cv_results_{}.json".format(num) 
-    return os.path.join(updated_path, file_name)
+    return _create_file_path(CV_RESULTS_DIR_PATH, file_name, subfolder=subfolder)
 
 
 def get_cv_result_path(subfolder, file_name): 
     '''Get the full file path for the cross validation result with the given filename in the given subfolder.'''
-    res_path = os.path.join(CV_RESULTS_DIR_PATH, subfolder)
-    return os.path.join(res_path, file_name)
+    return _create_file_path(CV_RESULTS_DIR_PATH, file_name, subfolder=subfolder)
 
 def convert_categories_to_numbers(labels):
     '''given a pandas series that contains the different categories, convert those 
@@ -192,7 +193,14 @@ def convert_categories_to_numbers(labels):
 
     return labels
 
-RESULT_VISUALS_PATH = os.path.join(CWD_PATH, "Visuals")
+RESULT_VISUALS_DIR_PATH = os.path.join(CWD_PATH, "Visuals")
+CONF_MATRIX_DIR_PATH = os.path.join(RESULT_VISUALS_DIR_PATH, "Confusion_Matrices")
+BAR_GRAPH_DIR_PATH = os.path.join(RESULT_VISUALS_DIR_PATH, "Bar_Graphs")
 
-def get_result_visual_path(filename): 
-    return os.path.join(RESULT_VISUALS_PATH, filename)
+def get_result_conf_matrix_path(filename):
+    """Given the name of a file, return the full file path to the .../Visuals/Confusion_Matrices folder"""
+    return _create_file_path(RESULT_VISUALS_DIR_PATH, filename, subfolder = CONF_MATRIX_DIR_PATH)
+
+def get_result_bar_graph_path(filename): 
+    """Given the name of a file, return the full file path to the .../Visuals/Bar_Graphes folder"""
+    return _create_file_path(RESULT_VISUALS_DIR_PATH, filename, subfolder=BAR_GRAPH_DIR_PATH)

@@ -26,24 +26,3 @@ def calculate_classifier_metrics(true_labels, predictions, model_details):
     file_path = make_result_path(model_details['Model'], model_details['Vector_Model'])
     save_json(model_details, file_path)
 
-
-def find_best_result(classifier_name, vec_model_name, metric, large = True): 
-    '''Given the classifier name, the vector model used, and the name of the classifier metric, 
-    return the file name that contains the best metric value for the given parameters and that score'''
-    best_score = NINF if large else PINF
-    best_file_name = ""
-    if not os.path.exists(get_result_path(classifier_name,"")):
-        return
-    for file in os.listdir(get_result_path(classifier_name,"")):
-        if file.startswith(vec_model_name):
-            results = load_json(get_result_path(classifier_name, file))['Classification_Report']
-            if metric not in results.keys(): 
-                return ""
-            if large and results[metric] > best_score:
-                best_file_name = file
-                best_score = results[metric] 
-            elif not large and results[metric] < best_score: 
-                best_file_name = file
-                best_score = results[metric]
-    
-    return best_file_name, best_score
