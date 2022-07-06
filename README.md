@@ -148,6 +148,39 @@ pip install -r /path/to/requirements.txt
 
 12. **make_confusion_matrix.py**: visualize how well each classifier on each word vector model did on the test set. 
 
+## Results
+
+| Classifier        | Word Vector Model | Accuracy |
+| ----------------- | ----------------- | -------- |
+| Support Vector Machine | FastText          | 81.7%    |
+| Multi-Layer Perceptron | Word2Vec          | 80.9%    |
+| Support Vector Machine | Word2Vec          | 80.7%    |
+| Multi-Layer Perceptron | FastText          | 80.6%    |
+| Logistic Regression    | Word2Vec          | 80.2%    |
+| Multi-Layer Perceptron | GLoVe             | 80.0%    |
+| Logistic Regression    | GLoVe             | 79.9%    |
+| Logistic Regression    | FastText          | 79.7%    |
+| Support Vector Machine | GLoVe             | 79.5%    |
+| K-Nearest Neighbor     | GLoVe             | 76.5%    |
+| Bagging                | FastText          | 76.2%    |
+| Bagging                | GLoVe             | 76.1%    |
+| K-Nearest Neighbor     | Word2Vec          | 76.1%    |
+| Bagging                | Word2Vec          | 76.0%    |
+| K-Nearest Neighbor     | FastText          | 74.8%    |
+| Nearest Centroid       | Word2Vec          | 69.8%    |
+| Nearest Centroid       | GLoVe             | 68.8%    |
+| Random Forest          | GLoVe             | 67.1%    |
+| Nearest Centroid       | FastText          | 66.5%    |
+| Random Forest          | Word2Vec          | 66.0%    |
+| Random Forest          | FastText          | 64.3%    |
+| Ada-Boost              | GLoVe             | 62.8%    |
+| Ada-Boost              | FastText          | 62.1%    | 
+| Comp. Naive Bayes      | Word2Vec          | 62.1%    |
+| Comp. Naive Bayes      | GLoVe             | 60.8%    |
+| Ada-Boost              | Word2Vec          | 60.7%    |
+| Comp. Naive Bayes      | FastText          | 51.7%    |
+
+
 ## License
 Distributed under the MIT License. See ```LICENSE.txt``` for more information. 
 
