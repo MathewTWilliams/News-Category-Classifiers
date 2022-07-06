@@ -1,5 +1,6 @@
 *\env
 *\__pycache__
-*\.json
-*\.txt
 /Models/*
+/Article_Vectors/*
+/Data/*
+/CV_Results/*
