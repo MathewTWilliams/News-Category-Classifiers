@@ -4,7 +4,8 @@
 
 from msilib.schema import Class
 from sklearn.ensemble import BaggingClassifier
-from utils import WordVectorModels, ClassificationModels, CV_BEST_DICT_KEY
+from utils import WordVectorModels, ClassificationModels, CV_BEST_DICT_KEY, \
+    RESULT_WORD_VEC_MOD_KEY, RESULT_MODEL_KEY
 from run_classification import run_classifier
 import numpy as np
 from save_load_json import load_cv_result
@@ -27,14 +28,11 @@ def run_bagging(vec_model_name):
 
     cv_results_dict = load_cv_result(ClassificationModels.BAG.value, vec_model_name)
     best_params_dict = cv_results_dict[CV_BEST_DICT_KEY]
-    best_params_dict["base_estimator"] = None
-    best_params_dict["warm_start"] = False
-    best_params_dict["oob_score"] = False
     bagging = BaggingClassifier(**best_params_dict)
 
     model_details = {
-        "Vector_Model" : vec_model_name,
-        "Model" : ClassificationModels.BAG.value,
+        RESULT_WORD_VEC_MOD_KEY : vec_model_name,
+        RESULT_MODEL_KEY : ClassificationModels.BAG.value,
         CV_BEST_DICT_KEY : best_params_dict, 
     }
 

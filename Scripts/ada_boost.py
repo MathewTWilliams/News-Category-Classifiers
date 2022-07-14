@@ -2,7 +2,8 @@
 #Version: 6/24/2022
 
 from sklearn.ensemble import AdaBoostClassifier
-from utils import WordVectorModels, ClassificationModels, CV_BEST_DICT_KEY
+from utils import WordVectorModels, ClassificationModels, CV_BEST_DICT_KEY, \
+    RESULT_WORD_VEC_MOD_KEY, RESULT_MODEL_KEY
 from run_classification import run_classifier
 from save_load_json import load_cv_result
 
@@ -22,8 +23,8 @@ def run_ada(vec_model_name):
     ada = AdaBoostClassifier()
 
     model_details = {
-        "Vector_Model" : vec_model_name, 
-        "Model" : ClassificationModels.ADA.value, 
+        RESULT_WORD_VEC_MOD_KEY : vec_model_name, 
+        RESULT_MODEL_KEY : ClassificationModels.ADA.value, 
         CV_BEST_DICT_KEY: best_params_dict,
 
     }

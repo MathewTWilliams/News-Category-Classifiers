@@ -1,7 +1,8 @@
 #Author: Matt Williams
 #Version: 06/24/2022
 from sklearn.naive_bayes import ComplementNB
-from utils import ClassificationModels, WordVectorModels, CV_BEST_DICT_KEY
+from utils import ClassificationModels, WordVectorModels, CV_BEST_DICT_KEY,  \
+    RESULT_WORD_VEC_MOD_KEY, RESULT_MODEL_KEY
 from run_classification import run_classifier
 from save_load_json import load_cv_result
  
@@ -20,8 +21,8 @@ def run_naive_bayes(vec_model_name):
     gauss = ComplementNB(**best_params_dict)
     
     model_details = {
-       'Vector_Model': vec_model_name, 
-        'Model' : ClassificationModels.CNB.value,
+        RESULT_WORD_VEC_MOD_KEY: vec_model_name, 
+        RESULT_MODEL_KEY: ClassificationModels.CNB.value,
         CV_BEST_DICT_KEY : best_params_dict
     }
 

@@ -2,7 +2,8 @@
 #Version: 6/24/2022
 
 from sklearn.neighbors import RadiusNeighborsClassifier
-from utils import ClassificationModels, WordVectorModels, CV_BEST_DICT_KEY
+from utils import ClassificationModels, WordVectorModels, CV_BEST_DICT_KEY,  \
+    RESULT_WORD_VEC_MOD_KEY, RESULT_MODEL_KEY
 from run_classification import run_classifier
 import numpy as np
 from save_load_json import load_cv_result
@@ -26,8 +27,8 @@ def run_near_radius(vec_model_name):
     near_radius = RadiusNeighborsClassifier(**best_params_dict)
 
     model_details = {
-        "Vector_Model" : vec_model_name, 
-        "Model" : ClassificationModels.RAD.value, 
+        RESULT_WORD_VEC_MOD_KEY : vec_model_name, 
+        RESULT_MODEL_KEY : ClassificationModels.RAD.value, 
         CV_BEST_DICT_KEY : best_params_dict, 
     }
 

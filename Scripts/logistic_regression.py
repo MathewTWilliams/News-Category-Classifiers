@@ -3,7 +3,8 @@
 #Version: 06/24/2022
 from sklearn.linear_model import LogisticRegression
 from get_article_vectors import get_training_info
-from utils import WordVectorModels, ClassificationModels, CV_BEST_DICT_KEY
+from utils import WordVectorModels, ClassificationModels, CV_BEST_DICT_KEY,  \
+    RESULT_WORD_VEC_MOD_KEY, RESULT_MODEL_KEY
 from run_classification import run_classifier
 import numpy as np
 from save_load_json import load_cv_result
@@ -43,8 +44,8 @@ def run_logistic_regression(vec_model_name, penalty = 'l2', tol = 1e-4, C = 1,
 
 
     model_details = {
-        'Vector_Model': vec_model_name, 
-        'Model' : ClassificationModels.LOG_REG.value,
+        RESULT_WORD_VEC_MOD_KEY: vec_model_name, 
+        RESULT_MODEL_KEY: ClassificationModels.LOG_REG.value,
         CV_BEST_DICT_KEY : best_params_dict, 
 
     }

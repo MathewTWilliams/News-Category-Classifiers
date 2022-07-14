@@ -61,7 +61,8 @@ class Categories(Enum):
 
 
 CV_BEST_DICT_KEY = "best params"
-
+RESULT_WORD_VEC_MOD_KEY = "Vector_Model"
+RESULT_MODEL_KEY = "Model"
 
 #Dataset: https://www.kaggle.com/rmisra/news-category-dataset 
 CWD_PATH = os.path.abspath(os.getcwd())

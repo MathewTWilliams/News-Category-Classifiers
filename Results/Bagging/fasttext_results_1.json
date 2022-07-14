@@ -6,10 +6,7 @@
   "bootstrap_features": false,
   "max_features": 50,
   "max_samples": 1.0,
-  "n_estimators": 70,
-  "base_estimator": null,
-  "warm_start": false,
-  "oob_score": false
+  "n_estimators": 70
  },
  "Classification_Report": {
   "GREEN": {
